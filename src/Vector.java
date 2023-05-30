@@ -8,13 +8,13 @@ public class Vector {
   }
 
   public void add(Vector v) {
-    x += v.x;
-    y += v.y;
+    x += v.getX();
+    y += v.getY();
   }
 
   public void sub(Vector v) {
-    x -= v.x;
-    y -= v.y;
+    x -= v.getX();
+    y -= v.getY();
   }
 
   public void mult(double d) {

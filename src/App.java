@@ -8,13 +8,17 @@ public class App extends JPanel implements Runnable {
     LinkedList<Goose> geese = new LinkedList<Goose>();
 
     public App() {
-        Thread t = new Thread(this);
-        t.start();
+        e = new Equation();
+        addKeyListener(e);
+        setFocusable(true);
 
-        e = new Equation("0.5x^2+2x+sin(x)-4");
+        // e = new Equation("0.5x^2+2x+sin(x)-4");
         for (int i = 0; i < 1; i++) {
             geese.add(new Goose(500, 150, 5, -8));
         }
+
+        Thread t = new Thread(this);
+        t.start();
     }
 
     public void run() {
@@ -38,6 +42,9 @@ public class App extends JPanel implements Runnable {
             goose.move();
             goose.draw(g2);
         }
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString(e.toString(), 10, 30);
     }
 
     public static void main(String[] args) throws Exception {

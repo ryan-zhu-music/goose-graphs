@@ -14,7 +14,7 @@ public class App extends JPanel implements Runnable {
 
         // e = new Equation("0.5x^2+2x+sin(x)-4");
         for (int i = 0; i < 1; i++) {
-            geese.add(new Goose(500, 150, 5, -8));
+            geese.add(new Goose(500, 150, 3, -8));
         }
 
         Thread t = new Thread(this);
@@ -37,12 +37,11 @@ public class App extends JPanel implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1000, 600);
         g.setColor(Color.WHITE);
-        // e.draw(g2);
         for (Goose goose : geese) {
             goose.move();
             goose.draw(g2);
         }
-
+        e.draw(g2);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.drawString(e.toString(), 10, 30);
     }

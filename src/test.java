@@ -4,12 +4,12 @@ import java.util.function.Function;
 import java.util.StringTokenizer;
 
 public class test {
-  static String expression = "4.0x^2+(x-2)^3+3x^2-sin(x+4)+x"; // 1221
+  // static String expression = "4.0x^2+(x-2)^3+3x^2-sin(x+4)+x"; // 1221
   // static String expression = "x^2+2x+sin(x)-4"; // 115.455978889
   // static String expression = "tan(x)/log(3x(x+4)^(-1/2))"; // 0.71716789713
   // static String expression = "px";
   // static String expression = "sqrt(x/(4x+2)^2)+cos(sin(tan(abs(x))))"; // 0.898
-  // static String expression = "x^2";
+  static String expression = "(1/2)^x";
 
   static final String[] functions = {
       "sin(", "cos(", "tan(", "ln(", "log(", "sqrt(", "abs(" };
@@ -27,19 +27,21 @@ public class test {
 
   public static void main(String[] args) {
     // System.out.println(evalSimple("-1/2"));
-    System.out.println(evaluate(substitute(expression, -10)));
+    System.out.println(evaluate(substitute(expression, -14)));
     // System.out.println(evalSimple("4+3.0*4/2-4*-0.8*3+5+10.0/2"));
-    // for (double i = -50; i < 50; i++) {
-    // System.out.println(6 * i + 300 + " " + transform(i));
+    // for (double i = 0; i < 100; i++) {
+    // System.out.println(i + " " + transform(i));
     // }
 
   }
 
-  private static int transform(double x) {
+  private static long transform(double x) {
     try {
-      // return (int) (-0.001 * evaluate(substitute(expression, x - 50)) + 300);
-      return (int) evaluate(substitute(expression, x));
+      long y = (long) (-2 * evaluate(substitute(expression, x - 50)) + 400);
+      // System.out.println(y);
+      return y;
     } catch (Exception e) {
+      System.out.println("error");
       return 0;
     }
   }
@@ -87,7 +89,7 @@ public class test {
   }
 
   public static double evaluate(String exp) {
-    System.out.println("e:" + exp);
+    // System.out.println("e:" + exp);
     if (exp.length() == 0) {
       return 0;
     }
@@ -117,7 +119,7 @@ public class test {
     }
 
     // parentheses
-    while (exp.indexOf('(') != -1) {
+    while (exp.indexOf('(') != -1 && exp.indexOf(')') != -1) {
       int start = exp.indexOf('(');
       int end = exp.indexOf(')');
       int count = 1;
@@ -132,13 +134,19 @@ public class test {
           break;
         }
       }
-
+      System.out.println(exp + " " + start + " " + end);
       Double subResult = evaluate(exp.substring(start + 1, end));
       // if exponent
       if (end < exp.length() - 1 && exp.charAt(end + 1) == '^') {
         int k = end + 2;
         int l = k;
-        while (l < exp.length() && !isOp(exp.charAt(l))) {
+        int count2 = 1;
+        while (count2 > 0 && l < exp.length()) {
+          if (exp.charAt(l) == '(') {
+            count2++;
+          } else if (exp.charAt(l) == ')') {
+            count2--;
+          }
           l++;
         }
         Double exponent = evaluate(exp.substring(k, l));
@@ -149,7 +157,7 @@ public class test {
       boolean prevIsOp = start >= 1 && "+-*/^".indexOf(exp.charAt(start - 1)) != -1;
       boolean nextIsOp = end == exp.length() - 1
           || end < exp.length() - 1 && "+-*/^".indexOf(exp.charAt(end + 1)) != -1;
-      String sub = "" + subResult;
+      String sub = String.format("%.10f", subResult); // avoid E notation
       if (!prevIsOp) {
         sub = "*" + sub;
       }
@@ -172,13 +180,12 @@ public class test {
         } while (i > 0 && !isOp(exp.charAt(i - 1))
             || i > 1 && !isOp(exp.charAt(i - 1)) && !isOp(exp.charAt(i - 2))); // does not work for negative bases
         Double base = evaluate(exp.substring(i, k));
-        exp = exp.substring(0, i) + Math.pow(base, exponent) + exp.substring(j);
+        exp = exp.substring(0, i) + String.format("%.10f", (Math.pow(base, exponent) * 10000)) + exp.substring(j);
       } else if ("+-*/".indexOf(exp.charAt(i)) != -1 && i > 0 && exp.charAt(i - 1) != '^') {
         j = i;
       }
       i--;
     }
-
     return evalSimple(exp);
   }
 
@@ -218,7 +225,7 @@ public class test {
         result += product(exp.substring(i, exp.length()));
       }
     }
-    System.out.println(exp + " = " + result);
+    // System.out.println(exp + " = " + result);
     return result;
   }
 
@@ -235,7 +242,7 @@ public class test {
         result *= Double.parseDouble(token);
       }
     }
-    System.out.println("p:" + exp + " = " + result);
+    // System.out.println("p:" + exp + " = " + result);
     return result;
   }
 }

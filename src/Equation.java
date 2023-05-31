@@ -24,7 +24,7 @@ public class Equation implements KeyListener {
     } else if (c == '/') {
       tempEquation += "/";
     } else if (c == '^') {
-      tempEquation += "^";
+      tempEquation += "^(";
     }
   }
 
@@ -97,6 +97,7 @@ public class Equation implements KeyListener {
   }
 
   public static double evaluate(String exp) {
+    // System.out.println("e:" + exp);
     if (exp.length() == 0) {
       return 0;
     }
@@ -141,13 +142,18 @@ public class Equation implements KeyListener {
           break;
         }
       }
-
       Double subResult = evaluate(exp.substring(start + 1, end));
       // if exponent
       if (end < exp.length() - 1 && exp.charAt(end + 1) == '^') {
         int k = end + 2;
         int l = k;
-        while (l < exp.length() && !isOp(exp.charAt(l))) {
+        int count2 = 1;
+        while (count2 > 0 && l < exp.length()) {
+          if (exp.charAt(l) == '(') {
+            count2++;
+          } else if (exp.charAt(l) == ')') {
+            count2--;
+          }
           l++;
         }
         Double exponent = evaluate(exp.substring(k, l));
@@ -158,7 +164,7 @@ public class Equation implements KeyListener {
       boolean prevIsOp = start >= 1 && "+-*/^".indexOf(exp.charAt(start - 1)) != -1;
       boolean nextIsOp = end == exp.length() - 1
           || end < exp.length() - 1 && "+-*/^".indexOf(exp.charAt(end + 1)) != -1;
-      String sub = "" + subResult;
+      String sub = String.format("%.10f", subResult); // avoid E notation
       if (!prevIsOp) {
         sub = "*" + sub;
       }
@@ -181,13 +187,12 @@ public class Equation implements KeyListener {
         } while (i > 0 && !isOp(exp.charAt(i - 1))
             || i > 1 && !isOp(exp.charAt(i - 1)) && !isOp(exp.charAt(i - 2))); // does not work for negative bases
         Double base = evaluate(exp.substring(i, k));
-        exp = exp.substring(0, i) + Math.pow(base, exponent) + exp.substring(j);
+        exp = exp.substring(0, i) + String.format("%.10f", (Math.pow(base, exponent) * 10000)) + exp.substring(j);
       } else if ("+-*/".indexOf(exp.charAt(i)) != -1 && i > 0 && exp.charAt(i - 1) != '^') {
         j = i;
       }
       i--;
     }
-
     return evalSimple(exp);
   }
 

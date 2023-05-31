@@ -35,7 +35,7 @@ public class App extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g2);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 1000, 600);
+        g.fillRect(0, 0, 1000, 800);
         g.setColor(Color.WHITE);
         for (Goose goose : geese) {
             goose.move();
@@ -49,7 +49,7 @@ public class App extends JPanel implements Runnable {
     public static void main(String[] args) throws Exception {
         JFrame f = new JFrame("App");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(1000, 600);
+        f.setSize(1000, 800);
         f.add(new App());
         f.setVisible(true);
     }

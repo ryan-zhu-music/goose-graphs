@@ -40,9 +40,7 @@ public class Equation implements KeyListener {
   }
 
   public void keyTyped(KeyEvent e) {
-    if (e.getKeyChar() == '\n') { // enter
-      equation = tempEquation;
-    } else if (e.getKeyChar() == '\b') { // backspace
+    if (e.getKeyChar() == '\b') { // backspace
       tempEquation = tempEquation.substring(0, tempEquation.length() - 1);
     } else {
       add(e.getKeyChar());
@@ -52,6 +50,14 @@ public class Equation implements KeyListener {
 
   public String toString() {
     return tempEquation;
+  }
+
+  public void reset() {
+    tempEquation = "";
+  }
+
+  public void setEquation() {
+    equation = tempEquation;
   }
 
   public static String replace(String exp, int i, String x) {
@@ -253,7 +259,7 @@ public class Equation implements KeyListener {
 
   private int transform(double x) {
     try {
-      int y = (int) (-2 * evaluate(substitute(this.equation, x - 50)) + 400);
+      int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 500);
       // System.out.println(y);
       return y;
     } catch (Exception e) {
@@ -264,8 +270,8 @@ public class Equation implements KeyListener {
 
   public void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
-    for (int i = 0; i < 100; i++) {
-      g2.drawLine(6 * i + 300, transform(i), 6 * i + 306, transform(i + 1));
+    for (int i = -50; i < 50; i++) {
+      g2.drawLine(10 * i + 500, transform(i), 10 * i + 510, transform(i + 1));
     }
   }
 

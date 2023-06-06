@@ -63,7 +63,13 @@ public class App extends JPanel implements Runnable {
         // axes
         g2.setStroke(new BasicStroke(3));
         g2.drawLine(500, 0, 500, 800);
-        g2.drawLine(0, 500, 1000, 500);
+        g2.drawLine(0, 450, 1000, 450);
+        g2.setColor(Color.RED);
+        // equation
+        e.draw(g2);
+        for (Goose goose : geese) {
+            goose.draw(g2);
+        }
         // menu
         g2.setColor(Constants.COLORS.get("pink"));
         g2.fillRect(0, 0, 1000, 200);
@@ -79,10 +85,6 @@ public class App extends JPanel implements Runnable {
             button.draw(g2);
         }
 
-        for (Goose goose : geese) {
-            goose.draw(g2);
-        }
-        e.draw(g2);
     }
 
     public static void main(String[] args) throws Exception {

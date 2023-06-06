@@ -5,6 +5,7 @@ import java.awt.event.*;
 public class Equation implements KeyListener {
   private String equation = "";
   private String tempEquation = "";
+  private Vector[] points = new Vector[101];
 
   public Equation() {
   }
@@ -57,7 +58,12 @@ public class Equation implements KeyListener {
   }
 
   public void setEquation() {
-    equation = tempEquation;
+    if (!equation.equals(tempEquation)) {
+      equation = tempEquation;
+      for (int i = -50; i <= 50; i++) {
+        points[i + 50] = new Vector(10 * i + 500, transform(i));
+      }
+    }
   }
 
   public static String replace(String exp, int i, String x) {
@@ -259,8 +265,7 @@ public class Equation implements KeyListener {
 
   private int transform(double x) {
     try {
-      int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 500);
-      // System.out.println(y);
+      int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 450);
       return y;
     } catch (Exception e) {
       System.out.println("error");
@@ -270,9 +275,12 @@ public class Equation implements KeyListener {
 
   public void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
-    for (int i = -50; i < 50; i++) {
-      g2.drawLine(10 * i + 500, transform(i), 10 * i + 510, transform(i + 1));
+    if (this.equation.length() > 0) {
+      for (int i = 0; i < 100; i++) {
+        if (points[i].getY() > 0 && points[i + 1].getY() > 0) {
+          g2.drawLine(points[i].getX(), points[i].getY(), points[i + 1].getX(), points[i + 1].getY());
+        }
+      }
     }
   }
-
 }

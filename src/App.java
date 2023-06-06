@@ -5,6 +5,7 @@ import java.awt.*;
 public class App extends JPanel implements Runnable {
 
     Equation e;
+    Line l = new Line(e);
     LinkedList<Goose> geese = new LinkedList<Goose>();
 
     public App() {
@@ -37,7 +38,7 @@ public class App extends JPanel implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1000, 600);
         g.setColor(Color.WHITE);
-        // e.draw(g2);
+        l.draw(g2);
         for (Goose goose : geese) {
             goose.move();
             goose.draw(g2);

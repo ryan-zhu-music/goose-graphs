@@ -12,29 +12,37 @@ public class Vector {
     y += v.getY();
   }
 
-  public void sub(Vector v) {
+  public void addX(int num) {
+    x += num;
+  }
+
+  public void addY(int num) {
+    y += num;
+  }
+
+  public void subtract(Vector v) {
     x -= v.getX();
     y -= v.getY();
   }
 
-  public void mult(double d) {
+  public void multScalar(double d) {
     x *= d;
     y *= d;
   }
 
-  public void div(double d) {
+  public void divScalar(double d) {
     x /= d;
     y /= d;
   }
 
-  public double mag() {
+  public double magnitude() {
     return Math.sqrt(x * x + y * y);
   }
 
-  public void normalize() {
-    double m = mag();
+  public void getUnit() {
+    double m = magnitude();
     if (m != 0) {
-      div(m);
+      divScalar(m);
     }
   }
 

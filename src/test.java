@@ -1,63 +1,49 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Function;
 import java.util.StringTokenizer;
-import java.awt.*;
-import java.awt.event.*;
 
-public class Equation implements KeyListener {
-  private String equation = "";
-  private String tempEquation = "";
+public class test {
+  // static String expression = "4.0x^2+(x-2)^3+3x^2-sin(x+4)+x"; // 1221
+  // static String expression = "x^2+2x+sin(x)-4"; // 115.455978889
+  // static String expression = "tan(x)/log(3x(x+4)^(-1/2))"; // 0.71716789713
+  // static String expression = "px";
+  // static String expression = "sqrt(x/(4x+2)^2)+cos(sin(tan(abs(x))))"; // 0.898
+  static String expression = "(1/2)^x";
 
-  public Equation() {
+  static final String[] functions = {
+      "sin(", "cos(", "tan(", "ln(", "log(", "sqrt(", "abs(" };
+  static final HashMap<String, Function<Double, Double>> FUNCTIONS = new HashMap<>();
+
+  static {
+    FUNCTIONS.put("sin(", (x) -> Math.sin((double) x));
+    FUNCTIONS.put("cos(", (x) -> Math.cos((double) x));
+    FUNCTIONS.put("tan(", (x) -> Math.tan((double) x));
+    FUNCTIONS.put("ln(", (x) -> Math.log((double) x));
+    FUNCTIONS.put("log(", (x) -> Math.log10((double) x));
+    FUNCTIONS.put("sqrt(", (x) -> Math.sqrt((double) x));
+    FUNCTIONS.put("abs(", (x) -> Math.abs((double) x));
   }
 
-  public void setEquation(String tempEquation) {
-    this.tempEquation = tempEquation;
+  public static void main(String[] args) {
+    // System.out.println(evalSimple("-1/2"));
+    System.out.println(evaluate(substitute(expression, -14)));
+    // System.out.println(evalSimple("4+3.0*4/2-4*-0.8*3+5+10.0/2"));
+    // for (double i = 0; i < 100; i++) {
+    // System.out.println(i + " " + transform(i));
+    // }
+
   }
 
-  public void add(char c) {
-    // only numbers, x, +, -, *, /, ^, (, ), .,
-    if (c >= '0' && c <= '9' || c >= '(' && c <= '.' && c != ',') {
-      tempEquation += c;
-    } else if (c == 'x' || c == 'X') {
-      tempEquation += 'x';
-    } else if (c == 'e' || c == 'E') {
-      tempEquation += 'e';
-    } else if (c == '/') {
-      tempEquation += "/";
-    } else if (c == '^') {
-      tempEquation += "^(";
+  private static long transform(double x) {
+    try {
+      long y = (long) (-2 * evaluate(substitute(expression, x - 50)) + 400);
+      // System.out.println(y);
+      return y;
+    } catch (Exception e) {
+      System.out.println("error");
+      return 0;
     }
-  }
-
-  public void add(String s) {
-    tempEquation += s;
-  }
-
-  // keylistener
-  public void keyPressed(KeyEvent e) {
-  }
-
-  public void keyReleased(KeyEvent e) {
-  }
-
-  public void keyTyped(KeyEvent e) {
-    if (e.getKeyChar() == '\b') { // backspace
-      tempEquation = tempEquation.substring(0, tempEquation.length() - 1);
-    } else {
-      add(e.getKeyChar());
-    }
-    System.out.println(tempEquation);
-  }
-
-  public String toString() {
-    return tempEquation;
-  }
-
-  public void reset() {
-    tempEquation = "";
-  }
-
-  public void setEquation() {
-    equation = tempEquation;
   }
 
   public static String replace(String exp, int i, String x) {
@@ -114,7 +100,7 @@ public class Equation implements KeyListener {
     }
 
     // functions
-    for (String function : Constants.functions) {
+    for (String function : functions) {
       while (exp.contains(function)) {
         int i = exp.indexOf(function);
         int j = i + function.length();
@@ -128,12 +114,12 @@ public class Equation implements KeyListener {
           j++;
         }
         String sub = exp.substring(i + function.length(), j - 1);
-        exp = exp.substring(0, i) + Constants.FUNCTIONS.get(function).apply(evaluate(sub)) + exp.substring(j);
+        exp = exp.substring(0, i) + FUNCTIONS.get(function).apply(evaluate(sub)) + exp.substring(j);
       }
     }
 
     // parentheses
-    while (exp.indexOf('(') != -1) {
+    while (exp.indexOf('(') != -1 && exp.indexOf(')') != -1) {
       int start = exp.indexOf('(');
       int end = exp.indexOf(')');
       int count = 1;
@@ -148,6 +134,7 @@ public class Equation implements KeyListener {
           break;
         }
       }
+      System.out.println(exp + " " + start + " " + end);
       Double subResult = evaluate(exp.substring(start + 1, end));
       // if exponent
       if (end < exp.length() - 1 && exp.charAt(end + 1) == '^') {
@@ -238,6 +225,7 @@ public class Equation implements KeyListener {
         result += product(exp.substring(i, exp.length()));
       }
     }
+    // System.out.println(exp + " = " + result);
     return result;
   }
 
@@ -254,25 +242,7 @@ public class Equation implements KeyListener {
         result *= Double.parseDouble(token);
       }
     }
+    // System.out.println("p:" + exp + " = " + result);
     return result;
   }
-
-  private int transform(double x) {
-    try {
-      int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 500);
-      // System.out.println(y);
-      return y;
-    } catch (Exception e) {
-      System.out.println("error");
-      return 0;
-    }
-  }
-
-  public void draw(Graphics2D g2) {
-    g2.setStroke(new BasicStroke(2));
-    for (int i = -50; i < 50; i++) {
-      g2.drawLine(10 * i + 500, transform(i), 10 * i + 510, transform(i + 1));
-    }
-  }
-
 }

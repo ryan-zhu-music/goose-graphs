@@ -26,7 +26,6 @@ public class Goose {
   }
 
   public void draw(Graphics2D g2) {
-    g2.setColor(Color.WHITE);
     g2.fillOval(pos.getX(), pos.getY(), 20, 20);
   }
 

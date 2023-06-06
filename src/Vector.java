@@ -54,4 +54,8 @@ public class Vector {
     return (int) y;
   }
 
+  public String toString() {
+    return "[" + x + ", " + y + "]";
+  }
+
 }

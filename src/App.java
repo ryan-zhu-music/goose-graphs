@@ -5,6 +5,7 @@ import java.awt.*;
 public class App extends JPanel implements Runnable {
 
     Equation e;
+    Line l = new Line(e);
     LinkedList<Goose> geese = new LinkedList<Goose>();
     Button[] buttons = new Button[8];
     static int level = 1;

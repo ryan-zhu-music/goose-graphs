@@ -14,15 +14,15 @@ public class Goose {
   }
 
   public void move() {
-    axis = (int)(Math.random()*(3-1+1)+1);
-    variation = (int)(Math.random()*(4-0+1));
-  
+    axis = (int) (Math.random() * (3 - 1 + 1) + 1);
+    variation = (int) (Math.random() * (4 - 0 + 1));
+
     pos.add(vel);
-    if(axis == 1) 
+    if (axis == 1)
       pos.addX(variation);
-    else 
+    else
       pos.addY(variation);
-    vel.add(new Vector(0, Constants.GRAVITY));
+    vel.add(Constants.GRAVITY);
   }
 
   public void draw(Graphics2D g2) {

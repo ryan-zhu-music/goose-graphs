@@ -46,6 +46,8 @@ public class Button implements MouseListener {
         e.add(text);
       }
     }
+    if (e.getEquation().length() > 0)
+      System.out.println(e.getSegments()[event.getX() / 10].collidesWith(new Vector(event.getX(), event.getY())));
   }
 
   public void mousePressed(MouseEvent e) {

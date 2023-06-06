@@ -11,6 +11,10 @@ public class Equation implements KeyListener {
   public Equation() {
   }
 
+  public String getEquation() {
+    return equation;
+  }
+
   public void setEquation(String tempEquation) {
     this.tempEquation = tempEquation;
   }
@@ -36,6 +40,10 @@ public class Equation implements KeyListener {
 
   public Vector[] getPoints() {
     return points;
+  }
+
+  public Line[] getSegments() {
+    return segments;
   }
 
   // keylistener

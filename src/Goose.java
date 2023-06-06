@@ -7,10 +7,12 @@ public class Goose {
   Vector vel;
   int variation;
   int axis;
+  Equation e;
 
-  public Goose(double x, double y, double vx, double vy) {
-    pos = new Vector(x, y);
-    vel = new Vector(vx, vy);
+  public Goose(double x, double y, double vx, double vy, Equation e) {
+    this.pos = new Vector(x, y);
+    this.vel = new Vector(vx, vy);
+    this.e = e;
   }
 
   public void move() {
@@ -23,6 +25,13 @@ public class Goose {
     else
       pos.addY(variation);
     vel.add(Constants.GRAVITY);
+  }
+
+  public void checkCollision() {
+    Vector[] points = e.getPoints();
+    int x = (int) pos.getX();
+    int segment = (int) (x / 10);
+
   }
 
   public void draw(Graphics2D g2) {

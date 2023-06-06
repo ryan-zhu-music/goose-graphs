@@ -6,6 +6,7 @@ public class Equation implements KeyListener {
   private String equation = "";
   private String tempEquation = "";
   private Vector[] points = new Vector[101];
+  private Line[] segments = new Line[100];
 
   public Equation() {
   }
@@ -31,6 +32,10 @@ public class Equation implements KeyListener {
 
   public void add(String s) {
     tempEquation += s;
+  }
+
+  public Vector[] getPoints() {
+    return points;
   }
 
   // keylistener
@@ -60,8 +65,13 @@ public class Equation implements KeyListener {
   public void setEquation() {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
+      int y = 0;
       for (int i = -50; i <= 50; i++) {
-        points[i + 50] = new Vector(10 * i + 500, transform(i));
+        y = transform(i);
+        points[i + 50] = new Vector(10 * i + 500, y);
+        if (i > -50) {
+          segments[i + 49] = new Line(points[i + 49], points[i + 50], this);
+        }
       }
     }
   }
@@ -277,9 +287,10 @@ public class Equation implements KeyListener {
     g2.setStroke(new BasicStroke(2));
     if (this.equation.length() > 0) {
       for (int i = 0; i < 100; i++) {
-        if (points[i].getY() > 0 && points[i + 1].getY() > 0) {
-          g2.drawLine(points[i].getX(), points[i].getY(), points[i + 1].getX(), points[i + 1].getY());
-        }
+        segments[i].draw(g2);
+        // g2.drawLine(points[i].getX(), points[i].getY(), points[i + 1].getX(),
+        // points[i + 1].getY());
+
       }
     }
   }

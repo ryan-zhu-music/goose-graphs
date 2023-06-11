@@ -50,6 +50,13 @@ public class Vector {
     return x * v.getX() + y * v.getY();
   }
 
+  public Vector projection(Vector v) {
+    Vector v1 = new Vector(x, y);
+    v1.normalize();
+    v1.multScalar(v.dot(v1));
+    return v1;
+  }
+
   // returns acute angle between two vectors
   public double angleBetween(Vector v) {
     double ratio = this.dot(v) / (this.magnitude() * v.magnitude());
@@ -73,15 +80,15 @@ public class Vector {
   // returns a new vector in the direction that a vector v would bounce of this
   // vector with the same magnitude as v
   public Vector bounceAngle(Vector v) {
-    double a1 = this.angle();
-    double a2 = v.angle();
-    double newAngle = 2 * a1 - a2;
-    if (Math.abs(a1 - a2) < 0.7) {
-      newAngle = a1;
+    Vector newVector;
+    if (this.angleBetween(v) < 1) {
+      newVector = this.projection(v);
+    } else {
+      double newAngle = 2 * this.angle() - v.angle();
+      double magnitude = v.magnitude();
+      newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
+      newVector.multScalar(0.8 * Math.cos(this.angleBetween(v)) + 0.2);
     }
-    double magnitude = v.magnitude();
-    Vector newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
-    newVector.multScalar(0.5 * Math.cos(this.angleBetween(v)) + 0.5);
     return newVector;
   }
 

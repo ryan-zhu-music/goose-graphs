@@ -50,7 +50,7 @@ public class Line {
     public Vector perpendicular() {
         Vector v = new Vector(v1.getY() - v2.getY(), v2.getX() - v1.getX());
         v.normalize();
-        v.multScalar(0.1);
+        v.multScalar(0.5);
         return v;
     }
 

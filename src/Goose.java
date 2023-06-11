@@ -36,7 +36,7 @@ public class Goose {
       if (!checkCollision()) {
         this.pos.add(vel);
         Line l = e.getSegments()[(int) pos.getX() / 10];
-        while (Math.abs(l.shortestDistance(pos)) < 10) {
+        while (Math.abs(l.shortestDistance(pos)) < 9) {
           // System.out.println("moving back" + l.getSlope() + l.perpendicular());
           this.pos.sub(l.perpendicular());
         }
@@ -44,10 +44,12 @@ public class Goose {
         Line l = e.getSegments()[(int) pos.getX() / 10];
         Vector slope = l.getSlope();
         this.vel = slope.bounceAngle(this.vel);
-        this.vel.multScalar(0.9); // energy loss
-        if (vel.magnitude() < 0.1) {
-          fired = false;
+        // System.out.println(this.vel + " " + this.vel.angle() + " " +
+        // this.vel.magnitude());
+        if (vel.magnitude() < 0.08 && Math.abs(vel.angle()) < Math.PI / 2 + 0.1
+            && Math.abs(vel.angle()) > Math.PI / 2 - 0.1) {
           System.out.println("stopped");
+          fired = false;
         }
         this.pos.add(vel);
       }

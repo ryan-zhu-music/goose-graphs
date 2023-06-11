@@ -286,7 +286,7 @@ public class Equation implements KeyListener {
 
   private int transform(double x) {
     try {
-      int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 450);
+      int y = (int) (-50 * evaluate(substitute(this.equation, x / 5.0)) + 450);
       return y;
     } catch (Exception e) {
       System.out.println("Graphing error: " + e.getMessage());

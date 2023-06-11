@@ -7,6 +7,7 @@ public class Equation implements KeyListener {
   private String tempEquation = "";
   private Vector[] points = new Vector[101];
   private Line[] segments = new Line[100];
+  static boolean isDrawn = false;
 
   public Equation() {
   }
@@ -74,6 +75,7 @@ public class Equation implements KeyListener {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
       int y = 0;
+      isDrawn = false;
       for (int i = -50; i <= 50; i++) {
         y = transform(i);
         points[i + 50] = new Vector(10 * i + 500, y);
@@ -81,6 +83,7 @@ public class Equation implements KeyListener {
           segments[i + 49] = new Line(points[i + 49], points[i + 50], this);
         }
       }
+      isDrawn = true;
     }
   }
 

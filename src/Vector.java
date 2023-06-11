@@ -20,7 +20,7 @@ public class Vector {
     y += num;
   }
 
-  public void subtract(Vector v) {
+  public void sub(Vector v) {
     x -= v.getX();
     y -= v.getY();
   }
@@ -39,7 +39,7 @@ public class Vector {
     return Math.sqrt(x * x + y * y);
   }
 
-  public void getUnit() {
+  public void normalize() {
     double m = magnitude();
     if (m != 0) {
       divScalar(m);
@@ -52,7 +52,14 @@ public class Vector {
 
   // returns acute angle between two vectors
   public double angleBetween(Vector v) {
-    double angle = Math.acos(this.dot(v) / (this.magnitude() * v.magnitude()));
+    double ratio = this.dot(v) / (this.magnitude() * v.magnitude());
+    if (ratio > 1) {
+      ratio = 1;
+    }
+    if (ratio < -1) {
+      ratio = -1;
+    }
+    double angle = Math.acos(ratio);
     if (angle > Math.PI / 2) {
       angle = Math.PI - angle;
     }
@@ -69,6 +76,9 @@ public class Vector {
     double a1 = this.angle();
     double a2 = v.angle();
     double newAngle = 2 * a1 - a2;
+    if (Math.abs(a1 - a2) < 0.7) {
+      newAngle = a1;
+    }
     double magnitude = v.magnitude();
     Vector newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
     newVector.multScalar(0.5 * Math.cos(this.angleBetween(v)) + 0.5);

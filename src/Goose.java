@@ -31,19 +31,24 @@ public class Goose {
         fired = false;
         return;
       }
+      if (vel.magnitude() < Constants.MAX_VELOCITY)
+        vel.add(Constants.GRAVITY);
       if (!checkCollision()) {
         this.pos.add(vel);
-        // if (axis == 1)
-        // pos.addX(variation);
-        // else
-        // pos.addY(variation);
-        if (vel.magnitude() < Constants.MAX_VELOCITY)
-          vel.add(Constants.GRAVITY);
+        Line l = e.getSegments()[(int) pos.getX() / 10];
+        while (Math.abs(l.shortestDistance(pos)) < 10) {
+          // System.out.println("moving back" + l.getSlope() + l.perpendicular());
+          this.pos.sub(l.perpendicular());
+        }
       } else if (e.getEquation().length() > 0 && Equation.isDrawn) {
         Line l = e.getSegments()[(int) pos.getX() / 10];
         Vector slope = l.getSlope();
         this.vel = slope.bounceAngle(this.vel);
         this.vel.multScalar(0.9); // energy loss
+        if (vel.magnitude() < 0.1) {
+          fired = false;
+          System.out.println("stopped");
+        }
         this.pos.add(vel);
       }
     } else {

@@ -23,7 +23,7 @@ public class Line {
 
     public boolean collidesWith(Vector v, double radius) {
         // shortest distance from point v to line
-        double d = (A * v.getX() + B * v.getY() + C) / Math.sqrt(A * A + B * B);
+        double d = shortestDistance(v);
         // check that the point is within the bounds of the line
         double x = (A * v.getY() + v.getX() - A * C) / (A * A + 1);
         double y = (v.getX() - x) / A + v.getY();
@@ -31,8 +31,7 @@ public class Line {
             x = v.getX();
             y = v1.getY();
         }
-
-        if (d > -5 * radius && d < 5 * radius && !Double.isNaN(x) && !Double.isNaN(y)) {
+        if (d > -10 - radius && d < 10 + radius && !Double.isNaN(x) && !Double.isNaN(y)) {
             if (x < Math.min(v1.getX(), v2.getX()) || x > Math.max(v1.getX(), v2.getX())) {
                 return false;
             }
@@ -41,6 +40,18 @@ public class Line {
             return true;
         }
         return false;
+    }
+
+    public double shortestDistance(Vector v) {
+        double d = (A * v.getX() + B * v.getY() + C) / Math.sqrt(A * A + B * B);
+        return d;
+    }
+
+    public Vector perpendicular() {
+        Vector v = new Vector(v1.getY() - v2.getY(), v2.getX() - v1.getX());
+        v.normalize();
+        v.multScalar(0.1);
+        return v;
     }
 
     public Vector getSlope() {

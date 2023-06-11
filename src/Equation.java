@@ -289,8 +289,8 @@ public class Equation implements KeyListener {
       int y = (int) (-100 * evaluate(substitute(this.equation, x / 10.0)) + 450);
       return y;
     } catch (Exception e) {
-      System.out.println("error");
-      return 0;
+      System.out.println("Graphing error: " + e.getMessage());
+      return Integer.MIN_VALUE;
     }
   }
 

@@ -24,9 +24,9 @@ public class Button implements MouseListener {
 
   public void draw(Graphics2D g2) {
     g2.setColor(color);
-    g2.fillRect(topLeft.getX(), topLeft.getY(), width, height);
+    g2.fillRect((int) topLeft.getX(), (int) topLeft.getY(), width, height);
     g2.setColor(Constants.BUTTON_TEXT_COLOR);
-    g2.drawString(text, topLeft.getX() + 10, topLeft.getY() + 20);
+    g2.drawString(text, (int) topLeft.getX() + 10, (int) topLeft.getY() + 20);
   }
 
   public void setColor(Color color) {
@@ -42,6 +42,7 @@ public class Button implements MouseListener {
       if (goButton) {
         System.out.println("goose");
         e.setEquation();
+        Goose.fire();
       } else {
         e.add(text);
       }

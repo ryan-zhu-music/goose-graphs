@@ -20,7 +20,7 @@ public class Vector {
     y += num;
   }
 
-  public void subtract(Vector v) {
+  public void sub(Vector v) {
     x -= v.getX();
     y -= v.getY();
   }
@@ -39,19 +39,65 @@ public class Vector {
     return Math.sqrt(x * x + y * y);
   }
 
-  public void getUnit() {
+  public void normalize() {
     double m = magnitude();
     if (m != 0) {
       divScalar(m);
     }
   }
 
-  public int getX() {
-    return (int) x;
+  public double dot(Vector v) {
+    return x * v.getX() + y * v.getY();
   }
 
-  public int getY() {
-    return (int) y;
+  public Vector projection(Vector v) {
+    Vector v1 = new Vector(x, y);
+    v1.normalize();
+    v1.multScalar(v.dot(v1));
+    return v1;
+  }
+
+  // returns acute angle between two vectors
+  public double angleBetween(Vector v) {
+    double ratio = this.dot(v) / (this.magnitude() * v.magnitude());
+    if (ratio > 1) {
+      ratio = 1;
+    }
+    if (ratio < -1) {
+      ratio = -1;
+    }
+    double angle = Math.acos(ratio);
+    if (angle > Math.PI / 2) {
+      angle = Math.PI - angle;
+    }
+    return angle;
+  }
+
+  public double angle() {
+    return Math.atan2(y, x);
+  }
+
+  // returns a new vector in the direction that a vector v would bounce of this
+  // vector with the same magnitude as v
+  public Vector bounceAngle(Vector v) {
+    Vector newVector;
+    if (this.angleBetween(v) < 1) {
+      newVector = this.projection(v);
+    } else {
+      double newAngle = 2 * this.angle() - v.angle();
+      double magnitude = v.magnitude();
+      newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
+      newVector.multScalar(0.8 * Math.cos(this.angleBetween(v)) + 0.2);
+    }
+    return newVector;
+  }
+
+  public double getX() {
+    return x;
+  }
+
+  public double getY() {
+    return y;
   }
 
   public String toString() {

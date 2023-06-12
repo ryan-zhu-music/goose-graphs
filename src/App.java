@@ -5,8 +5,7 @@ import java.awt.*;
 public class App extends JPanel implements Runnable {
 
     Equation e;
-    Line l = new Line(e);
-    LinkedList<Goose> geese = new LinkedList<Goose>();
+    Goose[] geese = new Goose[1];
     Button[] buttons = new Button[8];
     static int level = 1;
 
@@ -26,8 +25,8 @@ public class App extends JPanel implements Runnable {
         addMouseListener(buttons[7]);
         setFocusable(true);
         // e = new Equation("0.5x^2+2x+sin(x)-4");
-        for (int i = 0; i < 1; i++) {
-            geese.add(new Goose(500, 150, 3, -8));
+        for (int i = 0; i < geese.length; i++) {
+            geese[i] = new Goose(500, 250, 0, 1, e);
         }
 
         Thread t = new Thread(this);
@@ -39,6 +38,7 @@ public class App extends JPanel implements Runnable {
             repaint();
             for (Goose goose : geese) {
                 goose.move();
+                goose.checkCollision();
             }
             try {
                 Thread.sleep(1000 / 60);
@@ -84,6 +84,10 @@ public class App extends JPanel implements Runnable {
         // buttons
         for (Button button : buttons) {
             button.draw(g2);
+        }
+        // geese
+        for (Goose goose : geese) {
+            goose.draw(g2);
         }
 
     }

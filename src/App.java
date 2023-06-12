@@ -28,6 +28,9 @@ public class App extends JPanel implements Runnable {
         for (int i = 0; i < geese.length; i++) {
             geese[i] = new Goose(500, 250, 0, 1, e);
         }
+        for (int i = 0; i < 3; i++) {
+            new Bowtie(300 * i + 250, 500);
+        }
 
         Thread t = new Thread(this);
         t.start();
@@ -39,6 +42,7 @@ public class App extends JPanel implements Runnable {
             for (Goose goose : geese) {
                 goose.move();
                 goose.checkCollision();
+                goose.checkBowties();
             }
             try {
                 Thread.sleep(1000 / 60);
@@ -88,6 +92,10 @@ public class App extends JPanel implements Runnable {
         // geese
         for (Goose goose : geese) {
             goose.draw(g2);
+        }
+        // bowties
+        for (Bowtie bowtie : Bowtie.bowties) {
+            bowtie.draw(g2);
         }
 
     }

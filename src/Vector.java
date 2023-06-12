@@ -57,6 +57,10 @@ public class Vector {
     return v1;
   }
 
+  public double distance(Vector v) {
+    return Math.sqrt(Math.pow(x - v.getX(), 2) + Math.pow(y - v.getY(), 2));
+  }
+
   // returns acute angle between two vectors
   public double angleBetween(Vector v) {
     double ratio = this.dot(v) / (this.magnitude() * v.magnitude());
@@ -87,7 +91,7 @@ public class Vector {
       double newAngle = 2 * this.angle() - v.angle();
       double magnitude = v.magnitude();
       newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
-      newVector.multScalar(0.8 * Math.cos(this.angleBetween(v)) + 0.2);
+      newVector.multScalar(0.1 * Math.cos(this.angleBetween(v)) + 0.9);
     }
     return newVector;
   }

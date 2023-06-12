@@ -69,6 +69,14 @@ public class Goose {
     return false;
   }
 
+  public void checkBowties() {
+    if (outOfBounds())
+      return;
+    for (Bowtie b : Bowtie.bowties) {
+      b.checkCollision(pos);
+    }
+  }
+
   private boolean outOfBounds() {
     return pos.getX() < 0 || pos.getX() > 1000 || pos.getY() < 200 || pos.getY() > 800;
   }

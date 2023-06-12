@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 public class Constants {
-  static final Vector GRAVITY = new Vector(0, 0.3);
+  static final Vector GRAVITY = new Vector(0, 0.2);
   static final int MAX_VELOCITY = 10;
   static final Color BUTTON_COLOR = new Color(255, 255, 255, 100);
   static final Color BUTTON_TEXT_COLOR = new Color(0, 0, 0, 100);

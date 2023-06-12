@@ -17,8 +17,12 @@ public class Line {
     }
 
     public void draw(Graphics2D g2) {
-        if (v1.getY() > -500 && v2.getY() > -500 && v1.getY() < 2500 && v2.getY() < 5000)
-            g2.drawLine((int) v1.getX(), (int) v1.getY(), (int) v2.getX(), (int) v2.getY());
+        int x1 = (int) v1.getX();
+        int x2 = (int) v2.getX();
+        int y1 = (int) v1.getY();
+        int y2 = (int) v2.getY();
+        if (y1 > -5000 && y1 < 5000 && y2 > -5000 && y2 < 5000)
+            g2.drawLine(x1, y1, x2, y2);
     }
 
     public boolean collidesWith(Vector v, double radius) {

@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-public class Menu extends JPanel implements Runnable{
+public class Menu extends JPanel implements Runnable {
     public static BufferedImage bg;
     public static BufferedImage logo;
     public static BufferedImage goose1;
@@ -27,22 +27,23 @@ public class Menu extends JPanel implements Runnable{
         addMouseListener(playButton);
         addMouseListener(levelButton);
         addMouseListener(helpButton);
+        addMouseMotionListener(playButton);
+        addMouseMotionListener(levelButton);
+        addMouseMotionListener(helpButton);
 
         try {
-            logo =  ImageIO.read(new File("logo.png"));
+            logo = ImageIO.read(new File("logo.png"));
             bg = ImageIO.read(new File("bg.png"));
             goose1 = ImageIO.read(new File("goose1.png"));
             goose2 = ImageIO.read(new File("goose2.png"));
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("File not found!");
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(":(");
         }
 
         Thread thread = new Thread(this);
-		thread.start();
+        thread.start();
         this.setFocusable(true);
     }
 
@@ -54,11 +55,10 @@ public class Menu extends JPanel implements Runnable{
         levelButton.draw(g);
         helpButton.draw(g);
 
-        if(!goose) {
+        if (!goose) {
             g.drawImage(goose1, 40, 500, null);
             goose = !goose;
-        }
-        else if(goose) {
+        } else if (goose) {
             g.drawImage(goose2, 40, 500, null);
             goose = !goose;
         }
@@ -79,8 +79,7 @@ public class Menu extends JPanel implements Runnable{
             repaint();
             try {
                 Thread.sleep(300);
-            } 
-            catch (Exception e) {
+            } catch (Exception e) {
             }
         }
     }

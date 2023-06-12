@@ -16,48 +16,44 @@ public class MenuButton implements MouseListener, MouseMotionListener {
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("File not found!");
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(":(");
         }
     }
 
     public void draw(Graphics g) {
-        mouseX = (int)MouseInfo.getPointerInfo().getLocation().getX();
-        mouseY = (int)MouseInfo.getPointerInfo().getLocation().getY();
-
-        if(mouseX >= imgX && mouseX <= (imgX+130) && mouseY >= imgY && mouseY <= (imgY+134)) {
-            System.out.println("hovered");
+        mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
+        mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
+        if (hovered) {
             g.drawImage(this.img1, this.imgX, this.imgY, null);
-        }
-        else
+        } else {
             g.drawImage(this.img, this.imgX, this.imgY, null);
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
-		mouseY = e.getY();
+        mouseY = e.getY();
 
         System.out.println("clicked");
     }
 
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     public void mouseReleased(MouseEvent e) {
-      
+
     }
 
     public void mouseExited(MouseEvent e) {
-      
+
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -66,7 +62,11 @@ public class MenuButton implements MouseListener, MouseMotionListener {
 
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
-		mouseY = e.getY();
-
+        mouseY = e.getY();
+        if (mouseX >= imgX && mouseX <= (imgX + 130) && mouseY >= imgY && mouseY <= (imgY + 134)) {
+            hovered = true;
+        } else {
+            hovered = false;
+        }
     }
 }

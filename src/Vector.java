@@ -90,11 +90,9 @@ public class Vector {
   // vector with the same magnitude as v
   public Vector bounceAngle(Vector v) {
     Vector newVector;
-    // System.out.println(this.angleBetween(v));
     if (this.angleBetween(v) < 1.15 || v.magnitude() < 5) {
       newVector = this.projection(v);
     } else {
-      System.out.println("bounce" + this.angleBetween(v) + " " + v.magnitude());
       double newAngle = 2 * this.angle() - v.angle();
       double magnitude = v.magnitude();
       newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));

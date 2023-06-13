@@ -36,24 +36,34 @@ public class Goose {
       }
       if (vel.magnitude() < Constants.MAX_VELOCITY)
         vel.add(Constants.GRAVITY);
-      if (!checkCollision()) {
+      int index = (int) pos.getX() / 10;
+      boolean collision1 = checkCollision(index);
+      boolean collision2 = checkCollision((int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1);
+      Line l1 = e.getSegments()[(int) pos.getX() / 10];
+      Line l2 = e.getSegments()[(int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1];
+      if (!collision1 && !collision2) {
         this.pos.add(vel);
-        Line l = e.getSegments()[(int) pos.getX() / 10];
-        while (Math.abs(l.shortestDistance(pos)) < 9) {
+        while (Math.abs(l1.shortestDistance(pos)) < 9) {
           // System.out.println("moving back" + l.getSlope() + l.perpendicular());
-          this.pos.sub(l.perpendicular());
+          this.pos.sub(l1.perpendicular());
         }
       } else if (e.getEquation().length() > 0 && Equation.isDrawn) {
-        Line l = e.getSegments()[(int) pos.getX() / 10];
-        Vector slope = l.getSlope();
-        this.vel = slope.bounceAngle(this.vel);
-        // System.out.println(this.vel + " " + this.vel.angle() + " " +
-        // this.vel.magnitude());
-        // System.out.println(prevVel + "" + prevVel.magnitude() + " " + vel +
-        // vel.magnitude());
-        double avg = Math.abs((vel.angle() + prevVel.angle()) / 2.0);
-        // System.out.println(vel.angle() + " " + prevVel.angle() + " " + avg);
-        if (vel.magnitude() < 0.08 && avg < 0.15) {
+        if (collision1 && collision2) {
+          Vector slope1 = l1.getSlope();
+          Vector slope2 = l2.getSlope();
+          Vector bounce1 = slope1.bounceAngle(this.vel);
+          Vector bounce2 = slope2.bounceAngle(this.vel);
+          bounce1.add(bounce2);
+          bounce1.multScalar(0.5);
+          this.vel = bounce1;
+        } else if (collision1) {
+          Vector slope = l1.getSlope();
+          this.vel = slope.bounceAngle(this.vel);
+        } else if (collision2) {
+          Vector slope = l2.getSlope();
+          this.vel = slope.bounceAngle(this.vel);
+        }
+        if (vel.magnitude() < 0.1 && Math.abs(Math.abs(vel.angle()) - Math.PI / 2) < 0.1) {
           System.out.println("stopped");
           fired = false;
         }
@@ -64,11 +74,11 @@ public class Goose {
     }
   }
 
-  public boolean checkCollision() {
+  public boolean checkCollision(int segment) {
     if (outOfBounds())
       return false;
     if (e.getEquation().length() > 0 && Equation.isDrawn) {
-      Line l = e.getSegments()[(int) pos.getX() / 10];
+      Line l = e.getSegments()[segment];
       // System.out.println(pos + " " + l);
       return l.collidesWith(pos, vel.magnitude());
     }

@@ -39,7 +39,6 @@ public class App extends JPanel implements Runnable {
             repaint();
             for (Goose goose : geese) {
                 goose.move();
-                goose.checkCollision();
                 goose.checkBowties();
             }
             try {

@@ -6,7 +6,7 @@ public class App extends JPanel implements Runnable {
 
     Equation e;
     Goose[] geese = new Goose[1];
-    Button[] buttons = new Button[8];
+    Button[] buttons = new Button[7];
     static int level = 1;
 
     int[] x = { 137, 300, 452 };
@@ -18,15 +18,16 @@ public class App extends JPanel implements Runnable {
             buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], e, false);
             addMouseListener(buttons[i]);
         }
-        buttons[6] = new Button(625, 144, 144, 36, "abs", e, false);
-        buttons[7] = new Button(625, 93, 144, 36, "go(ose)", e, true);
-        buttons[7].setColor(Constants.COLORS.get("lime"));
+        buttons[6] = new Button(625, 93, 144, 36, "go(ose)", e, true);
+        buttons[6].setColor(Constants.COLORS.get("lime"));
         addMouseListener(buttons[6]);
-        addMouseListener(buttons[7]);
         setFocusable(true);
         // e = new Equation("0.5x^2+2x+sin(x)-4");
         for (int i = 0; i < geese.length; i++) {
             geese[i] = new Goose(500, 250, 0, 1, e);
+        }
+        for (int i = 0; i < 3; i++) {
+            new Bowtie(300 * i + 250, 500);
         }
 
         Thread t = new Thread(this);
@@ -39,6 +40,7 @@ public class App extends JPanel implements Runnable {
             for (Goose goose : geese) {
                 goose.move();
                 goose.checkCollision();
+                goose.checkBowties();
             }
             try {
                 Thread.sleep(1000 / 60);
@@ -88,6 +90,10 @@ public class App extends JPanel implements Runnable {
         // geese
         for (Goose goose : geese) {
             goose.draw(g2);
+        }
+        // bowties
+        for (Bowtie bowtie : Bowtie.bowties) {
+            bowtie.draw(g2);
         }
 
     }

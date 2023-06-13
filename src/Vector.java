@@ -7,6 +7,11 @@ public class Vector {
     this.y = y;
   }
 
+  public void set(Vector v) {
+    x = v.getX();
+    y = v.getY();
+  }
+
   public void add(Vector v) {
     x += v.getX();
     y += v.getY();
@@ -57,6 +62,10 @@ public class Vector {
     return v1;
   }
 
+  public double distance(Vector v) {
+    return Math.sqrt(Math.pow(x - v.getX(), 2) + Math.pow(y - v.getY(), 2));
+  }
+
   // returns acute angle between two vectors
   public double angleBetween(Vector v) {
     double ratio = this.dot(v) / (this.magnitude() * v.magnitude());
@@ -81,13 +90,15 @@ public class Vector {
   // vector with the same magnitude as v
   public Vector bounceAngle(Vector v) {
     Vector newVector;
-    if (this.angleBetween(v) < 1) {
+    // System.out.println(this.angleBetween(v));
+    if (this.angleBetween(v) < 1.15 || v.magnitude() < 5) {
       newVector = this.projection(v);
     } else {
+      System.out.println("bounce" + this.angleBetween(v) + " " + v.magnitude());
       double newAngle = 2 * this.angle() - v.angle();
       double magnitude = v.magnitude();
       newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
-      newVector.multScalar(0.8 * Math.cos(this.angleBetween(v)) + 0.2);
+      newVector.multScalar(0.2 * Math.cos(this.angleBetween(v)) + 0.8);
     }
     return newVector;
   }
@@ -101,7 +112,7 @@ public class Vector {
   }
 
   public String toString() {
-    return "[" + x + ", " + y + "]";
+    return String.format("[%.4f, %.4f]", x, y);
   }
 
 }

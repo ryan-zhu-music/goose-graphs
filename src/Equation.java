@@ -8,6 +8,8 @@ public class Equation implements KeyListener {
   private Vector[] points = new Vector[101];
   private Line[] segments = new Line[100];
   static boolean isDrawn = false;
+  static boolean error = false;
+  static double subX;
 
   public Equation() {
   }
@@ -155,7 +157,12 @@ public class Equation implements KeyListener {
           j++;
         }
         String sub = exp.substring(i + function.length(), j - 1);
-        exp = exp.substring(0, i) + Constants.FUNCTIONS.get(function).apply(evaluate(sub)) + exp.substring(j);
+        String result = String.format("%.5f", Constants.FUNCTIONS.get(function).apply(evaluate(sub)));
+        // System.out.println(subX + " " + result);
+        if (result.equals("NaN")) {
+          throw new NumberFormatException();
+        }
+        exp = exp.substring(0, i) + result + exp.substring(j);
       }
     }
 
@@ -220,7 +227,8 @@ public class Equation implements KeyListener {
         } while (i > 0 && !isOp(exp.charAt(i - 1))
             || i > 1 && !isOp(exp.charAt(i - 1)) && !isOp(exp.charAt(i - 2))); // does not work for negative bases
         Double base = evaluate(exp.substring(i, k));
-        exp = exp.substring(0, i) + String.format("%.10f", (Math.pow(base, exponent) * 10000)) + exp.substring(j);
+        exp = exp.substring(0, i) + String.format("%.10f", (Math.pow(base, exponent) * 10000) / 10000.0)
+            + exp.substring(j);
       } else if ("+-*/".indexOf(exp.charAt(i)) != -1 && i > 0 && exp.charAt(i - 1) != '^') {
         j = i;
       }
@@ -285,11 +293,34 @@ public class Equation implements KeyListener {
   }
 
   private int transform(double x) {
+    int y = tryEvaluate(x / 5.0);
+    if (y == Integer.MIN_VALUE) {
+      y = tryEvaluate(x / 5.0 + 0.1);
+      if (y == Integer.MIN_VALUE) {
+        y = tryEvaluate(x / 5.0 - 0.1);
+        if (y == Integer.MIN_VALUE) {
+          System.out.println("Graphing error");
+          error = true;
+          return Integer.MIN_VALUE;
+        } else {
+          return y;
+        }
+      } else {
+        return y;
+      }
+    } else {
+      return y;
+    }
+  }
+
+  private int tryEvaluate(double x) {
     try {
-      int y = (int) (-50 * evaluate(substitute(this.equation, x / 5.0)) + 450);
+      // System.out.println(substitute(this.equation, x / 5.0) + "=" +
+      // evaluate(substitute(this.equation, x / 5.0)));
+      int y = (int) (-50 * evaluate(substitute(this.equation, x)) + 450);
+      error = false;
       return y;
     } catch (Exception e) {
-      System.out.println("Graphing error: " + e.getMessage());
       return Integer.MIN_VALUE;
     }
   }
@@ -298,10 +329,10 @@ public class Equation implements KeyListener {
     g2.setStroke(new BasicStroke(2));
     if (this.equation.length() > 0) {
       for (int i = 0; i < 100; i++) {
-        segments[i].draw(g2);
+        if (!error)
+          segments[i].draw(g2);
         // g2.drawLine(points[i].getX(), points[i].getY(), points[i + 1].getX(),
         // points[i + 1].getY());
-
       }
     }
   }

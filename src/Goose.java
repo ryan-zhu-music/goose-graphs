@@ -5,6 +5,7 @@ import java.util.*;
 public class Goose {
   Vector pos;
   Vector vel;
+  Vector prevVel;
   Vector initialPos;
   int variation;
   int axis;
@@ -14,6 +15,7 @@ public class Goose {
   public Goose(double x, double y, double vx, double vy, Equation e) {
     this.pos = new Vector(x, y);
     this.vel = new Vector(vx, vy);
+    this.prevVel = new Vector(vx, vy);
     this.initialPos = new Vector(x, y);
     this.e = e;
   }
@@ -24,6 +26,7 @@ public class Goose {
 
   public void move() {
     if (fired) {
+      prevVel.set(vel);
       // axis = (int) (Math.random() * (3 - 1 + 1) + 1);
       // variation = (int) (Math.random() * (4 - 0 + 1));
       if (outOfBounds()) {
@@ -46,8 +49,11 @@ public class Goose {
         this.vel = slope.bounceAngle(this.vel);
         // System.out.println(this.vel + " " + this.vel.angle() + " " +
         // this.vel.magnitude());
-        if (vel.magnitude() < 0.08 && Math.abs(vel.angle()) < Math.PI / 2 + 0.1
-            && Math.abs(vel.angle()) > Math.PI / 2 - 0.1) {
+        // System.out.println(prevVel + "" + prevVel.magnitude() + " " + vel +
+        // vel.magnitude());
+        double avg = Math.abs((vel.angle() + prevVel.angle()) / 2.0);
+        // System.out.println(vel.angle() + " " + prevVel.angle() + " " + avg);
+        if (vel.magnitude() < 0.08 && avg < 0.15) {
           System.out.println("stopped");
           fired = false;
         }
@@ -67,6 +73,14 @@ public class Goose {
       return l.collidesWith(pos, vel.magnitude());
     }
     return false;
+  }
+
+  public void checkBowties() {
+    if (outOfBounds())
+      return;
+    for (Bowtie b : Bowtie.bowties) {
+      b.checkCollision(pos);
+    }
   }
 
   private boolean outOfBounds() {

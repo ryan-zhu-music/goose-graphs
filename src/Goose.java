@@ -49,16 +49,13 @@ public class Goose {
         vel.multScalar(Constants.FRICTION);
         Vector bounce;
         if (collision1 && collision2) {
-          Vector slope1 = l1.getSlope();
-          Vector slope2 = l2.getSlope();
-          bounce = slope1.bounceAngle(this.vel);
-          bounce.add(slope2.bounceAngle(this.vel));
-          bounce.multScalar(0.5);
-          this.vel.set(bounce);
-          if (Math.abs(vel.angle() - Math.PI / 2) < 0.1) { // ball gets stuck
-            this.vel.normalize();
-            this.vel.multScalar(0.1);
+          Line l3 = new Line(l1.getPoint1(), l2.getPoint2());
+          if ((int) pos.getX() % 10 < 5 && index > 0) {
+            l3 = new Line(l2.getPoint1(), l1.getPoint2());
           }
+          Vector slope = l3.getSlope();
+          bounce = slope.bounceAngle(this.vel);
+          this.vel.set(bounce);
         } else {
           Vector slope;
           if (collision1) {
@@ -86,18 +83,27 @@ public class Goose {
         }
       }
       // check if goose is too close to line
-      while (Math.abs(l1.shortestDistance(pos)) < 10) {
+      if (Math.abs(l1.shortestDistance(pos)) < 9 && Math.abs(l2.shortestDistance(pos)) < 9) {
         Vector perp = new Vector(this.pos);
         perp.sub(l1.closestPoint(pos));
+        perp.sub(l2.closestPoint(pos));
         perp.normalize();
         perp.multScalar(0.5);
         this.pos.add(perp);
-        while (Math.abs(l2.shortestDistance(pos)) < 10) {
-          perp = new Vector(this.pos);
-          perp.sub(l2.closestPoint(pos));
+      } else {
+        while (Math.abs(l1.shortestDistance(pos)) < 9) {
+          Vector perp = new Vector(this.pos);
+          perp.sub(l1.closestPoint(pos));
           perp.normalize();
           perp.multScalar(0.5);
           this.pos.add(perp);
+          while (Math.abs(l2.shortestDistance(pos)) < 9) {
+            perp = new Vector(this.pos);
+            perp.sub(l2.closestPoint(pos));
+            perp.normalize();
+            perp.multScalar(0.5);
+            this.pos.add(perp);
+          }
         }
       }
     } else {

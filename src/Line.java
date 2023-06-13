@@ -2,18 +2,29 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Line {
-    Equation e;
-    Vector v1;
-    Vector v2;
-    Double A, B, C;
+    public static Equation e;
+    private Vector v1;
+    private Vector v2;
+    private double A, B, C;
 
-    public Line(Vector v1, Vector v2, Equation e) {
+    public Line(Vector v1, Vector v2) {
         this.v1 = v1;
         this.v2 = v2;
-        this.e = e;
         A = (v2.getY() - v1.getY()) * 1.0 / (v2.getX() - v1.getX());
         B = -1.0;
         C = v1.getY() - A * v1.getX();
+    }
+
+    public Vector getPoint1() {
+        return v1;
+    }
+
+    public Vector getPoint2() {
+        return v2;
+    }
+
+    public static void setEquation(Equation eq) {
+        e = eq;
     }
 
     public void draw(Graphics2D g2) {
@@ -31,10 +42,10 @@ public class Line {
         // check that the point is within the bounds of the line
         Vector p = closestPoint(v);
         if (d > -10 - radius && d < 10 + radius && !Double.isNaN(p.getX()) && !Double.isNaN(p.getY())) {
-            if (p.getX() < Math.min(v1.getX(), v2.getX()) || p.getX() > Math.max(v1.getX(), v2.getX())) {
+            if (p.getX() < Math.min(v1.getX(), v2.getX()) - 2 || p.getX() > Math.max(v1.getX(), v2.getX()) + 2) {
                 return false;
             }
-            if (p.getY() < Math.min(v1.getY(), v2.getY()) || p.getY() > Math.max(v1.getY(), v2.getY()))
+            if (p.getY() < Math.min(v1.getY(), v2.getY()) - 2 || p.getY() > Math.max(v1.getY(), v2.getY()) + 2)
                 return false;
             return true;
         }

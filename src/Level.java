@@ -2,7 +2,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class App extends JPanel implements Runnable {
+public class Level extends JPanel implements Runnable {
 
     Equation e;
     Button[] buttons = new Button[7];
@@ -11,7 +11,7 @@ public class App extends JPanel implements Runnable {
 
     int[] x = { 137, 300, 452 };
 
-    public App() {
+    public Level() {
         e = new Equation();
         addKeyListener(e);
         for (int i = 0; i < 6; i++) {
@@ -93,7 +93,7 @@ public class App extends JPanel implements Runnable {
         JFrame f = new JFrame("App");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(1000, 800);
-        f.add(new App());
+        f.add(new Level());
         f.setVisible(true);
     }
 }

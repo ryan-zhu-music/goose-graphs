@@ -76,10 +76,11 @@ public class Equation implements KeyListener {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
       isDrawn = false;
+      Line.setEquation(this);
       for (int i = -50; i <= 50; i++) {
         points[i + 50] = transform(i);
         if (i > -50) {
-          segments[i + 49] = new Line(points[i + 49], points[i + 50], this);
+          segments[i + 49] = new Line(points[i + 49], points[i + 50]);
         }
       }
       isDrawn = true;

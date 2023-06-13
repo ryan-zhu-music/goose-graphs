@@ -1,0 +1,33 @@
+import java.awt.*;
+import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+public class Help {
+    public static BufferedImage helpMenu;
+    public static BufferedImage goose3;
+    public static BufferedImage goose4;
+    
+    public Help() {
+        try {
+            helpMenu = ImageIO.read(new File("helpMenu.png"));
+            goose3 = ImageIO.read(new File("goose3.png"));
+            goose4 = ImageIO.read(new File("goose4.png"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            System.out.println("Reading Error!");
+        }
+    }
+
+    public static void draw(Graphics g) {
+        g.drawImage(helpMenu, 0, 0, null);
+        
+        if(Menu.goose) {
+            g.drawImage(goose3, 800, 600, null);
+        }
+        else if(!Menu.goose) {
+            g.drawImage(goose4, 800, 600, null);
+        }
+    }
+}

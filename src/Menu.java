@@ -1,35 +1,37 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.*;
-import java.util.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 
-public class Menu extends JPanel implements Runnable {
-    public static BufferedImage bg;
-    public static BufferedImage logo;
-    public static BufferedImage goose1;
-    public static BufferedImage goose2;
-    public static MenuButton playButton;
-    public static MenuButton levelButton;
-    public static MenuButton helpButton;
+public class Menu extends JPanel implements MouseListener, Runnable {
+    public static BufferedImage bg, logo, goose1, goose2;
+    public static MenuButton playButton, aboutButton, helpButton, exitButton;
     public static boolean goose = false;
+    public static int mouseX, mouseY, currentScreen = 0;
+    public static Help helpScreen;
+    public static About aboutScreen;
 
     public Menu() {
-        JPanel menu = new JPanel();
-        menu.setPreferredSize(new Dimension(1000, 800));
+        setPreferredSize(new Dimension(1000, 800));
 
-        playButton = new MenuButton("play.png", "play1.png", 244, 500);
-        levelButton = new MenuButton("play.png", "play1.png", 460, 500);
-        helpButton = new MenuButton("help.png", "help1.png", 685, 500);
+        playButton = new MenuButton("play.png", "play1.png", 244, 500, 1);
+        aboutButton = new MenuButton("about.png", "about1.png", 460, 500, 2);
+        helpButton = new MenuButton("help.png", "help1.png", 685, 500, 3);
+        exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
+        addMouseListener(exitButton);
+        addMouseMotionListener(exitButton);
         addMouseListener(playButton);
-        addMouseListener(levelButton);
+        addMouseListener(aboutButton);
         addMouseListener(helpButton);
         addMouseMotionListener(playButton);
-        addMouseMotionListener(levelButton);
+        addMouseMotionListener(aboutButton);
         addMouseMotionListener(helpButton);
+
+        helpScreen = new Help();
+        aboutScreen = new About();
 
         try {
             logo = ImageIO.read(new File("logo.png"));
@@ -39,7 +41,7 @@ public class Menu extends JPanel implements Runnable {
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
-            System.out.println(":(");
+            System.out.println("Reading Error!");
         }
 
         Thread thread = new Thread(this);
@@ -49,17 +51,29 @@ public class Menu extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(bg, 0, 0, null);
-        g.drawImage(logo, 120, 40, null);
-        playButton.draw(g);
-        levelButton.draw(g);
-        helpButton.draw(g);
+        if(currentScreen == 0) {
+            g.drawImage(bg, 0, 0, null);
+            g.drawImage(logo, 120, 40, null);
+            playButton.draw(g);
+            aboutButton.draw(g);
+            helpButton.draw(g);
 
-        if (!goose) {
-            g.drawImage(goose1, 40, 500, null);
+            if (!goose) {
+                g.drawImage(goose1, 40, 500, null);
+                goose = !goose;
+            } else if (goose) {
+                g.drawImage(goose2, 40, 500, null);
+                goose = !goose;
+            }
+        }
+        else if(currentScreen == 2) {
+            About.draw(g);
+            exitButton.draw(g);
             goose = !goose;
-        } else if (goose) {
-            g.drawImage(goose2, 40, 500, null);
+        }
+        else if(currentScreen == 3) {
+            Help.draw(g);
+            exitButton.draw(g);
             goose = !goose;
         }
     }
@@ -75,12 +89,34 @@ public class Menu extends JPanel implements Runnable {
     }
 
     public void run() {
-        while (true) {
+        while(true) {
             repaint();
             try {
                 Thread.sleep(300);
-            } catch (Exception e) {
+            } 
+            catch (Exception e) {
             }
         }
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    public void mousePressed(MouseEvent e) {
+        
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    public void mouseExited(MouseEvent e) {
+        
     }
 }

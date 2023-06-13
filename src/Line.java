@@ -29,17 +29,12 @@ public class Line {
         // shortest distance from point v to line
         double d = shortestDistance(v);
         // check that the point is within the bounds of the line
-        double x = (A * v.getY() + v.getX() - A * C) / (A * A + 1);
-        double y = (v.getX() - x) / A + v.getY();
-        if (A == 0) {
-            x = v.getX();
-            y = v1.getY();
-        }
-        if (d > -10 - radius && d < 10 + radius && !Double.isNaN(x) && !Double.isNaN(y)) {
-            if (x < Math.min(v1.getX(), v2.getX()) || x > Math.max(v1.getX(), v2.getX())) {
+        Vector p = closestPoint(v);
+        if (d > -10 - radius && d < 10 + radius && !Double.isNaN(p.getX()) && !Double.isNaN(p.getY())) {
+            if (p.getX() < Math.min(v1.getX(), v2.getX()) || p.getX() > Math.max(v1.getX(), v2.getX())) {
                 return false;
             }
-            if (y < Math.min(v1.getY(), v2.getY()) || y > Math.max(v1.getY(), v2.getY()))
+            if (p.getY() < Math.min(v1.getY(), v2.getY()) || p.getY() > Math.max(v1.getY(), v2.getY()))
                 return false;
             return true;
         }
@@ -49,6 +44,16 @@ public class Line {
     public double shortestDistance(Vector v) {
         double d = (A * v.getX() + B * v.getY() + C) / Math.sqrt(A * A + B * B);
         return d;
+    }
+
+    public Vector closestPoint(Vector v) {
+        double x = (A * v.getY() + v.getX() - A * C) / (A * A + 1);
+        double y = (v.getX() - x) / A + v.getY();
+        if (A == 0) {
+            x = v.getX();
+            y = v1.getY();
+        }
+        return new Vector(x, y);
     }
 
     public Vector perpendicular() {

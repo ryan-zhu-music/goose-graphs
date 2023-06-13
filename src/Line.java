@@ -17,12 +17,12 @@ public class Line {
     }
 
     public void draw(Graphics2D g2) {
-        int x1 = (int) v1.getX();
-        int x2 = (int) v2.getX();
-        int y1 = (int) v1.getY();
-        int y2 = (int) v2.getY();
-        if (y1 > -5000 && y1 < 5000 && y2 > -5000 && y2 < 5000)
-            g2.drawLine(x1, y1, x2, y2);
+        double y1 = v1.getY();
+        double y2 = v2.getY();
+        if (y1 > -5000 && y1 < 5000 && y2 > -5000 && y2 < 5000 && !Equation.isUndefined(y1)
+                && !Equation.isUndefined(y2)) {
+            g2.drawLine((int) v1.getX(), (int) y1, (int) v2.getX(), (int) y2);
+        }
     }
 
     public boolean collidesWith(Vector v, double radius) {

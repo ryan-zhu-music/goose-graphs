@@ -8,6 +8,7 @@ public class Constants {
   static final int MAX_VELOCITY = 10;
   static final Color BUTTON_COLOR = new Color(255, 255, 255, 100);
   static final Color BUTTON_TEXT_COLOR = new Color(0, 0, 0, 100);
+  static final double iNAN = Math.log(-1);
   static final String[] functions = {
       "sin(", "cos(", "ln(", "log(", "sqrt(", "abs(" };
   static final HashMap<String, Function<Double, Double>> FUNCTIONS = new HashMap<>();

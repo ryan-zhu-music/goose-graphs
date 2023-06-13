@@ -62,7 +62,6 @@ public class Equation implements KeyListener {
     } else {
       add(e.getKeyChar());
     }
-    System.out.println(tempEquation);
   }
 
   public String toString() {
@@ -76,11 +75,9 @@ public class Equation implements KeyListener {
   public void setEquation() {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
-      int y = 0;
       isDrawn = false;
       for (int i = -50; i <= 50; i++) {
-        y = transform(i);
-        points[i + 50] = new Vector(10 * i + 500, y);
+        points[i + 50] = transform(i);
         if (i > -50) {
           segments[i + 49] = new Line(points[i + 49], points[i + 50], this);
         }
@@ -131,13 +128,11 @@ public class Equation implements KeyListener {
     return exp;
   }
 
-  public static double evaluate(String exp) {
-    // System.out.println("e:" + exp);
+  public double evaluate(String exp) {
     if (exp.length() == 0) {
       return 0;
     }
     try {
-      // does not work for super small exponents because of E notation
       return Double.parseDouble(exp);
     } catch (NumberFormatException e) {
     }
@@ -158,7 +153,6 @@ public class Equation implements KeyListener {
         }
         String sub = exp.substring(i + function.length(), j - 1);
         String result = String.format("%.5f", Constants.FUNCTIONS.get(function).apply(evaluate(sub)));
-        // System.out.println(subX + " " + result);
         if (result.equals("NaN")) {
           throw new NumberFormatException();
         }
@@ -237,12 +231,12 @@ public class Equation implements KeyListener {
     return evalSimple(exp);
   }
 
-  private static boolean isOp(char c) {
+  private boolean isOp(char c) {
     return "+-*/^".indexOf(c) != -1;
   }
 
   // evaluate an expression with only +-*/
-  public static double evalSimple(String exp) {
+  private double evalSimple(String exp) {
     double result = 0;
     int i = 0;
     int j = 0;
@@ -276,7 +270,7 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  public static double product(String exp) {
+  private double product(String exp) {
     StringTokenizer st = new StringTokenizer(exp, "*/", true);
     double result = 1;
     while (st.hasMoreTokens()) {
@@ -292,37 +286,38 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  private int transform(double x) {
-    int y = tryEvaluate(x / 5.0);
-    if (y == Integer.MIN_VALUE) {
-      y = tryEvaluate(x / 5.0 + 0.1);
-      if (y == Integer.MIN_VALUE) {
-        y = tryEvaluate(x / 5.0 - 0.1);
-        if (y == Integer.MIN_VALUE) {
-          System.out.println("Graphing error");
+  private Vector transform(double x) {
+    double y = tryEvaluate(x / 5.0);
+    if (isUndefined(y)) {
+      y = tryEvaluate(x / 5.0 + 0.000001);
+      if (isUndefined(y)) {
+        y = tryEvaluate(x / 5.0 - 0.000001);
+        if (isUndefined(y)) {
           error = true;
-          return Integer.MIN_VALUE;
+          return new Vector(10 * x + 500, Constants.iNAN);
         } else {
-          return y;
+          return new Vector(10 * x + 495, y);
         }
       } else {
-        return y;
+        return new Vector(10 * x + 505, y);
       }
     } else {
-      return y;
+      return new Vector(10 * x + 500, y);
     }
   }
 
-  private int tryEvaluate(double x) {
+  private double tryEvaluate(double x) {
     try {
-      // System.out.println(substitute(this.equation, x / 5.0) + "=" +
-      // evaluate(substitute(this.equation, x / 5.0)));
-      int y = (int) (-50 * evaluate(substitute(this.equation, x)) + 450);
+      double y = -50 * evaluate(substitute(this.equation, x)) + 450;
       error = false;
       return y;
     } catch (Exception e) {
-      return Integer.MIN_VALUE;
+      return Constants.iNAN;
     }
+  }
+
+  public static boolean isUndefined(double x) {
+    return Double.isNaN(x) || Double.isInfinite(x);
   }
 
   public void draw(Graphics2D g2) {

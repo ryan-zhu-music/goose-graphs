@@ -46,16 +46,23 @@ public class Goose {
         while (Math.abs(l1.shortestDistance(pos)) < 9) {
           // System.out.println("moving back" + l.getSlope() + l.perpendicular());
           this.pos.sub(l1.perpendicular());
+          if (Math.abs(l2.shortestDistance(pos)) < 9) {
+            this.pos.sub(l2.perpendicular());
+          }
         }
       } else if (e.getEquation().length() > 0 && Equation.isDrawn) {
+        vel.multScalar(Constants.FRICTION);
         if (collision1 && collision2) {
           Vector slope1 = l1.getSlope();
           Vector slope2 = l2.getSlope();
-          Vector bounce1 = slope1.bounceAngle(this.vel);
-          Vector bounce2 = slope2.bounceAngle(this.vel);
-          bounce1.add(bounce2);
-          bounce1.multScalar(0.5);
-          this.vel = bounce1;
+          Vector bounce = slope1.bounceAngle(this.vel);
+          bounce.add(slope2.bounceAngle(this.vel));
+          bounce.multScalar(0.5);
+          this.vel.set(bounce);
+          if (Math.abs(vel.angle() - Math.PI / 2) < 0.1) { // ball gets stuck
+            this.vel.normalize();
+            this.vel.multScalar(0.1);
+          }
         } else if (collision1) {
           Vector slope = l1.getSlope();
           this.vel = slope.bounceAngle(this.vel);
@@ -63,11 +70,16 @@ public class Goose {
           Vector slope = l2.getSlope();
           this.vel = slope.bounceAngle(this.vel);
         }
-        if (vel.magnitude() < 0.1 && Math.abs(Math.abs(vel.angle()) - Math.PI / 2) < 0.1) {
+        // System.out.println("vel: " + vel + " angle: " + vel.angle() + " mag: " +
+        // vel.magnitude());
+        // System.out.println(prevVel + " " + prevVel.magnitude());
+        if (vel.magnitude() <= 0.85 && prevVel.magnitude() <= 0.85 && Math.abs(vel.getX()) < 0.05
+            && Math.abs(prevVel.getX()) < 0.05) {
           System.out.println("stopped");
           fired = false;
+        } else {
+          this.pos.add(vel);
         }
-        this.pos.add(vel);
       }
     } else {
       this.pos = initialPos;

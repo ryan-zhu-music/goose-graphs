@@ -96,7 +96,7 @@ public class Vector {
       double newAngle = 2 * this.angle() - v.angle();
       double magnitude = v.magnitude();
       newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
-      newVector.multScalar(0.2 * Math.cos(this.angleBetween(v)) + 0.8);
+      newVector.multScalar(0.3 * Math.cos(this.angleBetween(v)) + 0.7);
     }
     return newVector;
   }

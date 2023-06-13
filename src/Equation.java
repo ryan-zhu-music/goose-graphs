@@ -180,7 +180,7 @@ public class Equation implements KeyListener {
       // if exponent
       if (end < exp.length() - 1 && exp.charAt(end + 1) == '^') {
         int k = end + 2;
-        int l = k;
+        int l = k + 1;
         int count2 = 1;
         while (count2 > 0 && l < exp.length()) {
           if (exp.charAt(l) == '(') {
@@ -213,9 +213,21 @@ public class Equation implements KeyListener {
     int j = exp.length(); // end of exponent
     while (i >= 0) {
       if (exp.charAt(i) == '^') {
+        // find end of exponent
+        int k = i + 1;
+        int l = k + 1;
+        int count = 1;
+        while (count > 0 && l < exp.length()) {
+          if (exp.charAt(l) == '(') {
+            count++;
+          } else if (exp.charAt(l) == ')') {
+            count--;
+          }
+          l++;
+        }
         Double exponent = evaluate(exp.substring(i + 1, j));
         // find start of term
-        int k = i;
+        k = i;
         do {
           i--;
         } while (i > 0 && !isOp(exp.charAt(i - 1))

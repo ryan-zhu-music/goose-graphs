@@ -11,6 +11,7 @@ public class Goose {
   int axis;
   Equation e;
   static boolean fired = false;
+  Queue<Vector> vels = new LinkedList<>();
 
   public Goose(double x, double y, double vx, double vy, Equation e) {
     this.pos = new Vector(x, y);
@@ -26,7 +27,11 @@ public class Goose {
 
   public void move() {
     if (fired) {
-      prevVel.set(vel);
+      // save most recent velocities
+      vels.offer(new Vector(vel.getX(), vel.getY()));
+      if (vels.size() > 10) {
+        vels.poll();
+      }
       // axis = (int) (Math.random() * (3 - 1 + 1) + 1);
       // variation = (int) (Math.random() * (4 - 0 + 1));
       if (outOfBounds()) {
@@ -52,10 +57,11 @@ public class Goose {
         }
       } else if (e.getEquation().length() > 0 && Equation.isDrawn) {
         vel.multScalar(Constants.FRICTION);
+        Vector bounce;
         if (collision1 && collision2) {
           Vector slope1 = l1.getSlope();
           Vector slope2 = l2.getSlope();
-          Vector bounce = slope1.bounceAngle(this.vel);
+          bounce = slope1.bounceAngle(this.vel);
           bounce.add(slope2.bounceAngle(this.vel));
           bounce.multScalar(0.5);
           this.vel.set(bounce);
@@ -63,18 +69,21 @@ public class Goose {
             this.vel.normalize();
             this.vel.multScalar(0.1);
           }
-        } else if (collision1) {
-          Vector slope = l1.getSlope();
-          this.vel = slope.bounceAngle(this.vel);
-        } else if (collision2) {
-          Vector slope = l2.getSlope();
-          this.vel = slope.bounceAngle(this.vel);
+        } else {
+          Vector slope;
+          if (collision1) {
+            slope = l1.getSlope();
+          } else {
+            slope = l2.getSlope();
+          }
+          bounce = slope.bounceAngle(this.vel);
+          this.vel.set(bounce);
         }
+        // System.out.println(bounce.angle() + " " + bounce.magnitude());
         // System.out.println("vel: " + vel + " angle: " + vel.angle() + " mag: " +
         // vel.magnitude());
         // System.out.println(prevVel + " " + prevVel.magnitude());
-        if (vel.magnitude() <= 0.85 && prevVel.magnitude() <= 0.85 && Math.abs(vel.getX()) < 0.05
-            && Math.abs(prevVel.getX()) < 0.05) {
+        if (Math.abs(bounce.angle() + Math.PI / 2) < 0.05 && bounce.magnitude() < 0.5) {
           System.out.println("stopped");
           fired = false;
         } else {

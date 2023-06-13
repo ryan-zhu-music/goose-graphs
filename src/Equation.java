@@ -253,6 +253,22 @@ public class Equation implements KeyListener {
     int i = 0;
     int j = 0;
     boolean add = true;
+    if (exp.startsWith("--") || exp.startsWith("++")) {
+      exp = exp.substring(2);
+    }
+    int k = 0;
+    while (k < exp.length() - 2) {
+      if (exp.charAt(k) == '-' && exp.charAt(k + 1) == '-') {
+        exp = exp.substring(0, k) + "+" + exp.substring(k + 2);
+      } else if (exp.charAt(k) == '-' && exp.charAt(k + 1) == '+') {
+        exp = exp.substring(0, k) + "-" + exp.substring(k + 2);
+      } else if (exp.charAt(k) == '+' && exp.charAt(k + 1) == '-') {
+        exp = exp.substring(0, k) + "-" + exp.substring(k + 2);
+      } else if (exp.charAt(k) == '+' && exp.charAt(k + 1) == '+') {
+        exp = exp.substring(0, k) + "+" + exp.substring(k + 2);
+      }
+      k++;
+    }
     while (j < exp.length()) {
       if (exp.charAt(j) == '+') {
         result += (add ? 1 : -1) * product(exp.substring(i, j));

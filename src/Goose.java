@@ -32,8 +32,6 @@ public class Goose {
       if (vels.size() > 10) {
         vels.poll();
       }
-      // axis = (int) (Math.random() * (3 - 1 + 1) + 1);
-      // variation = (int) (Math.random() * (4 - 0 + 1));
       if (outOfBounds()) {
         System.out.println("out of bounds");
         fired = false;
@@ -79,10 +77,6 @@ public class Goose {
           bounce = slope.bounceAngle(this.vel);
           this.vel.set(bounce);
         }
-        // System.out.println(bounce.angle() + " " + bounce.magnitude());
-        // System.out.println("vel: " + vel + " angle: " + vel.angle() + " mag: " +
-        // vel.magnitude());
-        // System.out.println(prevVel + " " + prevVel.magnitude());
         if (Math.abs(bounce.angle() + Math.PI / 2) < 0.05 && bounce.magnitude() < 0.5) {
           System.out.println("stopped");
           fired = false;
@@ -96,11 +90,10 @@ public class Goose {
   }
 
   public boolean checkCollision(int segment) {
-    if (outOfBounds())
+    if (outOfBounds() || segment < 0 || segment >= e.getSegments().length)
       return false;
     if (e.getEquation().length() > 0 && Equation.isDrawn) {
       Line l = e.getSegments()[segment];
-      // System.out.println(pos + " " + l);
       return l.collidesWith(pos, vel.magnitude());
     }
     return false;
@@ -115,7 +108,7 @@ public class Goose {
   }
 
   private boolean outOfBounds() {
-    return pos.getX() < 0 || pos.getX() > 1000 || pos.getY() < 200 || pos.getY() > 800;
+    return pos.getX() <= 5 || pos.getX() >= 995 || pos.getY() <= 200 || pos.getY() >= 800;
   }
 
   public void draw(Graphics2D g2) {

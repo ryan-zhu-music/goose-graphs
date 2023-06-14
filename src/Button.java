@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.lang.model.type.NullType;
 import javax.swing.*;
+import java.util.function.Function;
 
 public class Button implements MouseListener {
   private Vector topLeft;
@@ -9,17 +12,17 @@ public class Button implements MouseListener {
   private int height;
   private String text;
   private Equation e;
-  private boolean goButton = false;
+  private Function<NullType, Boolean> f;
   private Color color = Constants.BUTTON_COLOR;
 
-  public Button(int x, int y, int width, int height, String text, Equation e, boolean goButton) {
+  public Button(int x, int y, int width, int height, String text, Equation e, Function<NullType, Boolean> f) {
     this.topLeft = new Vector(x, y);
     this.bottomRight = new Vector(x + width, y + height);
     this.width = width;
     this.height = height;
     this.text = text;
     this.e = e;
-    this.goButton = goButton;
+    this.f = f;
   }
 
   public void draw(Graphics2D g2) {
@@ -39,10 +42,8 @@ public class Button implements MouseListener {
 
   public void mouseClicked(MouseEvent event) {
     if (isClicked(event.getX(), event.getY())) {
-      if (goButton) {
-        System.out.println("goose");
-        e.setEquation();
-        Goose.fire();
+      if (f != null) {
+        f.apply(null);
       } else {
         e.add(text);
       }

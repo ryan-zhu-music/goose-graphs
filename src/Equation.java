@@ -72,7 +72,7 @@ public class Equation implements KeyListener {
     tempEquation = "";
   }
 
-  public void setEquation() {
+  public boolean setEquation() {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
       isDrawn = false;
@@ -85,6 +85,7 @@ public class Equation implements KeyListener {
       }
       isDrawn = true;
     }
+    return true;
   }
 
   public static String replace(String exp, int i, String x) {

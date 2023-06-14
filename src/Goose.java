@@ -8,8 +8,9 @@ public class Goose {
   private Vector initialPos;
   private Equation e;
   private boolean fired = false;
-  public static LinkedList<Goose> geese = new LinkedList<>();
   private Queue<Vector> vels = new LinkedList<>();
+
+  public static LinkedList<Goose> geese = new LinkedList<>();
 
   public Goose(double x, double y, double vx, double vy, Equation e) {
     this.pos = new Vector(x, y);
@@ -19,10 +20,16 @@ public class Goose {
     geese.add(this);
   }
 
-  public static void fire() {
+  public static boolean fire() {
+    System.out.println("fire");
     for (Goose g : geese) {
-      g.fired = true;
+      g.setFired(true);
     }
+    return true;
+  }
+
+  public void setFired(boolean fired) {
+    this.fired = fired;
   }
 
   public void move() {

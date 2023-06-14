@@ -5,29 +5,31 @@ import java.awt.*;
 public class Level extends JPanel implements Runnable {
 
     Equation e;
-    Button[] buttons = new Button[7];
+    Button[] buttons = new Button[8];
     static int level = 1;
     static final int GEESE_COUNT = 5;
 
-    int[] x = { 137, 300, 452 };
+    int[] x = { 137, 300, 463 };
 
-    public Level() {
+    public Level(Vector gooseStart, Vector[] bowtiePos) {
         e = new Equation();
         addKeyListener(e);
         for (int i = 0; i < 6; i++) {
-            buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], e, false);
+            buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], e, null);
             addMouseListener(buttons[i]);
         }
-        buttons[6] = new Button(625, 93, 144, 36, "go(ose)", e, true);
+        buttons[6] = new Button(625, 93, 144, 36, "graph", e, (x) -> e.setEquation());
         buttons[6].setColor(Constants.COLORS.get("lime"));
+        buttons[7] = new Button(625, 143, 144, 36, "go(ose)", e, (x) -> Goose.fire());
+        buttons[7].setColor(Constants.COLORS.get("lime"));
         addMouseListener(buttons[6]);
+        addMouseListener(buttons[7]);
         setFocusable(true);
-        // e = new Equation("0.5x^2+2x+sin(x)-4");
         for (int i = 0; i < GEESE_COUNT; i++) {
-            new Goose(500, 250, 0, 1, e);
+            new Goose(gooseStart.getX(), gooseStart.getY(), 0, 1, e);
         }
-        for (int i = 0; i < 3; i++) {
-            new Bowtie(300 * i + 250, 500);
+        for (Vector v : bowtiePos) {
+            new Bowtie((int) v.getX(), (int) v.getY());
         }
 
         Thread t = new Thread(this);
@@ -89,11 +91,11 @@ public class Level extends JPanel implements Runnable {
 
     }
 
-    public static void main(String[] args) throws Exception {
-        JFrame f = new JFrame("App");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(1000, 800);
-        f.add(new Level());
-        f.setVisible(true);
-    }
+    // public static void main(String[] args) throws Exception {
+    // JFrame f = new JFrame("App");
+    // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    // f.setSize(1000, 800);
+    // f.add(new Level());
+    // f.setVisible(true);
+    // }
 }

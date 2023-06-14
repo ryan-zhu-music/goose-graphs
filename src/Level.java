@@ -2,16 +2,16 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class App extends JPanel implements Runnable {
+public class Level extends JPanel implements Runnable {
 
     Equation e;
-    Goose[] geese = new Goose[1];
     Button[] buttons = new Button[7];
     static int level = 1;
+    static final int GEESE_COUNT = 5;
 
     int[] x = { 137, 300, 452 };
 
-    public App() {
+    public Level() {
         e = new Equation();
         addKeyListener(e);
         for (int i = 0; i < 6; i++) {
@@ -23,8 +23,8 @@ public class App extends JPanel implements Runnable {
         addMouseListener(buttons[6]);
         setFocusable(true);
         // e = new Equation("0.5x^2+2x+sin(x)-4");
-        for (int i = 0; i < geese.length; i++) {
-            geese[i] = new Goose(500, 250, 0, 1, e);
+        for (int i = 0; i < GEESE_COUNT; i++) {
+            new Goose(500, 250, 0, 1, e);
         }
         for (int i = 0; i < 3; i++) {
             new Bowtie(300 * i + 250, 500);
@@ -37,10 +37,7 @@ public class App extends JPanel implements Runnable {
     public void run() {
         while (true) {
             repaint();
-            for (Goose goose : geese) {
-                goose.move();
-                goose.checkBowties();
-            }
+            Goose.run();
             try {
                 Thread.sleep(1000 / 60);
             } catch (Exception e) {
@@ -69,9 +66,6 @@ public class App extends JPanel implements Runnable {
         g2.setColor(Color.RED);
         // equation
         e.draw(g2);
-        for (Goose goose : geese) {
-            goose.draw(g2);
-        }
         // menu
         g2.setColor(Constants.COLORS.get("pink"));
         g2.fillRect(0, 0, 1000, 200);
@@ -87,9 +81,7 @@ public class App extends JPanel implements Runnable {
             button.draw(g2);
         }
         // geese
-        for (Goose goose : geese) {
-            goose.draw(g2);
-        }
+        Goose.drawAll(g2);
         // bowties
         for (Bowtie bowtie : Bowtie.bowties) {
             bowtie.draw(g2);
@@ -101,7 +93,7 @@ public class App extends JPanel implements Runnable {
         JFrame f = new JFrame("App");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(1000, 800);
-        f.add(new App());
+        f.add(new Level());
         f.setVisible(true);
     }
 }

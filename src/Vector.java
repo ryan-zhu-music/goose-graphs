@@ -7,6 +7,11 @@ public class Vector {
     this.y = y;
   }
 
+  public Vector(Vector v) {
+    this.x = v.getX();
+    this.y = v.getY();
+  }
+
   public void set(Vector v) {
     x = v.getX();
     y = v.getY();
@@ -90,13 +95,19 @@ public class Vector {
   // vector with the same magnitude as v
   public Vector bounceAngle(Vector v) {
     Vector newVector;
-    if (this.angleBetween(v) < 1.15 && v.magnitude() < 5) {
+    Vector unit1 = new Vector(x, y);
+    unit1.normalize();
+    Vector unit2 = new Vector(v.getX(), v.getY());
+    unit2.normalize();
+    if (Math.abs(unit1.dot(unit2) / (unit1.magnitude() * unit2.magnitude())) > 0.75) {
+      // if vectors are close to parallel, no bounce
       newVector = this.projection(v);
     } else {
+      // otherwise, bounce
       double newAngle = 2 * this.angle() - v.angle();
       double magnitude = v.magnitude();
       newVector = new Vector(magnitude * Math.cos(newAngle), magnitude * Math.sin(newAngle));
-      newVector.multScalar(0.2 * Math.cos(this.angleBetween(v)) + 0.8);
+      newVector.multScalar(0.3 * Math.cos(this.angleBetween(v)) + 0.7);
     }
     return newVector;
   }

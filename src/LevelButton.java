@@ -45,12 +45,10 @@ public class LevelButton implements MouseListener, MouseMotionListener {
 
         if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
                 && mouseY <= (this.imgY + height)) {
-        if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
-                && mouseY <= (this.imgY + height)) {
             hovered = true;
-        } else
-        } else
+        } else {
             hovered = false;
+        }
     }
 
     @Override
@@ -58,7 +56,6 @@ public class LevelButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
 
-        if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
             Menu.currentScreen = this.screenID;
         }

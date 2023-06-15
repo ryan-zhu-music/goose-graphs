@@ -87,15 +87,15 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            LevelSelect.draw(g);
-            exitButton.draw(g);
+            LevelSelect.draw(g2);
+            exitButton.draw(g2);
         } else if (currentScreen == 2) {
-            About.draw(g);
-            exitButton.draw(g);
+            About.draw(g2);
+            exitButton.draw(g2);
             goose = !goose;
         } else if (currentScreen == 3) {
-            Help.draw(g);
-            exitButton.draw(g);
+            Help.draw(g2);
+            exitButton.draw(g2);
             goose = !goose;
         }
     }

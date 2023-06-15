@@ -44,11 +44,9 @@ public class MenuButton implements MouseListener, MouseMotionListener {
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
             Menu.currentScreen = this.screenID;
         }
-        System.out.println("clicked");
     }
 
     public void mouseEntered(MouseEvent e) {

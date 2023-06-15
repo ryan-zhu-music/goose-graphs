@@ -25,16 +25,15 @@ public class About {
         }
     }
 
-    public static void draw(Graphics g) {
-        g.drawImage(aboutMenu, 0, 0, null);
-        
-         if(Menu.goose) {
-            g.drawImage(pinkGoose1, 100, 565, null);
-            g.drawImage(purpleGoose1, 270, 565, null);
-        }
-        else if(!Menu.goose) {
-            g.drawImage(pinkGoose2, 100, 565, null);
-            g.drawImage(purpleGoose2, 270, 565, null);
+    public static void draw(Graphics2D g2) {
+        g2.drawImage(aboutMenu, 0, 0, null);
+
+        if (Menu.goose) {
+            g2.drawImage(pinkGoose1, 100, 565, null);
+            g2.drawImage(purpleGoose1, 270, 565, null);
+        } else if (!Menu.goose) {
+            g2.drawImage(pinkGoose2, 100, 565, null);
+            g2.drawImage(purpleGoose2, 270, 565, null);
         }
     }
 }

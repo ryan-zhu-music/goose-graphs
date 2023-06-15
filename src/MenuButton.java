@@ -14,7 +14,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
             this.img = ImageIO.read(new File(fileName));
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
-            this.imgY = imgY; 
+            this.imgY = imgY;
             this.screenID = screenID;
             this.width = img.getWidth();
             this.height = img.getHeight();
@@ -25,15 +25,14 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         }
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g2) {
         if (hovered) {
-            g.drawImage(this.img1, this.imgX-10, this.imgY-10, null);
-        } 
-        else {
-            g.drawImage(this.img, this.imgX, this.imgY, null);
+            g2.drawImage(this.img1, this.imgX - 10, this.imgY - 10, null);
+        } else {
+            g2.drawImage(this.img, this.imgX, this.imgY, null);
         }
     }
- 
+
     public int getX() {
         return this.imgX;
     }
@@ -46,7 +45,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
 
-        if(mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
+        if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
             Menu.currentScreen = this.screenID;
         }
         System.out.println("clicked");
@@ -76,10 +75,10 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
 
-        if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY && mouseY <= (this.imgY + height)) {
+        if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
+                && mouseY <= (this.imgY + height)) {
             hovered = true;
-        } 
-        else 
+        } else
             hovered = false;
     }
 }

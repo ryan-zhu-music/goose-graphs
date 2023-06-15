@@ -7,7 +7,7 @@ public class Help {
     public static BufferedImage helpMenu;
     public static BufferedImage goose3;
     public static BufferedImage goose4;
-    
+
     public Help() {
         try {
             helpMenu = ImageIO.read(new File("helpMenu.png"));
@@ -20,14 +20,13 @@ public class Help {
         }
     }
 
-    public static void draw(Graphics g) {
-        g.drawImage(helpMenu, 0, 0, null);
-        
-        if(Menu.goose) {
-            g.drawImage(goose3, 800, 600, null);
-        }
-        else if(!Menu.goose) {
-            g.drawImage(goose4, 800, 600, null);
+    public static void draw(Graphics2D g2) {
+        g2.drawImage(helpMenu, 0, 0, null);
+
+        if (Menu.goose) {
+            g2.drawImage(goose3, 800, 600, null);
+        } else if (!Menu.goose) {
+            g2.drawImage(goose4, 800, 600, null);
         }
     }
 }

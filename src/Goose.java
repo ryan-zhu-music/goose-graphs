@@ -153,7 +153,7 @@ public class Goose {
     }
   }
 
-  public static void run() {
+  public static void update() {
     for (Goose g : geese) {
       g.move();
       g.checkBowties();

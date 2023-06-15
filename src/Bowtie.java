@@ -1,20 +1,29 @@
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Bowtie {
   private Vector pos;
   private boolean obtained;
-  public static ArrayList<Bowtie> bowties = new ArrayList<>();
+  private static int count = 0;
 
   public Bowtie(int x, int y) {
     this.pos = new Vector(x, y);
     this.obtained = false;
-    bowties.add(this);
+  }
+
+  public static void reset() {
+    count = 0;
+  }
+
+  public static int getCount() {
+    return count;
   }
 
   public boolean checkCollision(Vector v) {
     if (pos.distance(v) < 20) {
-      obtained = true;
+      if (!obtained) {
+        count++;
+        obtained = true;
+      }
       return true;
     }
     return false;

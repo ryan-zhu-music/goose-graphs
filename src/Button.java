@@ -11,17 +11,15 @@ public class Button implements MouseListener {
   private int width;
   private int height;
   private String text;
-  private Equation e;
   private Function<NullType, Boolean> f;
   private Color color = Constants.BUTTON_COLOR;
 
-  public Button(int x, int y, int width, int height, String text, Equation e, Function<NullType, Boolean> f) {
+  public Button(int x, int y, int width, int height, String text, Function<NullType, Boolean> f) {
     this.topLeft = new Vector(x, y);
     this.bottomRight = new Vector(x + width, y + height);
     this.width = width;
     this.height = height;
     this.text = text;
-    this.e = e;
     this.f = f;
   }
 
@@ -45,7 +43,7 @@ public class Button implements MouseListener {
       if (f != null) {
         f.apply(null);
       } else {
-        e.add(text);
+        Level.getEquation().add(text);
       }
     }
   }

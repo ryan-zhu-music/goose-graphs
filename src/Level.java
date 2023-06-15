@@ -2,44 +2,91 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Level extends JPanel implements Runnable {
+public class Level extends JPanel implements Runnable, Comparable<Level> {
+    private static Equation e;
+    private static ArrayList<Bowtie> bowties;
 
-    Equation e;
-    Button[] buttons = new Button[8];
-    static int level = 1;
-    static final int GEESE_COUNT = 5;
+    private Button[] buttons = new Button[8];
+    private int GEESE_COUNT = 5;
+    private boolean completed = false;
+    private boolean win = false;
+    private int difficulty;
 
     int[] x = { 137, 300, 463 };
 
-    public Level(Vector gooseStart, Vector[] bowtiePos) {
+    // add frame as parameter and add listeners??
+    public Level(Vector gooseStart, Vector[] bowtiePos, int difficulty) {
+        this.difficulty = difficulty;
+        init(gooseStart, bowtiePos);
+        Thread t = new Thread(this);
+        t.start();
+    }
+
+    // called when a new level is initiated, resets all game states except for
+    // completed
+    private void init(Vector gooseStart, Vector[] bowtiePos) {
         e = new Equation();
         addKeyListener(e);
         for (int i = 0; i < 6; i++) {
-            buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], e, null);
+            buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], null);
             addMouseListener(buttons[i]);
         }
-        buttons[6] = new Button(625, 93, 144, 36, "graph", e, (x) -> e.setEquation());
+        buttons[6] = new Button(625, 93, 144, 36, "graph", (x) -> e.setEquation());
         buttons[6].setColor(Constants.COLORS.get("lime"));
-        buttons[7] = new Button(625, 143, 144, 36, "go(ose)", e, (x) -> Goose.fire());
+        buttons[7] = new Button(625, 143, 144, 36, "go(ose)", (x) -> Goose.fire());
         buttons[7].setColor(Constants.COLORS.get("lime"));
         addMouseListener(buttons[6]);
         addMouseListener(buttons[7]);
         setFocusable(true);
         for (int i = 0; i < GEESE_COUNT; i++) {
-            new Goose(gooseStart.getX(), gooseStart.getY(), 0, 1, e);
+            new Goose(gooseStart.getX(), gooseStart.getY(), 0, 1);
         }
+        bowties = new ArrayList<>();
         for (Vector v : bowtiePos) {
-            new Bowtie((int) v.getX(), (int) v.getY());
+            bowties.add(new Bowtie((int) v.getX(), (int) v.getY()));
         }
+        Bowtie.reset();
+        this.win = false;
+    }
 
-        Thread t = new Thread(this);
-        t.start();
+    public int compareTo(Level l) {
+        if (this.completed && !l.isCompleted()) {
+            return 1;
+        } else if (!this.completed && l.isCompleted()) {
+            return -1;
+        } else {
+            return this.difficulty - l.getDifficulty();
+        }
+    }
+
+    public int getDifficulty() {
+        return this.difficulty;
+    }
+
+    public static Equation getEquation() {
+        return e;
+    }
+
+    public static ArrayList<Bowtie> getBowties() {
+        return bowties;
+    }
+
+    public boolean getWin() {
+        return this.win;
+    }
+
+    public boolean isCompleted() {
+        return this.completed;
     }
 
     public void run() {
         while (true) {
             repaint();
             Goose.run();
+            if (Bowtie.getCount() == bowties.size()) {
+                this.completed = true;
+                this.win = true;
+            }
             try {
                 Thread.sleep(1000 / 60);
             } catch (Exception e) {
@@ -71,11 +118,8 @@ public class Level extends JPanel implements Runnable {
         // menu
         g2.setColor(Constants.COLORS.get("pink"));
         g2.fillRect(0, 0, 1000, 200);
-        // level number
-        g2.setColor(Constants.COLORS.get("maroon"));
-        g2.setFont(new Font("Arial", Font.BOLD, 20));
-        g2.drawString("" + level, 12, 23);
         // equation
+        g2.setColor(Color.BLACK);
         g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g2.drawString("y=" + e.toString(), 137, 19);
         // buttons
@@ -85,17 +129,18 @@ public class Level extends JPanel implements Runnable {
         // geese
         Goose.drawAll(g2);
         // bowties
-        for (Bowtie bowtie : Bowtie.bowties) {
+        for (Bowtie bowtie : bowties) {
             bowtie.draw(g2);
         }
 
     }
 
-    // public static void main(String[] args) throws Exception {
-    // JFrame f = new JFrame("App");
-    // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    // f.setSize(1000, 800);
-    // f.add(new Level());
-    // f.setVisible(true);
-    // }
+    // for testing
+    public static void main(String[] args) throws Exception {
+        JFrame f = new JFrame("App");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(1000, 800);
+        f.add(new Level(Constants.LEVEL_STARTS.get(0), Constants.LEVEL_BOWTIES.get(0), 1));
+        f.setVisible(true);
+    }
 }

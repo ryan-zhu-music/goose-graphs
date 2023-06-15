@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Constants {
@@ -29,6 +30,15 @@ public class Constants {
     COLORS.put("pink", new Color(252, 208, 208));
     COLORS.put("maroon", new Color(194, 131, 131));
     COLORS.put("lime", new Color(162, 229, 165));
+  }
+
+  static ArrayList<Vector> LEVEL_STARTS = new ArrayList<>();
+  static ArrayList<Vector[]> LEVEL_BOWTIES = new ArrayList<>();
+
+  static {
+    LEVEL_STARTS.add(new Vector(253, 210));
+    LEVEL_BOWTIES.add(new Vector[] { new Vector(200, 600), new Vector(400, 600), new Vector(600, 600),
+        new Vector(800, 600) });
   }
 
 }

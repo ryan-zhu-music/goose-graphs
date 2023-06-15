@@ -6,17 +6,15 @@ public class Goose {
   private Vector pos;
   private Vector vel;
   private Vector initialPos;
-  private Equation e;
   private boolean fired = false;
   private Queue<Vector> vels = new LinkedList<>();
 
   public static LinkedList<Goose> geese = new LinkedList<>();
 
-  public Goose(double x, double y, double vx, double vy, Equation e) {
+  public Goose(double x, double y, double vx, double vy) {
     this.pos = new Vector(x, y);
     this.vel = new Vector(vx, vy);
     this.initialPos = new Vector(x, y);
-    this.e = e;
     geese.add(this);
   }
 
@@ -50,9 +48,9 @@ public class Goose {
       int index = (int) pos.getX() / 10;
       boolean collision1 = checkCollision(index);
       boolean collision2 = checkCollision((int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1);
-      Line l1 = e.getSegments()[(int) pos.getX() / 10];
-      Line l2 = e.getSegments()[(int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1];
-      if ((collision1 || collision2) && e.getEquation().length() > 0 && Equation.isDrawn) {
+      Line l1 = Level.getEquation().getSegments()[(int) pos.getX() / 10];
+      Line l2 = Level.getEquation().getSegments()[(int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1];
+      if ((collision1 || collision2) && Level.getEquation().getEquation().length() > 0 && Equation.isDrawn) {
         vel.multScalar(Constants.FRICTION);
         Vector bounce;
         if (collision1 && collision2) {
@@ -119,10 +117,10 @@ public class Goose {
   }
 
   public boolean checkCollision(int segment) {
-    if (outOfBounds() || segment < 0 || segment >= e.getSegments().length)
+    if (outOfBounds() || segment < 0 || segment >= Level.getEquation().getSegments().length)
       return false;
-    if (e.getEquation().length() > 0 && Equation.isDrawn) {
-      Line l = e.getSegments()[segment];
+    if (Level.getEquation().getEquation().length() > 0 && Equation.isDrawn) {
+      Line l = Level.getEquation().getSegments()[segment];
       return l.collidesWith(pos, vel.magnitude());
     }
     return false;
@@ -131,7 +129,7 @@ public class Goose {
   public void checkBowties() {
     if (outOfBounds())
       return;
-    for (Bowtie b : Bowtie.bowties) {
+    for (Bowtie b : Level.getBowties()) {
       b.checkCollision(pos);
     }
   }

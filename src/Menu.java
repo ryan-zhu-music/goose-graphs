@@ -13,10 +13,15 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
     public static About aboutScreen;
+    public static LevelSelect levelSelectScreen;
     public LevelButton[] buttons = new LevelButton[15];
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
+
+        helpScreen = new Help();
+        aboutScreen = new About();
+        levelSelectScreen = new LevelSelect();
 
         playButton = new MenuButton("play.png", "play1.png", 200, 500, 1);
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
@@ -27,23 +32,20 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         addMouseListener(playButton);
         addMouseListener(aboutButton);
         addMouseListener(helpButton);
+        addMouseListener(levelSelectScreen);
         addMouseMotionListener(playButton);
         addMouseMotionListener(aboutButton);
         addMouseMotionListener(helpButton);
 
-         for(int i = 0; i < 15; i++) {
-            if(i < 10) {
-                buttons[i] = new LevelButton(i+"normal", i+"normal1", (i%3)*280, (i%3)*260+100, i);
-            }
-            else {
-                buttons[i] = new LevelButton(i+"challenge", i+"challenge1", (i%3)*280, (i%3)*260+200, i);
+        for (int i = 0; i < 15; i++) {
+            if (i < 10) {
+                buttons[i] = new LevelButton(i + "normal", i + "normal1", (i % 3) * 280, (i % 3) * 260 + 100, i);
+            } else {
+                buttons[i] = new LevelButton(i + "challenge", i + "challenge1", (i % 3) * 280, (i % 3) * 260 + 200, i);
             }
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);
         }
-
-        helpScreen = new Help();
-        aboutScreen = new About();
 
         try {
             logo = ImageIO.read(new File("logo.png"));
@@ -65,7 +67,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(currentScreen == 0) {
+        if (currentScreen == 0) {
             g.drawImage(mainMenu, 0, 0, null);
             g.drawImage(logo, 120, 40, null);
             playButton.draw(g);
@@ -81,13 +83,14 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 g.drawImage(sprayGoose2, 780, 375, null);
                 goose = !goose;
             }
-        }
-        else if(currentScreen == 2) {
+        } else if (currentScreen == 1) {
+            LevelSelect.draw(g);
+            exitButton.draw(g);
+        } else if (currentScreen == 2) {
             About.draw(g);
             exitButton.draw(g);
             goose = !goose;
-        }
-        else if(currentScreen == 3) {
+        } else if (currentScreen == 3) {
             Help.draw(g);
             exitButton.draw(g);
             goose = !goose;
@@ -105,12 +108,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     }
 
     public void run() {
-        while(true) {
+        while (true) {
             repaint();
             try {
                 Thread.sleep(200);
-            } 
-            catch (Exception e) {
+            } catch (Exception e) {
             }
         }
     }
@@ -121,18 +123,18 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     }
 
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     public void mouseExited(MouseEvent e) {
-        
+
     }
 }

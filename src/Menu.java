@@ -13,12 +13,17 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
     public static About aboutScreen;
+    public static LevelSelect levelSelectScreen;
     public LevelButton[] buttons = new LevelButton[15];
 
     Level l = new Level(1, Constants.LEVEL_STARTS.get(0), Constants.LEVEL_BOWTIES.get(0), 1, this);
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
+
+        helpScreen = new Help();
+        aboutScreen = new About();
+        levelSelectScreen = new LevelSelect();
 
         playButton = new MenuButton("play.png", "play1.png", 200, 500, 1);
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
@@ -29,6 +34,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         addMouseListener(playButton);
         addMouseListener(aboutButton);
         addMouseListener(helpButton);
+        addMouseListener(levelSelectScreen);
         addMouseMotionListener(playButton);
         addMouseMotionListener(aboutButton);
         addMouseMotionListener(helpButton);
@@ -42,9 +48,6 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);
         }
-
-        helpScreen = new Help();
-        aboutScreen = new About();
 
         try {
             logo = ImageIO.read(new File("logo.png"));
@@ -84,19 +87,15 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            if (Level.running) {
-                l.draw(g2);
-            } else {
-                l.init();
-                goose = !goose;
-            }
+            LevelSelect.draw(g);
+            exitButton.draw(g);
         } else if (currentScreen == 2) {
-            About.draw(g2);
-            exitButton.draw(g2);
+            About.draw(g);
+            exitButton.draw(g);
             goose = !goose;
         } else if (currentScreen == 3) {
-            Help.draw(g2);
-            exitButton.draw(g2);
+            Help.draw(g);
+            exitButton.draw(g);
             goose = !goose;
         }
     }
@@ -118,11 +117,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 l.update();
             }
             try {
-                if (currentScreen == 1) {
-                    Thread.sleep(30);
-                } else {
-                    Thread.sleep(400);
-                }
+                Thread.sleep(200);
             } catch (Exception e) {
             }
         }

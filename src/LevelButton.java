@@ -15,6 +15,7 @@ public class LevelButton implements MouseListener, MouseMotionListener {
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
+            this.imgY = imgY;
             this.screenID = screenID;
             this.width = img.getWidth();
             this.height = img.getHeight();
@@ -44,7 +45,10 @@ public class LevelButton implements MouseListener, MouseMotionListener {
 
         if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
                 && mouseY <= (this.imgY + height)) {
+        if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
+                && mouseY <= (this.imgY + height)) {
             hovered = true;
+        } else
         } else
             hovered = false;
     }
@@ -54,6 +58,7 @@ public class LevelButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
 
+        if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
             Menu.currentScreen = this.screenID;
         }

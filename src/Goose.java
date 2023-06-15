@@ -21,9 +21,17 @@ public class Goose {
   public static boolean fire() {
     System.out.println("fire");
     for (Goose g : geese) {
+      g.reset();
       g.setFired(true);
     }
     return true;
+  }
+
+  public void reset() {
+    this.fired = false;
+    this.pos.set(initialPos);
+    this.vel.set(new Vector(0, 1));
+    this.vels.clear();
   }
 
   public void setFired(boolean fired) {
@@ -39,7 +47,6 @@ public class Goose {
         vels.poll();
       }
       if (outOfBounds()) {
-        System.out.println("out of bounds");
         fired = false;
         return;
       }
@@ -111,8 +118,6 @@ public class Goose {
           }
         }
       }
-    } else {
-      this.pos = initialPos;
     }
   }
 
@@ -135,7 +140,7 @@ public class Goose {
   }
 
   private boolean outOfBounds() {
-    return pos.getX() <= 5 || pos.getX() >= 995 || pos.getY() <= 200 || pos.getY() >= 800;
+    return (pos.getX() <= 5 || pos.getX() >= 995 || pos.getY() <= 200 || pos.getY() >= 800) && fired;
   }
 
   public void draw(Graphics2D g2) {

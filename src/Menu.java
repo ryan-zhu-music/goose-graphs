@@ -15,8 +15,8 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static About aboutScreen;
     public static LevelSelect levelSelectScreen;
     public LevelButton[] buttons = new LevelButton[15];
-
-    Level l = new Level(1, Constants.LEVEL_STARTS.get(1), Constants.LEVEL_BOWTIES.get(1), 1, this);
+    int testLevel = 4;
+    Level l = new Level(1, Constants.LEVEL_STARTS.get(testLevel), Constants.LEVEL_BOWTIES.get(testLevel), 1, this);
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));

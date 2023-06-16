@@ -9,7 +9,7 @@ public class Level implements Comparable<Level> {
 
   private int levelID;
   private Button[] buttons = new Button[8];
-  private final int GEESE_COUNT = 1;
+  private final int GEESE_COUNT = 5;
   private boolean completed = false;
   private boolean win = false;
   private int difficulty;

@@ -20,6 +20,7 @@ public class Equation implements KeyListener {
 
   public void setEquation(String tempEquation) {
     this.tempEquation = tempEquation;
+    Goose.stop();
   }
 
   public void add(char c) {
@@ -294,7 +295,7 @@ public class Equation implements KeyListener {
         j++;
       }
       if (j >= exp.length()) {
-        result += product(exp.substring(i, exp.length()));
+        result += (add ? 1 : -1) * product(exp.substring(i, exp.length()));
       }
     }
     return result;

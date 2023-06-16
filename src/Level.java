@@ -9,7 +9,7 @@ public class Level implements Comparable<Level> {
 
   private int levelID;
   private Button[] buttons = new Button[8];
-  private final int GEESE_COUNT = 5;
+  private final int GEESE_COUNT = 1;
   private boolean completed = false;
   private boolean win = false;
   private int difficulty;
@@ -56,7 +56,7 @@ public class Level implements Comparable<Level> {
     Bowtie.reset();
     this.win = false;
     currentLevel = this.levelID;
-    this.running = true;
+    running = true;
     System.out.println("Level " + this.levelID + " initiated.");
   }
 
@@ -92,6 +92,10 @@ public class Level implements Comparable<Level> {
 
   public boolean isCompleted() {
     return this.completed;
+  }
+
+  public static boolean isRunning() {
+    return running;
   }
 
   public void update() {

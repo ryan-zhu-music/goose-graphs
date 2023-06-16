@@ -24,7 +24,14 @@ public class Goose {
       g.reset();
       g.setFired(true);
     }
+    Bowtie.reset();
     return true;
+  }
+
+  public static void stop() {
+    for (Goose g : geese) {
+      g.setFired(false);
+    }
   }
 
   public void reset() {
@@ -96,12 +103,14 @@ public class Goose {
       }
       // check if goose is too close to line
       if (Math.abs(l1.shortestDistance(pos)) < 9 && Math.abs(l2.shortestDistance(pos)) < 9) {
-        Vector perp = new Vector(this.pos);
-        perp.sub(l1.closestPoint(pos));
-        perp.sub(l2.closestPoint(pos));
-        perp.normalize();
-        perp.multScalar(0.5);
-        this.pos.add(perp);
+        Vector perp1 = new Vector(this.pos);
+        perp1.sub(l1.closestPoint(pos));
+        Vector perp2 = new Vector(this.pos);
+        perp2.sub(l2.closestPoint(pos));
+        perp1.add(perp2);
+        perp1.normalize();
+        perp1.multScalar(0.5);
+        this.pos.add(perp1);
       } else {
         while (Math.abs(l1.shortestDistance(pos)) < 9) {
           Vector perp = new Vector(this.pos);
@@ -109,13 +118,6 @@ public class Goose {
           perp.normalize();
           perp.multScalar(0.5);
           this.pos.add(perp);
-          while (Math.abs(l2.shortestDistance(pos)) < 9) {
-            perp = new Vector(this.pos);
-            perp.sub(l2.closestPoint(pos));
-            perp.normalize();
-            perp.multScalar(0.5);
-            this.pos.add(perp);
-          }
         }
       }
     }

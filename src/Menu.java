@@ -16,7 +16,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static LevelSelect levelSelectScreen;
     public LevelButton[] buttons = new LevelButton[15];
 
-    Level l = new Level(1, Constants.LEVEL_STARTS.get(0), Constants.LEVEL_BOWTIES.get(0), 1, this);
+    Level l = new Level(1, Constants.LEVEL_STARTS.get(1), Constants.LEVEL_BOWTIES.get(1), 1, this);
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
@@ -87,8 +87,14 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            LevelSelect.draw(g2);
-            exitButton.draw(g2);
+            if (!Level.isRunning()) {
+                l.init();
+                goose = !goose;
+            } else {
+                l.draw(g2);
+            }
+            // LevelSelect.draw(g2);
+            // exitButton.draw(g2);
         } else if (currentScreen == 2) {
             About.draw(g2);
             exitButton.draw(g2);
@@ -117,7 +123,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 l.update();
             }
             try {
-                Thread.sleep(200);
+                if (currentScreen == 1) {
+                    Thread.sleep(20);
+                } else {
+                    Thread.sleep(400);
+                }
             } catch (Exception e) {
             }
         }

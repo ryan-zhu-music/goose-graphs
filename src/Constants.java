@@ -35,10 +35,20 @@ public class Constants {
   static ArrayList<Vector> LEVEL_STARTS = new ArrayList<>();
   static ArrayList<Vector[]> LEVEL_BOWTIES = new ArrayList<>();
 
+  static int[][][] positions = {
+      { { 754, 214 }, { 453, 460 }, { 222, 563 }, { 342, 513 } }, // 0.5x
+      { { 372, 214 }, { 500, 598 }, { 547, 525 }, { 576, 429 } },
+
+  };
+
   static {
-    LEVEL_STARTS.add(new Vector(253, 210));
-    LEVEL_BOWTIES.add(new Vector[] { new Vector(200, 600), new Vector(400, 600), new Vector(600, 600),
-        new Vector(800, 600) });
+    for (int i = 0; i < positions.length; i++) {
+      LEVEL_STARTS.add(new Vector(positions[i][0][0], positions[i][0][1]));
+      LEVEL_BOWTIES.add(new Vector[positions[i].length - 1]);
+      for (int j = 1; j < positions[i].length; j++) {
+        LEVEL_BOWTIES.get(i)[j - 1] = new Vector(positions[i][j][0], positions[i][j][1]);
+      }
+    }
   }
 
 }

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class LevelButton implements MouseListener, MouseMotionListener {
+public class LevelButton implements MouseListener, MouseMotionListener, Comparable<LevelButton> {
     public BufferedImage img, img1;
     public int imgX, imgY, mouseX, mouseY, width, height, levelID;
     public boolean hovered = false;
@@ -23,6 +23,16 @@ public class LevelButton implements MouseListener, MouseMotionListener {
             System.out.println("File not found!");
         } catch (IOException e) {
             System.out.println("Reading Error!");
+        }
+    }
+
+    public int compareTo(LevelButton other) {
+        if (Menu.levels[this.levelID].isCompleted() && !Menu.levels[other.levelID].isCompleted()) {
+            return 1;
+        } else if (!Menu.levels[this.levelID].isCompleted() && Menu.levels[other.levelID].isCompleted()) {
+            return -1;
+        } else {
+            return Menu.levels[this.levelID].getDifficulty() - Menu.levels[other.levelID].getDifficulty();
         }
     }
 

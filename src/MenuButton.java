@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Arrays;
+
 import javax.imageio.ImageIO;
 
 public class MenuButton implements MouseListener, MouseMotionListener {
@@ -45,6 +47,9 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
+            if (this.screenID == 1) { // level select screen
+                Arrays.sort(Menu.buttons);
+            }
             Menu.currentScreen = this.screenID;
         }
     }

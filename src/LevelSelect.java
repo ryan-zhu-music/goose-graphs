@@ -27,6 +27,7 @@ public class LevelSelect implements MouseListener {
     }
 
     public static void draw(Graphics g) {
+        isDrawn = true;
         if (currentScreen == 1) {
             g.drawImage(normalBg, 0, 0, null);
         } else if (currentScreen == 2) {

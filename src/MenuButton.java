@@ -50,9 +50,9 @@ public class MenuButton implements MouseListener, MouseMotionListener {
                 && (Menu.currentScreen == 0 || this.screenID == 0 && Menu.currentScreen != 0)) {
             if (this.screenID == 1) { // level select screen
                 Arrays.sort(Menu.buttons);
-                LevelSelect.isDrawn = true;
             } else if (this.screenID == 0) {
-                Level.currentLevel = -1;
+                Level.halt();
+                LevelSelect.isDrawn = false;
             }
             Menu.currentScreen = this.screenID;
         }

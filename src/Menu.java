@@ -39,10 +39,13 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         addMouseMotionListener(helpButton);
 
         for (int i = 0; i < 15; i++) {
+            int x = (i % 3) * 325 + 32;
+            int y = (i / 3) * 195 + 176;
+            Vector pos = new Vector(x, y);
             if (i < 9) {
-                buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", (i % 3) * 325 + 32, (i / 3) * 195 + 176, i, false);
+                buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", pos, i, false);
             } else {
-                buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", ((i - 9) % 3) * 325 + 32, ((i - 9) / 3) * 195 + 250, i, true);
+                buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", pos, i, true);
             }
 
             levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i % 3 + 1, this);
@@ -88,21 +91,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            if (Level.currentLevel > -1) {
-                if (Level.isRunning()) {
-                    levels[Level.currentLevel].draw(g2);
-                }
+            if (Level.currentLevel > -1 && Level.isRunning()) {
+                levels[Level.currentLevel].draw(g2);
             } else {
                 LevelSelect.draw(g2);
-                if (LevelSelect.currentScreen == 1) {
-                    for (int i = 0; i < 9; i++) {
-                        buttons[i].draw(g2);
-                    }
-                } else if (LevelSelect.currentScreen == 2) {
-                    for (int i = 9; i < 15; i++) {
-                        buttons[i].draw(g2);
-                    }
-                }
+                LevelButton.draw(g2);
             }
             exitButton.draw(g2);
         } else if (currentScreen == 2) {

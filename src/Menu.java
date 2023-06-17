@@ -16,6 +16,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static LevelSelect levelSelectScreen;
     public static LevelButton[] buttons = new LevelButton[15];
     public static Level[] levels = new Level[15];
+    public static ImageIcon icon;
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
@@ -55,6 +56,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         }
 
         try {
+            icon = new ImageIcon("goose.png");
             logo = ImageIO.read(new File("logo.png"));
             mainMenu = ImageIO.read(new File("mainMenu.png"));
             goose1 = ImageIO.read(new File("goose1.png"));
@@ -121,10 +123,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     }
 
     public static void main(String[] args) throws Exception {
-        JFrame f = new JFrame("Menu Test");
+        JFrame f = new JFrame("Goose Graphs");
         Menu panel = new Menu();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setPreferredSize(new Dimension(1000, 800));
+        f.setIconImage(icon.getImage());
         f.add(panel);
         f.pack();
         f.setVisible(true);

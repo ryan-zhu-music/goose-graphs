@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
@@ -49,12 +51,24 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
                 && (Menu.currentScreen == 0 || this.screenID == 0 && Menu.currentScreen != 0)) {
             if (this.screenID == 1) { // level select screen
-                LevelButton[] normal = new LevelButton[9];
-                LevelButton[] challenge = new LevelButton[6];
-                normal = Arrays.copyOfRange(Menu.buttons, 0, 9);
-                challenge = Arrays.copyOfRange(Menu.buttons, 9, 15);
-                Arrays.sort(normal);
-                Arrays.sort(challenge);
+                ArrayList<LevelButton> normal = new ArrayList<>();
+                ArrayList<LevelButton> challenge = new ArrayList<>();
+                for (LevelButton b : Menu.buttons) {
+                    if (b.isChallenge()) {
+                        challenge.add(b);
+                    } else {
+                        normal.add(b);
+                    }
+                }
+                Collections.sort(normal);
+                Collections.sort(challenge);
+                for (int i = 0; i < 15; i++) {
+                    if (i < 9) {
+                        Menu.buttons.set(i, normal.get(i));
+                    } else {
+                        Menu.buttons.set(i, challenge.get(i - 9));
+                    }
+                }
             } else if (this.screenID == 0) {
                 Level.halt();
                 LevelSelect.isDrawn = false;

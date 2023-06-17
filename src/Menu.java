@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
@@ -15,7 +16,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static About aboutScreen;
     public static LevelSelect levelSelectScreen;
     public static Win winScreen;
-    public static LevelButton[] buttons = new LevelButton[15];
+    public static ArrayList<LevelButton> buttons = new ArrayList<>();
     public static Level[] levels = new Level[15];
     public static ImageIcon icon;
 
@@ -31,7 +32,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 1);
+        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 0);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(returnButton);
@@ -50,16 +51,16 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             if (i < 9) {
                 Vector v = new Vector((i % 3) * 325 + 32,
                         (i / 3) * 195 + 176);
-                buttons[i] = new LevelButton(i, v, false);
+                buttons.add(new LevelButton(i, v, false));
             } else {
                 Vector v = new Vector(((i - 9) % 3) * 325 + 32,
                         ((i - 9) / 3) * 195 + 250);
-                buttons[i] = new LevelButton(i, v, true);
+                buttons.add(new LevelButton(i, v, true));
             }
 
-            levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i % 5 + 1, this);
-            addMouseListener(buttons[i]);
-            addMouseMotionListener(buttons[i]);
+            levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i / 3 + 1, this);
+            addMouseListener(buttons.get(i));
+            addMouseMotionListener(buttons.get(i));
         }
 
         try {

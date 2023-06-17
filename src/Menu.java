@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -12,10 +14,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Menu extends JPanel implements MouseListener, Runnable {
-    public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
+public class Menu extends JPanel implements MouseListener, MouseMotionListener, Runnable {
+    public static BufferedImage mainMenu, logo, logo1, goose1, goose2, sprayGoose1, sprayGoose2;
     public static MenuButton playButton, aboutButton, helpButton, exitButton, returnButton;
-    public static boolean goose = false;
+    public static boolean goose = false, hovered = false;
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
     public static About aboutScreen;
@@ -43,6 +45,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0, -1);
         returnButton = new MenuButton("back.png", "back1.png", 380, 400, 1, 4);
         addMouseListener(this);
+        addMouseMotionListener(this);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(returnButton);
@@ -76,6 +79,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         try {
             icon = new ImageIcon("goose.png");
             logo = ImageIO.read(new File("logo.png"));
+            logo1 = ImageIO.read(new File("logo1.png"));
             mainMenu = ImageIO.read(new File("mainMenu.png"));
             goose1 = ImageIO.read(new File("goose1.png"));
             goose2 = ImageIO.read(new File("goose2.png"));
@@ -113,7 +117,10 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             gameMusic.stop();
             menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
             g.drawImage(mainMenu, 0, 0, null);
-            g.drawImage(logo, 120, 40, null);
+            if (!hovered)
+                g.drawImage(logo, 120, 40, null);
+            else
+                g.drawImage(logo1, 115, 35, null);
             playButton.draw(g2);
             aboutButton.draw(g2);
             helpButton.draw(g2);
@@ -207,5 +214,19 @@ public class Menu extends JPanel implements MouseListener, Runnable {
 
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+
+        if (currentScreen == 0 && mouseX >= 120 && mouseX <= 870 && mouseY >= 40 && mouseY <= 428) {
+            hovered = true;
+        } else
+            hovered = false;
     }
 }

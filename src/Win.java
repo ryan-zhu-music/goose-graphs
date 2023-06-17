@@ -20,11 +20,11 @@ public class Win {
     g2.drawImage(winScreen, 0, 0, null);
 
     if (Menu.goose) {
-      g2.drawImage(About.purpleGoose1, 800, 600, null);
-      g2.drawImage(About.pinkGoose1, 200, 600, null);
+      g2.drawImage(About.purpleGoose1, 700, 500, null);
+      g2.drawImage(About.pinkGoose1, 150, 500, null);
     } else if (!Menu.goose) {
-      g2.drawImage(About.purpleGoose2, 800, 600, null);
-      g2.drawImage(About.pinkGoose2, 200, 600, null);
+      g2.drawImage(About.purpleGoose2, 700, 500, null);
+      g2.drawImage(About.pinkGoose2, 150, 500, null);
     }
     g2.setColor(Constants.COLORS.get("tomato_light"));
     g2.setFont(new Font("Arial", Font.BOLD, 20));

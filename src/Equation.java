@@ -3,57 +3,60 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Equation implements KeyListener {
-  private static String equation = "";
-  private static String tempEquation = "";
-  private static Vector[] points = new Vector[101];
-  private static Line[] segments = new Line[100];
+  private String equation = "";
+  private String tempEquation = "";
+  private Vector[] points = new Vector[101];
+  private Line[] segments = new Line[100];
 
   public static boolean isDrawn = false;
   public static boolean error = false;
 
   public Equation() {
-    equation = "";
-    tempEquation = "";
-    points = new Vector[101];
-    segments = new Line[100];
+  }
+
+  public String getEquation() {
+    return this.equation;
+  }
+
+  public void setEquation(String tempEquation) {
+    this.tempEquation = tempEquation;
+    Goose.stop();
+  }
+
+  public void clear() {
+    this.equation = "";
+    this.tempEquation = "";
+    this.points = new Vector[101];
+    this.segments = new Line[100];
     isDrawn = false;
     error = false;
   }
 
-  public static String getEquation() {
-    return equation;
-  }
-
-  public static void setEquation(String tempEquation) {
-    Equation.tempEquation = tempEquation;
-    Goose.stop();
-  }
-
-  public static void add(char c) {
+  public void add(char c) {
     // only numbers, x, +, -, *, /, ^, (, ), .,
     if (c >= '0' && c <= '9' || c >= '(' && c <= '.' && c != ',') {
-      tempEquation += c;
+      this.tempEquation += c;
     } else if (c == 'x' || c == 'X') {
-      tempEquation += 'x';
+      this.tempEquation += 'x';
     } else if (c == 'e' || c == 'E') {
-      tempEquation += 'e';
+      this.tempEquation += 'e';
     } else if (c == '/') {
-      tempEquation += "/";
+      this.tempEquation += "/";
     } else if (c == '^') {
-      tempEquation += "^(";
+      this.tempEquation += "^(";
     }
   }
 
-  public static void add(String s) {
-    tempEquation += s;
+  public void add(String s) {
+    this.tempEquation += s;
   }
 
-  public static Vector[] getPoints() {
-    return points;
+  public Vector[] getPoints() {
+    return this.points;
   }
 
-  public static Line[] getSegments() {
-    return segments;
+  public Line[] getSegments() {
+    return this.segments;
   }
 
   // keylistener
@@ -75,8 +78,8 @@ public class Equation implements KeyListener {
     return tempEquation;
   }
 
-  public static void reset() {
-    tempEquation = "";
+  public void reset() {
+    this.tempEquation = "";
   }
 
   public boolean setEquation() {
@@ -323,7 +326,7 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  private static Vector transform(double x) {
+  private Vector transform(double x) {
     double y = tryEvaluate(x / 5.0);
     if (isUndefined(y)) {
       y = tryEvaluate(x / 5.0 + 0.000001);
@@ -343,9 +346,9 @@ public class Equation implements KeyListener {
     }
   }
 
-  private static double tryEvaluate(double x) {
+  private double tryEvaluate(double x) {
     try {
-      double y = -50 * evaluate(substitute(equation, x)) + 450;
+      double y = -50 * evaluate(substitute(this.equation, x)) + 450;
       error = false;
       return y;
     } catch (Exception e) {
@@ -357,9 +360,9 @@ public class Equation implements KeyListener {
     return Double.isNaN(x) || Double.isInfinite(x);
   }
 
-  public static void draw(Graphics2D g2) {
+  public void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
-    if (equation.length() > 0) {
+    if (this.equation.length() > 0) {
       for (int i = 0; i < 100; i++) {
         if (!error)
           segments[i].draw(g2);

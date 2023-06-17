@@ -35,7 +35,7 @@ public class Goose {
   }
 
   public static boolean fire() {
-    if (Equation.getEquation().length() == 0) {
+    if (Level.getEquation().getEquation().length() == 0) {
       return false;
     }
     for (Goose g : geese) {
@@ -81,9 +81,9 @@ public class Goose {
       int index = (int) pos.getX() / 10;
       boolean collision1 = checkCollision(index);
       boolean collision2 = checkCollision((int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1);
-      Line l1 = Equation.getSegments()[(int) pos.getX() / 10];
-      Line l2 = Equation.getSegments()[(int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1];
-      if ((collision1 || collision2) && Equation.getEquation().length() > 0 && Equation.isDrawn) {
+      Line l1 = Level.getEquation().getSegments()[(int) pos.getX() / 10];
+      Line l2 = Level.getEquation().getSegments()[(int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1];
+      if ((collision1 || collision2) && Level.getEquation().getEquation().length() > 0 && Equation.isDrawn) {
         vel.multScalar(Constants.FRICTION);
         Vector bounce;
         if (collision1 && collision2) {
@@ -142,10 +142,10 @@ public class Goose {
   }
 
   public boolean checkCollision(int segment) {
-    if (outOfBounds() || segment < 0 || segment >= Equation.getSegments().length)
+    if (outOfBounds() || segment < 0 || segment >= Level.getEquation().getSegments().length)
       return false;
-    if (Equation.getEquation().length() > 0 && Equation.isDrawn) {
-      Line l = Equation.getSegments()[segment];
+    if (Level.getEquation().getEquation().length() > 0 && Equation.isDrawn) {
+      Line l = Level.getEquation().getSegments()[segment];
       return l.collidesWith(pos, vel.magnitude());
     }
     return false;

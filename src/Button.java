@@ -43,7 +43,7 @@ public class Button implements MouseListener {
       if (f != null) {
         f.apply(null);
       } else {
-        Equation.add(text);
+        Level.getEquation().add(text);
       }
     }
   }

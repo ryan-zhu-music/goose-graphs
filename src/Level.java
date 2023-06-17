@@ -28,11 +28,6 @@ public class Level {
     this.gooseStart = gooseStart;
     this.bowtiePos = bowtiePos;
     this.panel = panel;
-  }
-
-  // called when a new level is initiated, resets all game states except for
-  // completed
-  public void init() {
     e = new Equation();
     panel.addKeyListener(e);
     for (int i = 0; i < 6; i++) {
@@ -46,6 +41,12 @@ public class Level {
     panel.addMouseListener(buttons[6]);
     panel.addMouseListener(buttons[7]);
     panel.setFocusable(true);
+  }
+
+  // called when a new level is initiated, resets all game states except for
+  // completed
+  public void init() {
+    e.clear();
     for (int i = 0; i < GEESE_COUNT; i++) {
       new Goose(gooseStart.getX(), gooseStart.getY(), 0, 1);
     }
@@ -145,7 +146,7 @@ public class Level {
       g2.drawLine(0, 450, 1000, 450);
       g2.setColor(Color.RED);
       // equation
-      Equation.draw(g2);
+      e.draw(g2);
       // menu
       g2.setColor(Constants.COLORS.get("beige"));
       g2.fillRect(0, 0, 1000, 200);

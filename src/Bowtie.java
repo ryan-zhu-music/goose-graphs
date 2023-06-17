@@ -40,7 +40,7 @@ public class Bowtie {
     }
 
     public boolean checkCollision(Vector v) {
-        if (pos.distance(v) < 20) {
+        if (pos.distance(v) < 30) {
             if (!obtained) {
                 count++;
                 obtained = true;

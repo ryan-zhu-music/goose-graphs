@@ -112,7 +112,6 @@ public class Goose {
           }
           avgVel /= vels.size();
           if (avgVel < 0.6) {
-            System.out.println("stopped");
             fired = false;
           }
         } else {

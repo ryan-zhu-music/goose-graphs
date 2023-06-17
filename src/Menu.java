@@ -41,13 +41,9 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         for (int i = 0; i < 15; i++) {
             levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), (i + 1) % 3, this);
             if (i < 9) {
-                // buttons[i] = new LevelButton(i + "normal", i + "normal1", (i % 3) * 280, (i %
-                // 3) * 260 + 100, i);
                 buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", (i % 3) * 325 + 32,
                         (i / 3) * 195 + 176, i, false);
             } else {
-                // buttons[i] = new LevelButton(i + "challenge", i + "challenge1", (i % 3) *
-                // 280, (i % 3) * 260 + 200, i);
                 buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", ((i - 9) % 3) * 325 + 32,
                         ((i - 9) / 3) * 195 + 250, i, true);
             }

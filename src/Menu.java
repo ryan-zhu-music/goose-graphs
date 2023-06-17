@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
-    public static MenuButton playButton, aboutButton, helpButton, exitButton;
+    public static MenuButton playButton, aboutButton, helpButton, exitButton, backButton;
     public static boolean goose = false;
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
@@ -29,6 +29,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
+        backButton = new MenuButton("back.png", "back1.png", 300, 500, 1);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(playButton);

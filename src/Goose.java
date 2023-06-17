@@ -1,6 +1,13 @@
 import java.awt.*;
-import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+//import javax.swing.*;
 import java.util.*;
+import java.util.Queue;
 
 public class Goose {
   private Vector pos;
@@ -8,6 +15,7 @@ public class Goose {
   private Vector initialPos;
   private boolean fired = false;
   private Queue<Vector> vels = new LinkedList<>();
+  public static BufferedImage goose;
 
   public static LinkedList<Goose> geese = new LinkedList<>();
 
@@ -16,6 +24,14 @@ public class Goose {
     this.vel = new Vector(vx, vy);
     this.initialPos = new Vector(x, y);
     geese.add(this);
+
+    try {
+      goose = ImageIO.read(new File("goose.png"));
+    } catch (FileNotFoundException e) {
+      System.out.println("File not found!");
+    } catch (IOException e) {
+      System.out.println("Reading Error!");
+    }
   }
 
   public static boolean fire() {
@@ -146,7 +162,8 @@ public class Goose {
   }
 
   public void draw(Graphics2D g2) {
-    g2.fillOval((int) pos.getX() - 10, (int) pos.getY() - 10, 20, 20);
+    g2.drawImage(goose, (int) pos.getX() - 10, (int) pos.getY() - 10, null);
+    // g2.fillOval((int) pos.getX() - 10, (int) pos.getY() - 10, 20, 20);
   }
 
   public static void drawAll(Graphics2D g2) {

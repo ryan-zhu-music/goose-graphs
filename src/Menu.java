@@ -10,7 +10,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
     public static MenuButton playButton, aboutButton, helpButton, exitButton;
     public static boolean goose = false;
-    public static int mouseX, mouseY, currentScreen = 0;
+    public static int mouseX, mouseY, currentScreen = 0, level;
     public static Help helpScreen;
     public static About aboutScreen;
     public static LevelSelect levelSelectScreen;
@@ -41,10 +41,17 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         addMouseMotionListener(helpButton);
 
         for (int i = 0; i < 15; i++) {
-            if (i < 10) {
-                buttons[i] = new LevelButton(i + "normal", i + "normal1", (i % 3) * 280, (i % 3) * 260 + 100, i);
+            if (i < 9) {
+                // buttons[i] = new LevelButton(i + "normal", i + "normal1", (i % 3) * 280, (i %
+                // 3) * 260 + 100, i);
+                System.out.println(((i % 3) * 333 + 32) + " " + ((i / 3) * 181 + 300));
+                buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", (i % 3) * 325 + 32,
+                        (i / 3) * 195 + 176, i);
             } else {
-                buttons[i] = new LevelButton(i + "challenge", i + "challenge1", (i % 3) * 280, (i % 3) * 260 + 200, i);
+                // buttons[i] = new LevelButton(i + "challenge", i + "challenge1", (i % 3) *
+                // 280, (i % 3) * 260 + 200, i);
+                buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", ((i - 9) % 3) * 325 + 32,
+                        ((i - 9) / 3) * 195 + 250, i);
             }
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);
@@ -95,6 +102,17 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             // l.draw(g2);
             // }
             LevelSelect.draw(g2);
+
+            if (LevelSelect.currentScreen == 1) {
+                for (int i = 0; i < 9; i++) {
+                    buttons[i].draw(g2);
+                }
+            } else if (LevelSelect.currentScreen == 2) {
+                for (int i = 9; i < 15; i++) {
+                    buttons[i].draw(g2);
+                }
+            }
+
             exitButton.draw(g2);
         } else if (currentScreen == 2) {
             About.draw(g2);

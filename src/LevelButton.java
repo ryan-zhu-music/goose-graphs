@@ -38,7 +38,6 @@ public class LevelButton implements MouseListener, MouseMotionListener {
 
     }
 
-    @Override
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
@@ -51,13 +50,13 @@ public class LevelButton implements MouseListener, MouseMotionListener {
         }
     }
 
-    @Override
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
 
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
-            Menu.currentScreen = this.screenID;
+            System.out.println(screenID);
+            Menu.level = this.screenID;
         }
     }
 

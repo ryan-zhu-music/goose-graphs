@@ -11,7 +11,6 @@ public class Level {
   private Button[] buttons = new Button[8];
   private final int GEESE_COUNT = 5;
   private boolean completed = false;
-  private boolean win = false;
   private int difficulty;
   private Vector gooseStart;
   private Vector[] bowtiePos;
@@ -52,7 +51,6 @@ public class Level {
       bowties.add(new Bowtie((int) v.getX(), (int) v.getY()));
     }
     Bowtie.reset();
-    this.win = false;
     currentLevel = this.levelID;
     running = true;
   }
@@ -60,6 +58,7 @@ public class Level {
   public static void halt() {
     running = false;
     currentLevel = -1;
+    Goose.geese.clear();
   }
 
   public int getDifficulty() {
@@ -72,10 +71,6 @@ public class Level {
 
   public static ArrayList<Bowtie> getBowties() {
     return bowties;
-  }
-
-  public boolean getWin() {
-    return this.win;
   }
 
   public boolean isCompleted() {
@@ -91,8 +86,8 @@ public class Level {
       Goose.update();
       if (Bowtie.getCount() == bowties.size()) {
         this.completed = true;
-        this.win = true;
-        Thread.currentThread().interrupt();
+        Level.halt();
+        Menu.currentScreen = 4;
       }
     }
   }
@@ -153,17 +148,5 @@ public class Level {
         g2.drawString("Invalid equation", 137, 27);
       }
     }
-  }
-
-  // for testing
-  public static void main(String[] args) throws Exception {
-    JFrame f = new JFrame("App");
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.setSize(1000, 800);
-    JPanel p = new JPanel();
-    p.setPreferredSize(new Dimension(1000, 800));
-    Level l = new Level(1, Constants.LEVEL_STARTS.get(0), Constants.LEVEL_BOWTIES.get(0), 1, p);
-    f.add(p);
-    f.setVisible(true);
   }
 }

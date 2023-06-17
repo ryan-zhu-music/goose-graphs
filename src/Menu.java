@@ -10,7 +10,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
     public static MenuButton playButton, aboutButton, helpButton, exitButton;
     public static boolean goose = false;
-    public static int mouseX, mouseY, currentScreen = 0, level = -1;
+    public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
     public static About aboutScreen;
     public static LevelSelect levelSelectScreen;
@@ -93,12 +93,9 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            if (level > -1) {
-                if (!Level.isRunning()) {
-                    levels[level].init();
-                    goose = !goose;
-                } else {
-                    levels[level].draw(g2);
+            if (Level.getCurrentLevel() > -1) {
+                if (Level.isRunning()) {
+                    levels[Level.getCurrentLevel()].draw(g2);
                 }
             } else {
                 LevelSelect.draw(g2);
@@ -137,9 +134,9 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public void run() {
         while (true) {
             repaint();
-            // if (currentScreen == 1) {
-            // l.update();
-            // }
+            if (currentScreen == 1 && Level.getCurrentLevel() > -1) {
+                levels[Level.getCurrentLevel()].update();
+            }
             try {
                 if (currentScreen == 1) {
                     Thread.sleep(20);

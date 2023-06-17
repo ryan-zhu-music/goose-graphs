@@ -39,9 +39,6 @@ public class Button implements MouseListener {
   }
 
   public void mouseClicked(MouseEvent event) {
-    if (this.text.startsWith("sin")) {
-      System.out.println(event.getX() + " " + event.getY());
-    }
     if (isClicked(event.getX(), event.getY())) {
       if (f != null) {
         f.apply(null);

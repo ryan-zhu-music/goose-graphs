@@ -39,10 +39,8 @@ public class LevelSelect implements MouseListener {
         if (Menu.currentScreen == 1) {
             if (mouseX >= 304 && mouseX <= 447 && mouseY >= 128 && mouseY <= 150) {
                 currentScreen = 1;
-                System.out.println("clicked1");
             } else if (mouseX >= 507 && mouseX <= 713 && mouseY >= 128 && mouseY <= 150) {
                 currentScreen = 2;
-                System.out.println("clicked1");
             }
         }
     }

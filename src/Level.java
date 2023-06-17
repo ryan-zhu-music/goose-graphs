@@ -2,10 +2,10 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Level implements Comparable<Level> {
+public class Level {
   private static Equation e;
   private static ArrayList<Bowtie> bowties;
-  private static int currentLevel;
+  private static int currentLevel = -1;
 
   private int levelID;
   private Button[] buttons = new Button[8];
@@ -20,7 +20,6 @@ public class Level implements Comparable<Level> {
 
   int[] x = { 137, 300, 463 };
 
-  // add frame as parameter and add listeners??
   public Level(int levelID, Vector gooseStart, Vector[] bowtiePos, int difficulty, JPanel panel) {
     this.levelID = levelID;
     this.difficulty = difficulty;
@@ -56,16 +55,6 @@ public class Level implements Comparable<Level> {
     this.win = false;
     currentLevel = this.levelID;
     running = true;
-  }
-
-  public int compareTo(Level l) {
-    if (this.completed && !l.isCompleted()) {
-      return 1;
-    } else if (!this.completed && l.isCompleted()) {
-      return -1;
-    } else {
-      return this.difficulty - l.getDifficulty();
-    }
   }
 
   public int getDifficulty() {

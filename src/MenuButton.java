@@ -50,7 +50,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
-                && (Menu.currentScreen == this.parentScreen || this.parentScreen == -1)) {
+                && (Menu.currentScreen == this.parentScreen || this.parentScreen == -1 && Menu.currentScreen != 0)) {
             if (this.screenID == 1) { // level select screen
                 ArrayList<LevelButton> normal = new ArrayList<>();
                 ArrayList<LevelButton> challenge = new ArrayList<>();

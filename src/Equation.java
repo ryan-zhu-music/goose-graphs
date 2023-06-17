@@ -12,6 +12,12 @@ public class Equation implements KeyListener {
   public static boolean error = false;
 
   public Equation() {
+    equation = "";
+    tempEquation = "";
+    points = new Vector[101];
+    segments = new Line[100];
+    isDrawn = false;
+    error = false;
   }
 
   public static String getEquation() {
@@ -58,7 +64,7 @@ public class Equation implements KeyListener {
   }
 
   public void keyTyped(KeyEvent e) {
-    if (e.getKeyChar() == '\b') { // backspace
+    if (e.getKeyChar() == '\b' && tempEquation.length() > 0) { // backspace
       tempEquation = tempEquation.substring(0, tempEquation.length() - 1);
     } else {
       add(e.getKeyChar());

@@ -65,8 +65,10 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
         mouseX = e.getX();
         mouseY = e.getY();
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
-                && Menu.currentScreen == 1 && (challenge ^ LevelSelect.currentScreen == 1) && !Level.isRunning()) {
+                && Menu.currentScreen == 1 && (challenge ^ LevelSelect.currentScreen == 1) && !Level.isRunning()
+                && LevelSelect.isDrawn) {
             Menu.levels[this.levelID].init();
+            LevelSelect.isDrawn = false;
         }
     }
 

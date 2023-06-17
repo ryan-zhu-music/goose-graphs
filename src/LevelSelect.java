@@ -10,6 +10,7 @@ public class LevelSelect implements MouseListener {
     public static BufferedImage normalBg;
     public static BufferedImage challengeBg;
     public static int currentScreen = 1, mouseX, mouseY;
+    public static boolean isDrawn = false;
 
     // when displaying levels, sort by completion status (put completed at the end,
     // sort by difficulty)

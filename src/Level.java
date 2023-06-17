@@ -5,7 +5,7 @@ import java.awt.*;
 public class Level {
   private static Equation e;
   private static ArrayList<Bowtie> bowties;
-  private static int currentLevel = -1;
+  public static int currentLevel = -1;
 
   private int levelID;
   private Button[] buttons = new Button[8];
@@ -67,10 +67,6 @@ public class Level {
 
   public static ArrayList<Bowtie> getBowties() {
     return bowties;
-  }
-
-  public static int getCurrentLevel() {
-    return currentLevel;
   }
 
   public boolean getWin() {

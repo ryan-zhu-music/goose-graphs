@@ -103,15 +103,25 @@ public class Level {
       g2.setColor(Constants.COLORS.get("ivory"));
       g2.fillRect(0, 0, 1000, 800);
       // gridlines
-      g2.setColor(Constants.COLORS.get("beige"));
+      g2.setFont(new Font("Monospace", Font.BOLD, 10));
       for (int i = 0; i < 1000; i += 50) {
+        if (i != 500) {
+          g2.setColor(Constants.COLORS.get("tomato_light"));
+          g2.drawString(((i - 10) - ((i / 50) * 49)) + "", i - 2, 465);
+        }
+        g2.setColor(Constants.COLORS.get("beige"));
         g2.drawLine(i, 0, i, 800);
       }
-      for (int i = 0; i < 800; i += 50) {
-        g2.drawLine(0, i, 1000, i);
+      for (int i = 0; i < 600; i += 50) {
+        if (i != 250) {
+          g2.setColor(Constants.COLORS.get("tomato_light"));
+          g2.drawString(((-i / 50) + 5) + "", 505, i + 204);
+        }
+        g2.setColor(Constants.COLORS.get("beige"));
+        g2.drawLine(0, i + 200, 1000, i + 200);
       }
       // axes
-      g2.setColor(Constants.COLORS.get("tomato"));
+      g2.setColor(Constants.COLORS.get("tomato_light"));
       g2.setStroke(new BasicStroke(3));
       g2.drawLine(500, 0, 500, 800);
       g2.drawLine(0, 450, 1000, 450);
@@ -123,9 +133,10 @@ public class Level {
       g2.fillRect(0, 0, 1000, 200);
       // equation
       g2.setColor(Constants.COLORS.get("tomato"));
-      g2.setFont(new Font("Monospace", Font.PLAIN, 20));
-      g2.drawString("y = " + e.toString(), 137, 30);
+      g2.setFont(new Font("Monospace", Font.BOLD, 30));
+      g2.drawString("y = " + e.toString(), 137, 40);
       // buttons
+      g2.setFont(new Font("Monospace", Font.PLAIN, 20));
       for (Button button : buttons) {
         button.draw(g2);
       }

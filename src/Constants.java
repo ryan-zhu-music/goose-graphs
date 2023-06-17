@@ -29,9 +29,10 @@ public class Constants {
     COLORS.put("ivory", new Color(255, 255, 240));
     COLORS.put("pink", new Color(252, 208, 208));
     COLORS.put("maroon", new Color(194, 131, 131));
-    COLORS.put("lime", new Color(162, 229, 165));
+    COLORS.put("lime", new Color(139, 194, 124));
     COLORS.put("beige", new Color(220, 207, 185));
     COLORS.put("tomato", new Color(213, 103, 81));
+    COLORS.put("tomato_light", new Color(225, 120, 98));
   }
 
   static ArrayList<Vector> LEVEL_STARTS = new ArrayList<>();

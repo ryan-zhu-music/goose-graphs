@@ -27,7 +27,7 @@ public class Button implements MouseListener {
     g2.setColor(color);
     g2.fillRect((int) topLeft.getX(), (int) topLeft.getY(), width, height);
     g2.setColor(Constants.BUTTON_TEXT_COLOR);
-    g2.drawString(text, (int) topLeft.getX() + 10, (int) topLeft.getY() + 20);
+    g2.drawString(text, (int) topLeft.getX() + 10, (int) topLeft.getY() + 23);
   }
 
   public void setColor(Color color) {

@@ -14,6 +14,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static Help helpScreen;
     public static About aboutScreen;
     public static LevelSelect levelSelectScreen;
+    public static Win winScreen;
     public static LevelButton[] buttons = new LevelButton[15];
     public static Level[] levels = new Level[15];
     public static ImageIcon icon;
@@ -24,14 +25,17 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         helpScreen = new Help();
         aboutScreen = new About();
         levelSelectScreen = new LevelSelect();
+        winScreen = new Win();
 
         playButton = new MenuButton("play.png", "play1.png", 200, 500, 1);
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        backButton = new MenuButton("back.png", "back1.png", 300, 500, 1);
+        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 1);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
+        addMouseListener(returnButton);
+        addMouseMotionListener(returnButton);
         addMouseListener(playButton);
         addMouseListener(aboutButton);
         addMouseListener(helpButton);

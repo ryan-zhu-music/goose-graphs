@@ -29,7 +29,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
 
     public void draw(Graphics2D g2) {
         if (hovered) {
-            g2.drawImage(this.img1, this.imgX - 10, this.imgY - 10, null);
+            g2.drawImage(this.img1, this.imgX - 5, this.imgY - 5, null);
         } else {
             g2.drawImage(this.img, this.imgX, this.imgY, null);
         }

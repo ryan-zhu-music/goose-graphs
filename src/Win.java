@@ -20,11 +20,11 @@ public class Win {
     g2.drawImage(winScreen, 0, 0, null);
 
     if (Menu.goose) {
-      g2.drawImage(About.purpleGoose1, 200, 600, null);
-      g2.drawImage(About.pinkGoose1, 800, 600, null);
+      g2.drawImage(About.purpleGoose1, 800, 600, null);
+      g2.drawImage(About.pinkGoose1, 200, 600, null);
     } else if (!Menu.goose) {
-      g2.drawImage(About.purpleGoose2, 200, 600, null);
-      g2.drawImage(About.pinkGoose2, 800, 600, null);
+      g2.drawImage(About.purpleGoose2, 800, 600, null);
+      g2.drawImage(About.pinkGoose2, 200, 600, null);
     }
   }
 }

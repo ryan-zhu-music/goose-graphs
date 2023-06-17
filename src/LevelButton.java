@@ -8,8 +8,9 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public BufferedImage img, img1;
     public int imgX, imgY, mouseX, mouseY, width, height, levelID;
     public boolean hovered = false;
+    private boolean challenge;
 
-    public LevelButton(String fileName, String fileName1, int imgX, int imgY, int levelID) {
+    public LevelButton(String fileName, String fileName1, int imgX, int imgY, int levelID, boolean challenge) {
         try {
             this.img = ImageIO.read(new File(fileName));
             this.img1 = ImageIO.read(new File(fileName1));
@@ -19,6 +20,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
             this.levelID = levelID;
             this.width = img.getWidth();
             this.height = img.getHeight();
+            this.challenge = challenge;
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
@@ -51,7 +53,6 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-
         if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
                 && mouseY <= (this.imgY + height)) {
             hovered = true;
@@ -63,9 +64,9 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-
-        if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
-            System.out.println(levelID);
+        if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
+                && Menu.currentScreen == 1 && (challenge ^ LevelSelect.currentScreen == 1)) {
+            System.out.println("level:" + levelID);
             Menu.level = this.levelID;
         }
     }

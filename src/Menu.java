@@ -16,9 +16,6 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static LevelSelect levelSelectScreen;
     public static LevelButton[] buttons = new LevelButton[15];
     public static Level[] levels = new Level[15];
-    // int testLevel = 4;
-    // Level l = new Level(1, Constants.LEVEL_STARTS.get(testLevel),
-    // Constants.LEVEL_BOWTIES.get(testLevel), 1, this);
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
@@ -46,14 +43,13 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             if (i < 9) {
                 // buttons[i] = new LevelButton(i + "normal", i + "normal1", (i % 3) * 280, (i %
                 // 3) * 260 + 100, i);
-                System.out.println(((i % 3) * 333 + 32) + " " + ((i / 3) * 181 + 300));
                 buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", (i % 3) * 325 + 32,
-                        (i / 3) * 195 + 176, i);
+                        (i / 3) * 195 + 176, i, false);
             } else {
                 // buttons[i] = new LevelButton(i + "challenge", i + "challenge1", (i % 3) *
                 // 280, (i % 3) * 260 + 200, i);
                 buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", ((i - 9) % 3) * 325 + 32,
-                        ((i - 9) / 3) * 195 + 250, i);
+                        ((i - 9) / 3) * 195 + 250, i, true);
             }
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);

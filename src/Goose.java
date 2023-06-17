@@ -35,6 +35,9 @@ public class Goose {
   }
 
   public static boolean fire() {
+    if (Equation.getEquation().length() == 0) {
+      return false;
+    }
     for (Goose g : geese) {
       g.reset();
       g.setFired(true);

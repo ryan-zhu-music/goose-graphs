@@ -153,6 +153,12 @@ public class Level {
       g2.setColor(Constants.COLORS.get("tomato"));
       g2.setFont(new Font("Monospace", Font.BOLD, 30));
       g2.drawString("y = " + e.toString(), 137, 40);
+      // error
+      if (Equation.error) {
+        g2.setColor(Constants.COLORS.get("tomato"));
+        g2.setFont(new Font("Monospace", Font.BOLD, 20));
+        g2.drawString("Invalid equation", 137, 75);
+      }
       // buttons
       g2.setFont(new Font("Monospace", Font.PLAIN, 20));
       for (Button button : buttons) {
@@ -165,11 +171,6 @@ public class Level {
         bowtie.draw(g2);
       }
 
-      if (Equation.error) {
-        g2.setColor(Color.RED);
-        g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g2.drawString("Invalid equation", 137, 27);
-      }
     }
   }
 

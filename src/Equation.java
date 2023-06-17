@@ -3,24 +3,23 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Equation implements KeyListener {
-  private String equation = "";
-  private String tempEquation = "";
-  private Vector[] points = new Vector[101];
-  private Line[] segments = new Line[100];
+  private static String equation = "";
+  private static String tempEquation = "";
+  private static Vector[] points = new Vector[101];
+  private static Line[] segments = new Line[100];
 
-  static boolean isDrawn = false;
-  static boolean error = false;
-  static double subX;
+  public static boolean isDrawn = false;
+  public static boolean error = false;
 
   public Equation() {
   }
 
-  public String getEquation() {
+  public static String getEquation() {
     return equation;
   }
 
   public void setEquation(String tempEquation) {
-    this.tempEquation = tempEquation;
+    Equation.tempEquation = tempEquation;
     Goose.stop();
   }
 
@@ -340,7 +339,7 @@ public class Equation implements KeyListener {
 
   private double tryEvaluate(double x) {
     try {
-      double y = -50 * evaluate(substitute(this.equation, x)) + 450;
+      double y = -50 * evaluate(substitute(equation, x)) + 450;
       error = false;
       return y;
     } catch (Exception e) {
@@ -354,12 +353,10 @@ public class Equation implements KeyListener {
 
   public void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
-    if (this.equation.length() > 0) {
+    if (equation.length() > 0) {
       for (int i = 0; i < 100; i++) {
         if (!error)
           segments[i].draw(g2);
-        // g2.drawLine(points[i].getX(), points[i].getY(), points[i + 1].getX(),
-        // points[i + 1].getY());
       }
     }
   }

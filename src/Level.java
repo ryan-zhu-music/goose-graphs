@@ -60,6 +60,7 @@ public class Level {
   public static void halt() {
     running = false;
     currentLevel = -1;
+    Goose.geese.clear();
   }
 
   public int getDifficulty() {
@@ -142,17 +143,5 @@ public class Level {
         g2.drawString("Invalid equation", 137, 27);
       }
     }
-  }
-
-  // for testing
-  public static void main(String[] args) throws Exception {
-    JFrame f = new JFrame("App");
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.setSize(1000, 800);
-    JPanel p = new JPanel();
-    p.setPreferredSize(new Dimension(1000, 800));
-    Level l = new Level(1, Constants.LEVEL_STARTS.get(0), Constants.LEVEL_BOWTIES.get(0), 1, p);
-    f.add(p);
-    f.setVisible(true);
   }
 }

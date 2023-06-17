@@ -98,7 +98,7 @@ public class Level {
       g2.setColor(Constants.COLORS.get("ivory"));
       g2.fillRect(0, 0, 1000, 800);
       // gridlines
-      g2.setColor(Color.BLACK);
+      g2.setColor(Constants.COLORS.get("beige"));
       for (int i = 0; i < 1000; i += 50) {
         g2.drawLine(i, 0, i, 800);
       }
@@ -106,6 +106,7 @@ public class Level {
         g2.drawLine(0, i, 1000, i);
       }
       // axes
+      g2.setColor(Constants.COLORS.get("tomato"));
       g2.setStroke(new BasicStroke(3));
       g2.drawLine(500, 0, 500, 800);
       g2.drawLine(0, 450, 1000, 450);
@@ -113,12 +114,12 @@ public class Level {
       // equation
       e.draw(g2);
       // menu
-      g2.setColor(Constants.COLORS.get("pink"));
+      g2.setColor(Constants.COLORS.get("beige"));
       g2.fillRect(0, 0, 1000, 200);
       // equation
-      g2.setColor(Color.BLACK);
-      g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-      g2.drawString("y=" + e.toString(), 137, 19);
+      g2.setColor(Constants.COLORS.get("tomato"));
+      g2.setFont(new Font("Monospace", Font.PLAIN, 20));
+      g2.drawString("y = " + e.toString(), 137, 30);
       // buttons
       for (Button button : buttons) {
         button.draw(g2);

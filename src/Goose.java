@@ -162,8 +162,7 @@ public class Goose {
   }
 
   public void draw(Graphics2D g2) {
-    g2.drawImage(goose, (int) pos.getX() - 10, (int) pos.getY() - 10, null);
-    // g2.fillOval((int) pos.getX() - 10, (int) pos.getY() - 10, 20, 20);
+    g2.drawImage(goose, (int) pos.getX() - 22, (int) pos.getY() - 30, null);
   }
 
   public static void drawAll(Graphics2D g2) {

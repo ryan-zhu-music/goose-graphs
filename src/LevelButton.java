@@ -16,7 +16,6 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
-            this.imgY = imgY;
             this.levelID = levelID;
             this.width = img.getWidth();
             this.height = img.getHeight();

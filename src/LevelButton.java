@@ -16,8 +16,8 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
 
     public LevelButton(int levelID, Vector pos, boolean challenge) {
         try {
-            this.img = ImageIO.read(new File(levelID + "level.png"));
-            this.img1 = ImageIO.read(new File(levelID + "level1.png"));
+            this.img = ImageIO.read(new File(levelID + 1 + "level.png"));
+            this.img1 = ImageIO.read(new File(levelID + 1 + "level1.png"));
             this.img2 = ImageIO.read(new File(1 + "win.png"));
             this.levelID = levelID;
             this.pos.set(pos);

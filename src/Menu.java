@@ -5,6 +5,11 @@ import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
@@ -18,6 +23,10 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public static LevelButton[] buttons = new LevelButton[15];
     public static Level[] levels = new Level[15];
     public static ImageIcon icon;
+    public static Clip menuMusic;
+    public static Clip gameMusic;
+    public static Clip honk;
+    public static AudioInputStream sound;
 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
@@ -31,7 +40,8 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 1);
+        returnButton = new MenuButton("back.png", "back1.png", 380, 400, 1);
+        addMouseListener(this);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(returnButton);
@@ -70,10 +80,24 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             goose2 = ImageIO.read(new File("goose2.png"));
             sprayGoose1 = ImageIO.read(new File("sprayGoose.png"));
             sprayGoose2 = ImageIO.read(new File("sprayGoose1.png"));
+
+            sound = AudioSystem.getAudioInputStream(new File("menuMusic.wav"));
+            menuMusic = AudioSystem.getClip();
+            menuMusic.open(sound);
+            sound = AudioSystem.getAudioInputStream(new File("gameMusic.wav"));
+            gameMusic = AudioSystem.getClip();
+            gameMusic.open(sound);
+            sound = AudioSystem.getAudioInputStream(new File("honk.wav"));
+            honk = AudioSystem.getClip();
+            honk.open(sound);
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
             System.out.println("Reading Error!");
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("The specified audio file is not supported!");
+        } catch (LineUnavailableException e) {
+            System.out.println("Error in audio line for playing back!");
         }
 
         Thread thread = new Thread(this);
@@ -85,6 +109,8 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
         if (currentScreen == 0) {
+            gameMusic.stop();
+            menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
             g.drawImage(mainMenu, 0, 0, null);
             g.drawImage(logo, 120, 40, null);
             playButton.draw(g2);
@@ -103,6 +129,8 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         } else if (currentScreen == 1) {
             if (Level.currentLevel > -1) {
                 if (Level.isRunning()) {
+                    menuMusic.stop();
+                    gameMusic.loop(Clip.LOOP_CONTINUOUSLY);
                     levels[Level.currentLevel].draw(g2);
                 }
             } else {
@@ -120,6 +148,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             goose = !goose;
         } else if (currentScreen == 4) {
             Win.draw(g2);
+            goose = !goose;
             returnButton.draw(g2);
         }
     }
@@ -145,7 +174,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 if (currentScreen == 1) {
                     Thread.sleep(20);
                 } else {
-                    Thread.sleep(400);
+                    Thread.sleep(315);
                 }
             } catch (Exception e) {
             }
@@ -155,6 +184,12 @@ public class Menu extends JPanel implements MouseListener, Runnable {
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+
+        if (currentScreen == 0 && mouseX >= 120 && mouseX <= 870 && mouseY >= 40 && mouseY <= 428) {
+            System.out.println("honked");
+            honk.setFramePosition(0);
+            honk.start();
+        }
     }
 
     public void mousePressed(MouseEvent e) {

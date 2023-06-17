@@ -32,7 +32,6 @@ public class Level implements Comparable<Level> {
   // called when a new level is initiated, resets all game states except for
   // completed
   public void init() {
-    System.out.println("Level " + this.levelID + " initiating...");
     e = new Equation();
     panel.addKeyListener(e);
     for (int i = 0; i < 6; i++) {
@@ -57,7 +56,6 @@ public class Level implements Comparable<Level> {
     this.win = false;
     currentLevel = this.levelID;
     running = true;
-    System.out.println("Level " + this.levelID + " initiated.");
   }
 
   public int compareTo(Level l) {

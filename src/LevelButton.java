@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class LevelButton implements MouseListener, MouseMotionListener, Comparable<LevelButton> {
     public BufferedImage img, img1, img2;
     public int mouseX, mouseY, width, height, levelID;
-    public Vector pos;
+    public Vector pos = new Vector(0, 0);
     public boolean hovered = false;
     private boolean challenge;
     public boolean isDrawn = false;
@@ -20,7 +20,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
             this.img1 = ImageIO.read(new File(levelID + "hover.png"));
             this.img2 = ImageIO.read(new File(levelID + "win.png"));
             this.levelID = levelID;
-            this.pos = new Vector(pos);
+            this.pos.set(pos);
             this.width = img.getWidth();
             this.height = img.getHeight();
             this.challenge = challenge;

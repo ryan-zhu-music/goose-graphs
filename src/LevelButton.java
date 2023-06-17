@@ -18,7 +18,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
         try {
             this.img = ImageIO.read(new File(levelID + 1 + "level.png"));
             this.img1 = ImageIO.read(new File(levelID + 1 + "level1.png"));
-            this.img2 = ImageIO.read(new File(levelID + "win.png"));
+            this.img2 = ImageIO.read(new File(levelID + 1 + "win.png"));
             this.levelID = levelID;
             this.pos.set(pos);
             this.width = img.getWidth();
@@ -55,8 +55,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 b.setPos(new Vector(x, y));
                 if (Menu.levels[i].isCompleted()) {
                     g2.drawImage(b.img2, x - 5, y - 5, null);
-                }
-                if (b.hovered) {
+                } else if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
                 } else {
                     g2.drawImage(b.img, x, y, null);

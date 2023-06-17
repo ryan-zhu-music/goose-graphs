@@ -15,7 +15,10 @@ public class Level {
   private Vector gooseStart;
   private Vector[] bowtiePos;
   private JPanel panel;
-  public static boolean running = false;
+  private static long bestTime = Long.MAX_VALUE;
+  private static long time;
+  private static long startTime;
+  private static boolean running = false;
 
   int[] x = { 137, 300, 463 };
 
@@ -51,6 +54,7 @@ public class Level {
       bowties.add(new Bowtie((int) v.getX(), (int) v.getY()));
     }
     Bowtie.reset();
+    time = 0;
     currentLevel = this.levelID;
     running = true;
   }
@@ -61,8 +65,23 @@ public class Level {
     Goose.geese.clear();
   }
 
+  public static void startTimer() {
+    startTime = System.currentTimeMillis();
+  }
+
+  public static String getTime(boolean best) {
+    if (bestTime == Long.MAX_VALUE) {
+      return "N/A";
+    }
+    return String.format("%d.%03ds", best ? bestTime / 1000 : time / 1000, best ? bestTime % 1000 : time % 1000);
+  }
+
   public int getDifficulty() {
     return this.difficulty;
+  }
+
+  public int getLevelID() {
+    return this.levelID;
   }
 
   public static Equation getEquation() {
@@ -84,8 +103,12 @@ public class Level {
   public void update() {
     if (running) {
       Goose.update();
-      if (Bowtie.getCount() == bowties.size()) {
+      if (Bowtie.getCount() == bowties.size()) { // win
         this.completed = true;
+        time = System.currentTimeMillis() - startTime;
+        if (time < bestTime) {
+          bestTime = time;
+        }
         Level.halt();
         Menu.currentScreen = 4;
       }
@@ -122,7 +145,7 @@ public class Level {
       g2.drawLine(0, 450, 1000, 450);
       g2.setColor(Color.RED);
       // equation
-      e.draw(g2);
+      Equation.draw(g2);
       // menu
       g2.setColor(Constants.COLORS.get("beige"));
       g2.fillRect(0, 0, 1000, 200);
@@ -130,6 +153,12 @@ public class Level {
       g2.setColor(Constants.COLORS.get("tomato"));
       g2.setFont(new Font("Monospace", Font.BOLD, 30));
       g2.drawString("y = " + e.toString(), 137, 40);
+      // error
+      if (Equation.error) {
+        g2.setColor(Constants.COLORS.get("tomato"));
+        g2.setFont(new Font("Monospace", Font.BOLD, 20));
+        g2.drawString("Invalid equation", 137, 75);
+      }
       // buttons
       g2.setFont(new Font("Monospace", Font.PLAIN, 20));
       for (Button button : buttons) {
@@ -142,11 +171,10 @@ public class Level {
         bowtie.draw(g2);
       }
 
-      if (Equation.error) {
-        g2.setColor(Color.RED);
-        g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g2.drawString("Invalid equation", 137, 27);
-      }
     }
+  }
+
+  public String toString() {
+    return "Level " + this.levelID + " (Difficulty: " + this.difficulty + ")" + (this.completed ? " (Completed)" : "");
   }
 }

@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public class LevelButton implements MouseListener, MouseMotionListener, Comparable<LevelButton> {
-    public BufferedImage img, img1;
+    public BufferedImage img, img1, img2;
     public int mouseX, mouseY, width, height, levelID;
     public Vector pos;
     public boolean hovered = false;
@@ -14,10 +14,11 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public boolean isDrawn = false;
     public static ArrayList<LevelButton> buttons = new ArrayList<>();
 
-    public LevelButton(String fileName, String fileName1, Vector pos, int levelID, boolean challenge) {
+    public LevelButton(int levelID, Vector pos, boolean challenge) {
         try {
-            this.img = ImageIO.read(new File(fileName));
-            this.img1 = ImageIO.read(new File(fileName1));
+            this.img = ImageIO.read(new File(levelID + "normal.png"));
+            this.img1 = ImageIO.read(new File(levelID + "hover.png"));
+            this.img2 = ImageIO.read(new File(levelID + "win.png"));
             this.levelID = levelID;
             this.pos = new Vector(pos);
             this.width = img.getWidth();
@@ -52,6 +53,9 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 int x = (i % 3) * 325 + 32;
                 int y = (i / 3) * 195 + 176;
                 b.setPos(new Vector(x, y));
+                if (Menu.levels[i].isCompleted()) {
+                    g2.drawImage(b.img2, x - 5, y - 5, null);
+                }
                 if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
                 } else {

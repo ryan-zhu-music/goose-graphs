@@ -15,7 +15,10 @@ public class Level {
   private Vector gooseStart;
   private Vector[] bowtiePos;
   private JPanel panel;
-  public static boolean running = false;
+  private static long bestTime = Long.MAX_VALUE;
+  private static long time;
+  private static long startTime;
+  private static boolean running = false;
 
   int[] x = { 137, 300, 463 };
 
@@ -51,6 +54,7 @@ public class Level {
       bowties.add(new Bowtie((int) v.getX(), (int) v.getY()));
     }
     Bowtie.reset();
+    time = 0;
     currentLevel = this.levelID;
     running = true;
   }
@@ -59,6 +63,17 @@ public class Level {
     running = false;
     currentLevel = -1;
     Goose.geese.clear();
+  }
+
+  public static void startTimer() {
+    startTime = System.currentTimeMillis();
+  }
+
+  public static String getTime(boolean best) {
+    if (bestTime == Long.MAX_VALUE) {
+      return "N/A";
+    }
+    return String.format("%d.%03ds", best ? bestTime / 1000 : time / 1000, best ? bestTime % 1000 : time % 1000);
   }
 
   public int getDifficulty() {
@@ -88,8 +103,12 @@ public class Level {
   public void update() {
     if (running) {
       Goose.update();
-      if (Bowtie.getCount() == bowties.size()) {
+      if (Bowtie.getCount() == bowties.size()) { // win
         this.completed = true;
+        time = System.currentTimeMillis() - startTime;
+        if (time < bestTime) {
+          bestTime = time;
+        }
         Level.halt();
         Menu.currentScreen = 4;
       }

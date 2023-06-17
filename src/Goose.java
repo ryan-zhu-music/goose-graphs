@@ -39,6 +39,7 @@ public class Goose {
       g.reset();
       g.setFired(true);
     }
+    Level.startTimer();
     Bowtie.reset();
     return true;
   }

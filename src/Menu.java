@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
-    public static MenuButton playButton, aboutButton, helpButton, exitButton, backButton;
+    public static MenuButton playButton, aboutButton, helpButton, exitButton, returnButton;
     public static boolean goose = false;
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
@@ -36,9 +36,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         addMouseListener(aboutButton);
         addMouseListener(helpButton);
         addMouseListener(levelSelectScreen);
+        addMouseListener(returnButton);
         addMouseMotionListener(playButton);
         addMouseMotionListener(aboutButton);
         addMouseMotionListener(helpButton);
+        addMouseMotionListener(returnButton);
 
         for (int i = 0; i < 15; i++) {
             if (i < 9) {
@@ -112,6 +114,9 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             Help.draw(g2);
             exitButton.draw(g2);
             goose = !goose;
+        } else if (currentScreen == 4) {
+            Win.draw(g2);
+            returnButton.draw(g2);
         }
     }
 

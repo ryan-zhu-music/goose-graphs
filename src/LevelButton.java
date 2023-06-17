@@ -34,9 +34,9 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
 
     public int compareTo(LevelButton other) {
         if (Menu.levels[this.levelID].isCompleted() && !Menu.levels[other.levelID].isCompleted()) {
-            return 1;
-        } else if (!Menu.levels[this.levelID].isCompleted() && Menu.levels[other.levelID].isCompleted()) {
             return -1;
+        } else if (!Menu.levels[this.levelID].isCompleted() && Menu.levels[other.levelID].isCompleted()) {
+            return 1;
         } else {
             return Menu.levels[this.levelID].getDifficulty() - Menu.levels[other.levelID].getDifficulty();
         }
@@ -53,10 +53,10 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 int x = (i % 3) * 325 + 32;
                 int y = (i / 3) * 195 + 176;
                 b.setPos(new Vector(x, y));
-                if (Menu.levels[i].isCompleted()) {
-                    g2.drawImage(b.img2, x - 5, y - 5, null);
-                } else if (b.hovered) {
+                if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
+                } else if (Menu.levels[i].isCompleted()) {
+                    g2.drawImage(b.img2, x - 5, y - 5, null);
                 } else {
                     g2.drawImage(b.img, x, y, null);
                 }

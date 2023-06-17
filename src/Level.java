@@ -100,20 +100,20 @@ public class Level {
       // gridlines
       g2.setFont(new Font("Monospace", Font.BOLD, 10));
       for (int i = 0; i < 1000; i += 50) {
-        if (i != 500) {
-          g2.setColor(Constants.COLORS.get("tomato_light"));
-          g2.drawString(((i - 10) - ((i / 50) * 49)) + "", i - 2, 465);
-        }
         g2.setColor(Constants.COLORS.get("beige"));
         g2.drawLine(i, 0, i, 800);
+        if (i != 500) {
+          g2.setColor(Constants.COLORS.get("tomato_light"));
+          g2.drawString(((i - 10) - ((i / 50) * 49)) + "", i - 3, 465);
+        }
       }
       for (int i = 0; i < 600; i += 50) {
+        g2.setColor(Constants.COLORS.get("beige"));
+        g2.drawLine(0, i + 200, 1000, i + 200);
         if (i != 250) {
           g2.setColor(Constants.COLORS.get("tomato_light"));
           g2.drawString(((-i / 50) + 5) + "", 505, i + 204);
         }
-        g2.setColor(Constants.COLORS.get("beige"));
-        g2.drawLine(0, i + 200, 1000, i + 200);
       }
       // axes
       g2.setColor(Constants.COLORS.get("tomato_light"));

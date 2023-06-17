@@ -57,6 +57,11 @@ public class Level {
     running = true;
   }
 
+  public static void halt() {
+    running = false;
+    currentLevel = -1;
+  }
+
   public int getDifficulty() {
     return this.difficulty;
   }

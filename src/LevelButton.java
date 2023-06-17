@@ -11,6 +11,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public Vector pos;
     public boolean hovered = false;
     private boolean challenge;
+    public boolean isDrawn = false;
     public static ArrayList<LevelButton> buttons = new ArrayList<>();
 
     public LevelButton(String fileName, String fileName1, Vector pos, int levelID, boolean challenge) {
@@ -56,6 +57,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 } else {
                     g2.drawImage(b.img, x, y, null);
                 }
+                b.isDrawn = true;
             }
         } else {
             for (int i = 9; i < 15; i++) {
@@ -68,6 +70,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 } else {
                     g2.drawImage(b.img, x, y, null);
                 }
+                b.isDrawn = true;
             }
         }
     }

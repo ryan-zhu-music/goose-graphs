@@ -7,6 +7,7 @@ public class Equation implements KeyListener {
   private String tempEquation = "";
   private Vector[] points = new Vector[101];
   private Line[] segments = new Line[100];
+
   static boolean isDrawn = false;
   static boolean error = false;
   static double subX;

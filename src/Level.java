@@ -144,6 +144,12 @@ public class Level implements Comparable<Level> {
       for (Bowtie bowtie : bowties) {
         bowtie.draw(g2);
       }
+
+      if (Equation.error) {
+        g2.setColor(Color.RED);
+        g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g2.drawString("Invalid equation", 137, 27);
+      }
     }
   }
 

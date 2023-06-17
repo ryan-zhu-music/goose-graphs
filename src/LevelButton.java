@@ -6,17 +6,17 @@ import javax.imageio.ImageIO;
 
 public class LevelButton implements MouseListener, MouseMotionListener {
     public BufferedImage img, img1;
-    public int imgX, imgY, mouseX, mouseY, screenID, width, height, levelID;
+    public int imgX, imgY, mouseX, mouseY, width, height, levelID;
     public boolean hovered = false;
 
-    public LevelButton(String fileName, String fileName1, int imgX, int imgY, int screenID) {
+    public LevelButton(String fileName, String fileName1, int imgX, int imgY, int levelID) {
         try {
             this.img = ImageIO.read(new File(fileName));
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
             this.imgY = imgY;
-            this.screenID = screenID;
+            this.levelID = levelID;
             this.width = img.getWidth();
             this.height = img.getHeight();
         } catch (FileNotFoundException e) {
@@ -55,8 +55,8 @@ public class LevelButton implements MouseListener, MouseMotionListener {
         mouseY = e.getY();
 
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)) {
-            System.out.println(screenID);
-            Menu.level = this.screenID;
+            System.out.println(levelID);
+            Menu.level = this.levelID;
         }
     }
 

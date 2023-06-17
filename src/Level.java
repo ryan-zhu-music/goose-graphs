@@ -145,7 +145,7 @@ public class Level {
       g2.drawLine(0, 450, 1000, 450);
       g2.setColor(Color.RED);
       // equation
-      e.draw(g2);
+      Equation.draw(g2);
       // menu
       g2.setColor(Constants.COLORS.get("beige"));
       g2.fillRect(0, 0, 1000, 200);

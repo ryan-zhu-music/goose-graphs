@@ -10,16 +10,17 @@ import javax.imageio.ImageIO;
 
 public class MenuButton implements MouseListener, MouseMotionListener {
     public BufferedImage img, img1;
-    public int imgX, imgY, mouseX, mouseY, screenID, width, height;
+    public int imgX, imgY, mouseX, mouseY, screenID, parentScreen, width, height;
     public boolean hovered = false;
 
-    public MenuButton(String fileName, String fileName1, int imgX, int imgY, int screenID) {
+    public MenuButton(String fileName, String fileName1, int imgX, int imgY, int screenID, int parentScreen) {
         try {
             this.img = ImageIO.read(new File(fileName));
             this.img1 = ImageIO.read(new File(fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
             this.screenID = screenID;
+            this.parentScreen = parentScreen;
             this.width = img.getWidth();
             this.height = img.getHeight();
         } catch (FileNotFoundException e) {
@@ -49,7 +50,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         mouseX = e.getX();
         mouseY = e.getY();
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
-                && (Menu.currentScreen == 0 || this.screenID == 0 && Menu.currentScreen != 0)) {
+                && (Menu.currentScreen == this.parentScreen || this.parentScreen == -1)) {
             if (this.screenID == 1) { // level select screen
                 ArrayList<LevelButton> normal = new ArrayList<>();
                 ArrayList<LevelButton> challenge = new ArrayList<>();

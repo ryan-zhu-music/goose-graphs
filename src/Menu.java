@@ -28,11 +28,11 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         levelSelectScreen = new LevelSelect();
         winScreen = new Win();
 
-        playButton = new MenuButton("play.png", "play1.png", 200, 500, 1);
-        aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
-        helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
-        exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 0);
+        playButton = new MenuButton("play.png", "play1.png", 200, 500, 1, 0);
+        aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2, 0);
+        helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3, 0);
+        exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0, -1);
+        returnButton = new MenuButton("back.png", "back1.png", 300, 500, 1, 4);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(returnButton);

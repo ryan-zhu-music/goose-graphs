@@ -18,12 +18,12 @@ public class Equation implements KeyListener {
     return equation;
   }
 
-  public void setEquation(String tempEquation) {
+  public static void setEquation(String tempEquation) {
     Equation.tempEquation = tempEquation;
     Goose.stop();
   }
 
-  public void add(char c) {
+  public static void add(char c) {
     // only numbers, x, +, -, *, /, ^, (, ), .,
     if (c >= '0' && c <= '9' || c >= '(' && c <= '.' && c != ',') {
       tempEquation += c;
@@ -38,15 +38,15 @@ public class Equation implements KeyListener {
     }
   }
 
-  public void add(String s) {
+  public static void add(String s) {
     tempEquation += s;
   }
 
-  public Vector[] getPoints() {
+  public static Vector[] getPoints() {
     return points;
   }
 
-  public Line[] getSegments() {
+  public static Line[] getSegments() {
     return segments;
   }
 
@@ -69,7 +69,7 @@ public class Equation implements KeyListener {
     return tempEquation;
   }
 
-  public void reset() {
+  public static void reset() {
     tempEquation = "";
   }
 
@@ -89,7 +89,7 @@ public class Equation implements KeyListener {
     return true;
   }
 
-  public static String replace(String exp, int i, String x) {
+  private static String replace(String exp, int i, String x) {
     boolean prevIsOp = i == 0 || i > 0 && "+-*/^()".indexOf(exp.charAt(i - 1)) != -1;
     boolean nextIsOp = i == exp.length() - 1 || i < exp.length() - 1 && "+-*/^()".indexOf(exp.charAt(i + 1)) != -1;
     if (prevIsOp && nextIsOp) {
@@ -113,7 +113,7 @@ public class Equation implements KeyListener {
   }
 
   // replace x with its value
-  public static String substitute(String exp, double x) {
+  private static String substitute(String exp, double x) {
     int i = 0;
     while (i < exp.length()) {
       if (exp.charAt(i) == 'x') { // replace x with *x or x* or just x
@@ -131,7 +131,7 @@ public class Equation implements KeyListener {
     return exp;
   }
 
-  public double evaluate(String exp) {
+  private static double evaluate(String exp) {
     if (exp.length() == 0) {
       return 0;
     }
@@ -246,12 +246,12 @@ public class Equation implements KeyListener {
     return evalSimple(exp);
   }
 
-  private boolean isOp(char c) {
+  private static boolean isOp(char c) {
     return "+-*/^".indexOf(c) != -1;
   }
 
   // evaluate an expression with only +-*/
-  private double evalSimple(String exp) {
+  private static double evalSimple(String exp) {
     double result = 0;
     int i = 0;
     int j = 0;
@@ -301,7 +301,7 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  private double product(String exp) {
+  private static double product(String exp) {
     StringTokenizer st = new StringTokenizer(exp, "*/", true);
     double result = 1;
     while (st.hasMoreTokens()) {
@@ -317,7 +317,7 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  private Vector transform(double x) {
+  private static Vector transform(double x) {
     double y = tryEvaluate(x / 5.0);
     if (isUndefined(y)) {
       y = tryEvaluate(x / 5.0 + 0.000001);
@@ -337,7 +337,7 @@ public class Equation implements KeyListener {
     }
   }
 
-  private double tryEvaluate(double x) {
+  private static double tryEvaluate(double x) {
     try {
       double y = -50 * evaluate(substitute(equation, x)) + 450;
       error = false;
@@ -351,7 +351,7 @@ public class Equation implements KeyListener {
     return Double.isNaN(x) || Double.isInfinite(x);
   }
 
-  public void draw(Graphics2D g2) {
+  public static void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
     if (equation.length() > 0) {
       for (int i = 0; i < 100; i++) {

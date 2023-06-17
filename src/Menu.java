@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Menu extends JPanel implements MouseListener, Runnable {
     public static BufferedImage mainMenu, logo, goose1, goose2, sprayGoose1, sprayGoose2;
-    public static MenuButton playButton, aboutButton, helpButton, exitButton, returnButton;
+    public static MenuButton playButton, aboutButton, helpButton, exitButton;
     public static boolean goose = false;
     public static int mouseX, mouseY, currentScreen = 0;
     public static Help helpScreen;
@@ -28,21 +28,25 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        returnButton = new MenuButton("exit.png", "exit1.png", 500, 600, 0);
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
         addMouseListener(playButton);
         addMouseListener(aboutButton);
         addMouseListener(helpButton);
         addMouseListener(levelSelectScreen);
-        addMouseListener(returnButton);
         addMouseMotionListener(playButton);
         addMouseMotionListener(aboutButton);
         addMouseMotionListener(helpButton);
-        addMouseMotionListener(returnButton);
 
         for (int i = 0; i < 15; i++) {
-            buttons[i] = new LevelButton(i, new Vector((i % 3) * 325 + 32, (i / 3) * 195 + 176), false);
+            if (i < 9) {
+                buttons[i] = new LevelButton(1 + "normal.png", 1 + "normal1.png", (i % 3) * 325 + 32,
+                        (i / 3) * 195 + 176, i, false);
+            } else {
+                buttons[i] = new LevelButton(1 + "challenge.png", 1 + "challenge1.png", ((i - 9) % 3) * 325 + 32,
+                        ((i - 9) / 3) * 195 + 250, i, true);
+            }
+
             levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i % 3 + 1, this);
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);
@@ -86,11 +90,21 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
-            if (Level.currentLevel > -1 && Level.isRunning()) {
-                levels[Level.currentLevel].draw(g2);
+            if (Level.currentLevel > -1) {
+                if (Level.isRunning()) {
+                    levels[Level.currentLevel].draw(g2);
+                }
             } else {
                 LevelSelect.draw(g2);
-                LevelButton.draw(g2);
+                if (LevelSelect.currentScreen == 1) {
+                    for (int i = 0; i < 9; i++) {
+                        buttons[i].draw(g2);
+                    }
+                } else if (LevelSelect.currentScreen == 2) {
+                    for (int i = 9; i < 15; i++) {
+                        buttons[i].draw(g2);
+                    }
+                }
             }
             exitButton.draw(g2);
         } else if (currentScreen == 2) {
@@ -101,9 +115,6 @@ public class Menu extends JPanel implements MouseListener, Runnable {
             Help.draw(g2);
             exitButton.draw(g2);
             goose = !goose;
-        } else if (currentScreen == 4) {
-            Win.draw(g2);
-            returnButton.draw(g2);
         }
     }
 

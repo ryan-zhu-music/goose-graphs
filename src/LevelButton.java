@@ -33,6 +33,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     }
 
     public int compareTo(LevelButton other) {
+        System.out.println("Comparing " + Menu.levels[this.levelID] + " and " + Menu.levels[other.levelID]);
         if (Menu.levels[this.levelID].isCompleted() && !Menu.levels[other.levelID].isCompleted()) {
             return -1;
         } else if (!Menu.levels[this.levelID].isCompleted() && Menu.levels[other.levelID].isCompleted()) {
@@ -49,7 +50,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public static void draw(Graphics2D g2) {
         if (LevelSelect.currentScreen == 1) {
             for (int i = 0; i < 9; i++) {
-                LevelButton b = buttons.get(i);
+                LevelButton b = Menu.buttons[i];
                 int x = (i % 3) * 325 + 32;
                 int y = (i / 3) * 195 + 176;
                 b.setPos(new Vector(x, y));
@@ -64,7 +65,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
             }
         } else {
             for (int i = 9; i < 15; i++) {
-                LevelButton b = buttons.get(i);
+                LevelButton b = Menu.buttons[i];
                 int x = ((i - 9) % 3) * 325 + 32;
                 int y = ((i - 9) / 3) * 195 + 176;
                 b.setPos(new Vector(x, y));

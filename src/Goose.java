@@ -35,7 +35,6 @@ public class Goose {
   }
 
   public static boolean fire() {
-    System.out.println("fire");
     for (Goose g : geese) {
       g.reset();
       g.setFired(true);

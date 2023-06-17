@@ -49,7 +49,12 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         if (mouseX >= imgX && mouseX <= (imgX + width) && mouseY >= imgY && mouseY <= (imgY + height)
                 && (Menu.currentScreen == 0 || this.screenID == 0 && Menu.currentScreen != 0)) {
             if (this.screenID == 1) { // level select screen
-                Arrays.sort(Menu.buttons);
+                LevelButton[] normal = new LevelButton[9];
+                LevelButton[] challenge = new LevelButton[6];
+                normal = Arrays.copyOfRange(Menu.buttons, 0, 9);
+                challenge = Arrays.copyOfRange(Menu.buttons, 9, 15);
+                Arrays.sort(normal);
+                Arrays.sort(challenge);
             } else if (this.screenID == 0) {
                 Level.halt();
                 LevelSelect.isDrawn = false;
@@ -81,7 +86,6 @@ public class MenuButton implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-
         if (mouseX >= this.imgX && mouseX <= (this.imgX + this.width) && mouseY >= this.imgY
                 && mouseY <= (this.imgY + height)) {
             hovered = true;

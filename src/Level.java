@@ -65,6 +65,10 @@ public class Level {
     return this.difficulty;
   }
 
+  public int getLevelID() {
+    return this.levelID;
+  }
+
   public static Equation getEquation() {
     return e;
   }
@@ -148,5 +152,9 @@ public class Level {
         g2.drawString("Invalid equation", 137, 27);
       }
     }
+  }
+
+  public String toString() {
+    return "Level " + this.levelID + " (Difficulty: " + this.difficulty + ")" + (this.completed ? " (Completed)" : "");
   }
 }

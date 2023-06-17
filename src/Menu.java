@@ -29,7 +29,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3);
         exitButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
-        returnButton = new MenuButton("exit.png", "exit1.png", 15, 15, 0);
+        returnButton = new MenuButton("exit.png", "exit1.png", 15, 15, 1);
 
         addMouseListener(exitButton);
         addMouseMotionListener(exitButton);
@@ -54,7 +54,7 @@ public class Menu extends JPanel implements MouseListener, Runnable {
                 buttons[i] = new LevelButton(i, v, true);
             }
 
-            levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i % 3 + 1, this);
+            levels[i] = new Level(i, Constants.LEVEL_STARTS.get(i), Constants.LEVEL_BOWTIES.get(i), i % 5 + 1, this);
             addMouseListener(buttons[i]);
             addMouseMotionListener(buttons[i]);
         }

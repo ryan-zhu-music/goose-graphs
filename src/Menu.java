@@ -138,6 +138,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
                 goose = !goose;
             }
         } else if (currentScreen == 1) {
+            win.stop();
+            menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
             if (Level.currentLevel > -1) {
                 if (Level.isRunning()) {
                     menuMusic.stop();
@@ -192,7 +194,6 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         mouseY = e.getY();
 
         if (currentScreen == 0 && mouseX >= 120 && mouseX <= 870 && mouseY >= 40 && mouseY <= 428) {
-            System.out.println("honked");
             honk.setFramePosition(0);
             honk.start();
         }

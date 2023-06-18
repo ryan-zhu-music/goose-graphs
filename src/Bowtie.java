@@ -51,6 +51,8 @@ public class Bowtie {
             if (!obtained) {
                 count++;
                 obtained = true;
+                Menu.honk.setFramePosition(0);
+                Menu.honk.start();
             }
             return true;
         }

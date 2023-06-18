@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: Goose class that represents the goose that is fired and bounces off the graph
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -5,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-//import javax.swing.*;
 import java.util.*;
 import java.util.Queue;
 
@@ -34,6 +38,8 @@ public class Goose {
     }
   }
 
+  // sets all geese in free fall
+  // @return: true if goose was fired
   public static boolean fire() {
     if (Level.getEquation().getEquation().length() == 0) {
       return false;
@@ -47,12 +53,14 @@ public class Goose {
     return true;
   }
 
+  // stops all geese from moving
   public static void stop() {
     for (Goose g : geese) {
       g.setFired(false);
     }
   }
 
+  // resets all geese back to their starting position
   public void reset() {
     this.fired = false;
     this.pos.set(initialPos);
@@ -64,6 +72,7 @@ public class Goose {
     this.fired = fired;
   }
 
+  // moves a goose each frame according to natural simulation
   public void move() {
     if (fired) {
       this.pos.add(vel);
@@ -73,11 +82,12 @@ public class Goose {
         vels.poll();
       }
       if (outOfBounds()) {
-        fired = false;
+        this.fired = false;
         return;
       }
       if (vel.magnitude() < Constants.MAX_VELOCITY)
         vel.add(Constants.GRAVITY);
+      // check for collisions
       int index = (int) pos.getX() / 10;
       boolean collision1 = checkCollision(index);
       boolean collision2 = checkCollision((int) pos.getX() % 10 < 5 && index > 0 ? index - 1 : index + 1);
@@ -141,6 +151,9 @@ public class Goose {
     }
   }
 
+  // checks if a goose collides with a line segment
+  // @param: segment - the index of the line segment to check
+  // @return: true if the goose collides with the line segment
   public boolean checkCollision(int segment) {
     if (outOfBounds() || segment < 0 || segment >= Level.getEquation().getSegments().length)
       return false;
@@ -151,6 +164,7 @@ public class Goose {
     return false;
   }
 
+  // checks if a goose collides with a bowtie
   public void checkBowties() {
     if (outOfBounds())
       return;
@@ -159,20 +173,25 @@ public class Goose {
     }
   }
 
+  // checks if a goose is out of bounds
+  // @return: true if the goose is out of bounds
   private boolean outOfBounds() {
     return (pos.getX() <= 5 || pos.getX() >= 995 || pos.getY() <= 200 || pos.getY() >= 800) && fired;
   }
 
+  // draws a goose
   public void draw(Graphics2D g2) {
     g2.drawImage(goose, (int) pos.getX() - 22, (int) pos.getY() - 30, null);
   }
 
+  // draws all geese
   public static void drawAll(Graphics2D g2) {
     for (Goose g : geese) {
       g.draw(g2);
     }
   }
 
+  // updates all geese
   public static void update() {
     for (Goose g : geese) {
       g.move();

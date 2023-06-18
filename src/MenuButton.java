@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: This class is used to create buttons for the menu screen that switch between screens when clicked.
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -37,6 +42,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         }
     }
 
+    // getters
     public int getX() {
         return this.imgX;
     }
@@ -45,6 +51,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
         return this.imgY;
     }
 
+    // mouse events
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();

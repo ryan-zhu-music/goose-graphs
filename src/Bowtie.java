@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: A bowtie that is collected by the goose
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +33,7 @@ public class Bowtie {
         }
     }
 
+    // resets all bowties to be redisplayed and unobtained
     public static void reset() {
         count = 0;
         for (Bowtie b : bowties) {
@@ -39,6 +45,7 @@ public class Bowtie {
         return count;
     }
 
+    // checks if the goose has collided with the bowtie
     public boolean checkCollision(Vector v) {
         if (pos.distance(v) < 30) {
             if (!obtained) {
@@ -50,10 +57,10 @@ public class Bowtie {
         return false;
     }
 
+    // draws the bowtie if it has not been obtained
     public void draw(Graphics g2) {
         if (!obtained) {
             g2.drawImage(bowtie, (int) pos.getX() - 10, (int) pos.getY() - 10, null);
-            // g2.fillOval((int) pos.getX() - 10, (int) pos.getY() - 10, 20, 20);
         }
     }
 

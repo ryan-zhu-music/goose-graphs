@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: Displays a preview of a level and allows the user to select it to start the level
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -17,7 +22,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
     public LevelButton(int levelID, Vector pos, boolean challenge) {
         try {
             this.img = ImageIO.read(new File(levelID + 1 + "level.png"));
-            this.img1 = ImageIO.read(new File(levelID + 1 + "level1.png"));
+            this.img1 = ImageIO.read(new File(levelID + 1 + "level1.png")); // hovered
             this.img2 = ImageIO.read(new File(levelID + 1 + "win.png"));
             this.levelID = levelID;
             this.pos.set(pos);
@@ -32,6 +37,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
         }
     }
 
+    // sorting
     public int compareTo(LevelButton other) {
         if (Menu.levels[this.levelID].isCompleted() && !Menu.levels[other.levelID].isCompleted()) {
             return 1;
@@ -50,6 +56,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
         return challenge;
     }
 
+    // draw all the buttons
     public static void draw(Graphics2D g2) {
         if (LevelSelect.currentScreen == 1) {
             for (int i = 0; i < 9; i++) {
@@ -84,8 +91,8 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
         }
     }
 
+    // mouse events
     public void mouseDragged(MouseEvent e) {
-
     }
 
     public void mouseMoved(MouseEvent e) {

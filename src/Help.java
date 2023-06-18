@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: help page
+
 import java.awt.*;
 import java.io.*;
 import javax.imageio.ImageIO;

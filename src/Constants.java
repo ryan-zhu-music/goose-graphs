@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: various constants used throught the program, including each level
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -10,10 +15,11 @@ public class Constants {
   static final Color BUTTON_COLOR = new Color(255, 255, 255, 100);
   static final Color BUTTON_TEXT_COLOR = new Color(0, 0, 0, 100);
   static final double iNAN = Math.log(-1);
+
+  // functions
   static final String[] functions = {
       "sin(", "cos(", "ln(", "log(", "sqrt(", "abs(" };
   static final HashMap<String, Function<Double, Double>> FUNCTIONS = new HashMap<>();
-
   static {
     FUNCTIONS.put("sin(", (x) -> Math.sin((double) x));
     FUNCTIONS.put("cos(", (x) -> Math.cos((double) x));
@@ -23,8 +29,8 @@ public class Constants {
     FUNCTIONS.put("abs(", (x) -> Math.abs((double) x));
   }
 
+  // color themes
   static final HashMap<String, Color> COLORS = new HashMap<>();
-
   static {
     COLORS.put("ivory", new Color(255, 255, 240));
     COLORS.put("pink", new Color(252, 208, 208));
@@ -38,7 +44,7 @@ public class Constants {
   static ArrayList<Vector> LEVEL_STARTS = new ArrayList<>();
   static ArrayList<Vector[]> LEVEL_BOWTIES = new ArrayList<>();
 
-  static int[][][] positions = {
+  static int[][][] positions = { // an example of a function that would pass each level
       { { 754, 235 }, { 453, 460 }, { 222, 563 }, { 342, 513 } }, // 0.5x
       { { 372, 235 }, { 500, 598 }, { 547, 525 }, { 576, 429 } }, // x^2-3
       { { 500, 235 }, { 420, 496 }, { 266, 353 }, { 106, 495 } }, // 1.5*sin(x)
@@ -56,6 +62,7 @@ public class Constants {
       { { 70, 300 }, { 181, 577 }, { 345, 380 }, { 449, 581 }, { 574, 699 } }, // -3(2^x-2)/(cos(x)+2)-5
   };
 
+  // adds the positions to the arraylists
   static {
     for (int i = 0; i < positions.length; i++) {
       LEVEL_STARTS.add(new Vector(positions[i][0][0], positions[i][0][1]));

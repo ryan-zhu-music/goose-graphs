@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: A class implementing common vector functionalities
+
 public class Vector {
   private double x;
   private double y;
@@ -12,16 +17,19 @@ public class Vector {
     this.y = v.getY();
   }
 
+  // sets this vector to the same as another vector v
   public void set(Vector v) {
     x = v.getX();
     y = v.getY();
   }
 
+  // adds another vector v to this vector
   public void add(Vector v) {
     x += v.getX();
     y += v.getY();
   }
 
+  // adds a number to the x or y component of this vector
   public void addX(int num) {
     x += num;
   }
@@ -30,25 +38,30 @@ public class Vector {
     y += num;
   }
 
+  // subtracts another vector v from this vector
   public void sub(Vector v) {
     x -= v.getX();
     y -= v.getY();
   }
 
+  // multiplies or divides this vector by a scalar
   public void multScalar(double d) {
     x *= d;
     y *= d;
   }
 
+  // multiplies or divides this vector by a scalar
   public void divScalar(double d) {
     x /= d;
     y /= d;
   }
 
+  // returns the magnitude of this vector
   public double magnitude() {
     return Math.sqrt(x * x + y * y);
   }
 
+  // returns the unit vector of this vector
   public void normalize() {
     double m = magnitude();
     if (m != 0) {
@@ -56,10 +69,12 @@ public class Vector {
     }
   }
 
+  // returns the dot product of this vector and another vector v
   public double dot(Vector v) {
     return x * v.getX() + y * v.getY();
   }
 
+  // returns the vector projection of another vector v onto this vector
   public Vector projection(Vector v) {
     Vector v1 = new Vector(x, y);
     v1.normalize();
@@ -67,6 +82,7 @@ public class Vector {
     return v1;
   }
 
+  // returns the distance between this point and another point v
   public double distance(Vector v) {
     return Math.sqrt(Math.pow(x - v.getX(), 2) + Math.pow(y - v.getY(), 2));
   }
@@ -87,6 +103,7 @@ public class Vector {
     return angle;
   }
 
+  // returns the polar angle of this vector in radians
   public double angle() {
     return Math.atan2(y, x);
   }
@@ -112,6 +129,7 @@ public class Vector {
     return newVector;
   }
 
+  // getters
   public double getX() {
     return x;
   }

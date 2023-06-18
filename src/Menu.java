@@ -1,18 +1,16 @@
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: Menu class that represents the menu screen, acts as the driver for the game
 
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 
 public class Menu extends JPanel implements MouseListener, MouseMotionListener, Runnable {
     public static BufferedImage mainMenu, logo, logo1, goose1, goose2, sprayGoose1, sprayGoose2;
@@ -34,11 +32,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
     public Menu() {
         setPreferredSize(new Dimension(1000, 800));
 
+        // screens
         helpScreen = new Help();
         aboutScreen = new About();
         levelSelectScreen = new LevelSelect();
         winScreen = new Win();
-
+        // menu buttons
         playButton = new MenuButton("play.png", "play1.png", 200, 500, 1, 0);
         aboutButton = new MenuButton("about.png", "about1.png", 425, 500, 2, 0);
         helpButton = new MenuButton("help.png", "help1.png", 645, 500, 3, 0);
@@ -60,6 +59,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         addMouseMotionListener(helpButton);
         addMouseMotionListener(returnButton);
 
+        // create level buttons
         for (int i = 0; i < 15; i++) {
             if (i < 9) {
                 Vector v = new Vector((i % 3) * 325 + 32,
@@ -110,6 +110,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         this.setFocusable(true);
     }
 
+    // draw stuff
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
@@ -161,17 +162,6 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        JFrame f = new JFrame("Goose Graphs");
-        Menu panel = new Menu();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setPreferredSize(new Dimension(1000, 800));
-        f.setIconImage(icon.getImage());
-        f.add(panel);
-        f.pack();
-        f.setVisible(true);
-    }
-
     public void run() {
         while (true) {
             repaint();
@@ -189,6 +179,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         }
     }
 
+    // mouse events
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
@@ -228,5 +219,17 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             hovered = true;
         } else
             hovered = false;
+    }
+
+    public static void main(String[] args) throws Exception {
+        JFrame f = new JFrame("Goose Graphs");
+        Menu panel = new Menu();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setPreferredSize(new Dimension(1000, 800));
+        f.setResizable(false);
+        f.setIconImage(icon.getImage());
+        f.add(panel);
+        f.pack();
+        f.setVisible(true);
     }
 }

@@ -1,5 +1,9 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: A line class used to detect collisions between the goose and the graph
+
 import java.awt.*;
-import java.awt.event.*;
 
 public class Line {
     public static Equation e;
@@ -36,8 +40,11 @@ public class Line {
         }
     }
 
+    // checks if the goose has collided with the line
+    // @param: v - the position of the goose
+    // @param: radius - the radius of the goose that will register a collision
+    // @return: true if the goose has collided with the line, false otherwise
     public boolean collidesWith(Vector v, double radius) {
-        // shortest distance from point v to line
         double d = shortestDistance(v);
         // check that the point is within the bounds of the line
         Vector p = closestPoint(v);
@@ -52,11 +59,17 @@ public class Line {
         return false;
     }
 
+    // calculates the shortest (perpendicular) distance from the line to a point
+    // @param: v - the point
+    // @return: the shortest distance from the line to the point
     public double shortestDistance(Vector v) {
         double d = (A * v.getX() + B * v.getY() + C) / Math.sqrt(A * A + B * B);
         return d;
     }
 
+    // calculates the closest point on the line to a point
+    // @param: v - the point
+    // @return: the closest point on the line to the point
     public Vector closestPoint(Vector v) {
         double x = (A * v.getY() + v.getX() - A * C) / (A * A + 1);
         double y = (v.getX() - x) / A + v.getY();
@@ -67,6 +80,7 @@ public class Line {
         return new Vector(x, y);
     }
 
+    // returns the perpendicular vector of the line
     public Vector perpendicular() {
         Vector v = new Vector(v1.getY() - v2.getY(), v2.getX() - v1.getX());
         v.normalize();
@@ -74,6 +88,7 @@ public class Line {
         return v;
     }
 
+    // returns the line as a single vector
     public Vector getSlope() {
         return new Vector(v2.getX() - v1.getX(), v2.getY() - v1.getY());
     }

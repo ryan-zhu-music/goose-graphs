@@ -44,7 +44,7 @@ public class Constants {
   static ArrayList<Vector> LEVEL_STARTS = new ArrayList<>();
   static ArrayList<Vector[]> LEVEL_BOWTIES = new ArrayList<>();
 
-  static int[][][] positions = { // an example of a function that would pass each level
+  static int[][][] positions = {
       { { 754, 235 }, { 453, 460 }, { 222, 563 }, { 342, 513 } }, // 0.5x
       { { 372, 235 }, { 500, 598 }, { 547, 525 }, { 576, 429 } }, // x^2-3
       { { 500, 235 }, { 420, 496 }, { 266, 353 }, { 106, 495 } }, // 1.5*sin(x)

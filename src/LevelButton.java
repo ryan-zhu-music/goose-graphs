@@ -81,7 +81,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 b.setPos(new Vector(x, y));
                 if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
-                } else if (Menu.levels[i].isCompleted()) {
+                } else if (Menu.levels[b.levelID].isCompleted()) {
                     g2.drawImage(b.img2, x - 5, y - 5, null);
                 } else {
                     g2.drawImage(b.img, x, y, null);

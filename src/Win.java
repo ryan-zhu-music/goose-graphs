@@ -33,7 +33,7 @@ public class Win {
     }
     g2.setColor(Constants.COLORS.get("tomato_light"));
     g2.setFont(new Font("MONOSPACE", Font.BOLD, 20));
-    g2.drawString("Time: " + Level.getTime(false), 330, 700);
-    g2.drawString("Best time: " + Level.getTime(true), 540, 700);
+    g2.drawString("Time: " + Menu.levels[Level.currentLevel].getTime(false), 330, 700);
+    g2.drawString("Best time: " + Menu.levels[Level.currentLevel].getTime(true), 540, 700);
   }
 }

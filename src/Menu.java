@@ -173,7 +173,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             }
             try {
                 if (currentScreen == 1) {
-                    Thread.sleep(15);
+                    Thread.sleep(18);
                 } else if (currentScreen == 4) {
                     Thread.sleep(365);
                 } else {

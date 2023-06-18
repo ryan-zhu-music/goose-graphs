@@ -17,14 +17,16 @@ public class Button implements MouseListener {
   private String text;
   private Function<NullType, Boolean> f;
   private Color color = Constants.BUTTON_COLOR;
+  private int levelID;
 
-  public Button(int x, int y, int width, int height, String text, Function<NullType, Boolean> f) {
+  public Button(int x, int y, int width, int height, String text, Function<NullType, Boolean> f, int levelID) {
     this.topLeft = new Vector(x, y);
     this.bottomRight = new Vector(x + width, y + height);
     this.width = width;
     this.height = height;
     this.text = text;
     this.f = f;
+    this.levelID = levelID;
   }
 
   // draws the button
@@ -49,7 +51,7 @@ public class Button implements MouseListener {
 
   // mouse events
   public void mouseClicked(MouseEvent event) {
-    if (isClicked(event.getX(), event.getY())) {
+    if (isClicked(event.getX(), event.getY()) && Level.currentLevel == levelID) {
       if (f != null) {
         f.apply(null);
       } else {

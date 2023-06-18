@@ -81,6 +81,7 @@ public class MenuButton implements MouseListener, MouseMotionListener {
                 LevelSelect.isDrawn = false;
             }
             Menu.currentScreen = this.screenID;
+            Level.currentLevel = -1;
         }
     }
 

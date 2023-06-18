@@ -19,8 +19,8 @@ public class Level {
   private int difficulty;
   private Vector gooseStart;
   private Vector[] bowtiePos;
-  private static long bestTime = Long.MAX_VALUE;
-  private static long time;
+  private long bestTime = Long.MAX_VALUE;
+  private long time;
   private static long startTime;
   private static boolean running = false;
 
@@ -34,12 +34,12 @@ public class Level {
     e = new Equation();
     panel.addKeyListener(e);
     for (int i = 0; i < 6; i++) {
-      buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], null);
+      buttons[i] = new Button(x[i % 3], 50 * (i / 3 + 1) + 43, 144, 36, Constants.functions[i], null, levelID);
       panel.addMouseListener(buttons[i]);
     }
-    buttons[6] = new Button(625, 93, 144, 36, "graph", (x) -> e.setEquation());
+    buttons[6] = new Button(625, 93, 144, 36, "graph", (x) -> e.setEquation(), levelID);
     buttons[6].setColor(Constants.COLORS.get("lime"));
-    buttons[7] = new Button(625, 143, 144, 36, "go(ose)", (x) -> Goose.fire());
+    buttons[7] = new Button(625, 143, 144, 36, "go(ose)", (x) -> Goose.fire(), levelID);
     buttons[7].setColor(Constants.COLORS.get("lime"));
     panel.addMouseListener(buttons[6]);
     panel.addMouseListener(buttons[7]);
@@ -65,7 +65,6 @@ public class Level {
   // called when the game is exited (not the program)
   public static void halt() {
     running = false;
-    currentLevel = -1;
     Goose.geese.clear();
   }
 
@@ -77,11 +76,12 @@ public class Level {
   // returns the time in seconds
   // @param: best - whether to return the best time or the current time
   // @return: the time in seconds
-  public static String getTime(boolean best) {
-    if (bestTime == Long.MAX_VALUE) {
+  public String getTime(boolean best) {
+    if (this.bestTime == Long.MAX_VALUE) {
       return "N/A";
     }
-    return String.format("%d.%03ds", best ? bestTime / 1000 : time / 1000, best ? bestTime % 1000 : time % 1000);
+    return String.format("%d.%03ds", best ? this.bestTime / 1000 : this.time / 1000,
+        best ? this.bestTime % 1000 : this.time % 1000);
   }
 
   // getters

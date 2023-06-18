@@ -127,7 +127,6 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             playButton.draw(g2);
             aboutButton.draw(g2);
             helpButton.draw(g2);
-
             if (!goose) {
                 g.drawImage(goose1, 30, 580, null);
                 g.drawImage(sprayGoose1, 780, 375, null);
@@ -174,7 +173,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             }
             try {
                 if (currentScreen == 1) {
-                    Thread.sleep(20);
+                    Thread.sleep(15);
                 } else if (currentScreen == 4) {
                     Thread.sleep(365);
                 } else {

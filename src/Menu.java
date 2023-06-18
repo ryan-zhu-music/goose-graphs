@@ -26,9 +26,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
     public static ArrayList<LevelButton> buttons = new ArrayList<>();
     public static Level[] levels = new Level[15];
     public static ImageIcon icon;
-    public static Clip menuMusic;
-    public static Clip gameMusic;
-    public static Clip honk;
+    public static Clip menuMusic, gameMusic, honk, win;
     public static AudioInputStream sound;
 
     public Menu() {
@@ -95,6 +93,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             sound = AudioSystem.getAudioInputStream(new File("honk.wav"));
             honk = AudioSystem.getClip();
             honk.open(sound);
+            sound = AudioSystem.getAudioInputStream(new File("win.wav"));
+            win = AudioSystem.getClip();
+            win.open(sound);
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
@@ -114,6 +115,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
         if (currentScreen == 0) {
+            win.stop();
             gameMusic.stop();
             menuMusic.loop(Clip.LOOP_CONTINUOUSLY);
             g.drawImage(mainMenu, 0, 0, null);
@@ -155,6 +157,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             exitButton.draw(g2);
             goose = !goose;
         } else if (currentScreen == 4) {
+            gameMusic.stop();
+            win.loop(Clip.LOOP_CONTINUOUSLY);
             Win.draw(g2);
             goose = !goose;
             returnButton.draw(g2);
@@ -181,12 +185,15 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
             try {
                 if (currentScreen == 1) {
                     Thread.sleep(20);
+                } else if (currentScreen == 4) {
+                    Thread.sleep(365);
                 } else {
                     Thread.sleep(315);
                 }
             } catch (Exception e) {
             }
         }
+
     }
 
     public void mouseClicked(MouseEvent e) {

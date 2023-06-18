@@ -29,11 +29,11 @@ public class About {
         g2.drawImage(aboutMenu, 0, 0, null);
 
         if (Menu.goose) {
-            g2.drawImage(pinkGoose1, 100, 565, null);
-            g2.drawImage(purpleGoose1, 270, 565, null);
+            g2.drawImage(pinkGoose1, 100, 510, null);
+            g2.drawImage(purpleGoose1, 270, 510, null);
         } else if (!Menu.goose) {
-            g2.drawImage(pinkGoose2, 100, 565, null);
-            g2.drawImage(purpleGoose2, 270, 565, null);
+            g2.drawImage(pinkGoose2, 100, 510, null);
+            g2.drawImage(purpleGoose2, 270, 510, null);
         }
     }
 }

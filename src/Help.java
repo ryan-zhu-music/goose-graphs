@@ -24,9 +24,9 @@ public class Help {
         g2.drawImage(helpMenu, 0, 0, null);
 
         if (Menu.goose) {
-            g2.drawImage(goose3, 800, 600, null);
+            g2.drawImage(goose3, 820, 150, null);
         } else if (!Menu.goose) {
-            g2.drawImage(goose4, 800, 600, null);
+            g2.drawImage(goose4, 820, 150, null);
         }
     }
 }

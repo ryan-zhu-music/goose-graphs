@@ -27,8 +27,8 @@ public class Win {
       g2.drawImage(About.pinkGoose2, 150, 500, null);
     }
     g2.setColor(Constants.COLORS.get("tomato_light"));
-    g2.setFont(new Font("Arial", Font.BOLD, 20));
-    g2.drawString("Time: " + Level.getTime(false), 380, 480);
-    g2.drawString("Best time: " + Level.getTime(true), 540, 480);
+    g2.setFont(new Font("MONOSPACE", Font.BOLD, 20));
+    g2.drawString("Time: " + Level.getTime(false), 330, 700);
+    g2.drawString("Best time: " + Level.getTime(true), 540, 700);
   }
 }

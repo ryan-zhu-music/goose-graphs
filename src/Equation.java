@@ -1,84 +1,44 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: This class handles user input for the equation and calculates+draws the graph.
+
 import java.util.StringTokenizer;
 import java.awt.*;
 import java.awt.event.*;
 
 public class Equation implements KeyListener {
-  private static String equation = "";
-  private static String tempEquation = "";
-  private static Vector[] points = new Vector[101];
-  private static Line[] segments = new Line[100];
+  private String equation = "";
+  private String tempEquation = "";
+  private Vector[] points = new Vector[101];
+  private Line[] segments = new Line[100];
 
   public static boolean isDrawn = false;
   public static boolean error = false;
 
   public Equation() {
-    equation = "";
-    tempEquation = "";
-    points = new Vector[101];
-    segments = new Line[100];
-    isDrawn = false;
-    error = false;
   }
 
-  public static String getEquation() {
-    return equation;
+  // getters and setters
+  public String getEquation() {
+    return this.equation;
   }
 
-  public static void setEquation(String tempEquation) {
-    Equation.tempEquation = tempEquation;
+  public Vector[] getPoints() {
+    return this.points;
+  }
+
+  public Line[] getSegments() {
+    return this.segments;
+  }
+
+  public void setEquation(String tempEquation) {
+    this.tempEquation = tempEquation;
     Goose.stop();
   }
 
-  public static void add(char c) {
-    // only numbers, x, +, -, *, /, ^, (, ), .,
-    if (c >= '0' && c <= '9' || c >= '(' && c <= '.' && c != ',') {
-      tempEquation += c;
-    } else if (c == 'x' || c == 'X') {
-      tempEquation += 'x';
-    } else if (c == 'e' || c == 'E') {
-      tempEquation += 'e';
-    } else if (c == '/') {
-      tempEquation += "/";
-    } else if (c == '^') {
-      tempEquation += "^(";
-    }
-  }
-
-  public static void add(String s) {
-    tempEquation += s;
-  }
-
-  public static Vector[] getPoints() {
-    return points;
-  }
-
-  public static Line[] getSegments() {
-    return segments;
-  }
-
-  // keylistener
-  public void keyPressed(KeyEvent e) {
-  }
-
-  public void keyReleased(KeyEvent e) {
-  }
-
-  public void keyTyped(KeyEvent e) {
-    if (e.getKeyChar() == '\b' && tempEquation.length() > 0) { // backspace
-      tempEquation = tempEquation.substring(0, tempEquation.length() - 1);
-    } else {
-      add(e.getKeyChar());
-    }
-  }
-
-  public String toString() {
-    return tempEquation;
-  }
-
-  public static void reset() {
-    tempEquation = "";
-  }
-
+  // evaluates the equation at 101 x value, creating an array of points and lines
+  // for displaying
   public boolean setEquation() {
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
@@ -94,6 +54,49 @@ public class Equation implements KeyListener {
     }
     return true;
   }
+
+  // reset equation
+  public void clear() {
+    this.equation = "";
+    this.tempEquation = "";
+    this.points = new Vector[101];
+    this.segments = new Line[100];
+    isDrawn = false;
+    error = false;
+  }
+
+  // append valid characters when inputted
+  // @param: char c - character to be appended
+  public void add(char c) {
+    // only numbers, x, +, -, *, /, ^, (, ), .,
+    if (c >= '0' && c <= '9' || c >= '(' && c <= '.' && c != ',') {
+      this.tempEquation += c;
+    } else if (c == 'x' || c == 'X') {
+      this.tempEquation += 'x';
+    } else if (c == 'e' || c == 'E') {
+      this.tempEquation += 'e';
+    } else if (c == '/') {
+      this.tempEquation += "/";
+    } else if (c == '^') {
+      this.tempEquation += "^(";
+    }
+  }
+
+  // append valid strings when inputted
+  // @param: String s - string to be appended (used for functions)
+  public void add(String s) {
+    this.tempEquation += s;
+  }
+
+  public String toString() {
+    return tempEquation;
+  }
+
+  // replace x with its value
+  // @param: double x - value to be substituted
+  // @param: int i - index of x in the equation
+  // @param: String x - value to be substituted
+  // @return: String - equation with x substituted
 
   private static String replace(String exp, int i, String x) {
     boolean prevIsOp = i == 0 || i > 0 && "+-*/^()".indexOf(exp.charAt(i - 1)) != -1;
@@ -118,7 +121,10 @@ public class Equation implements KeyListener {
     return exp;
   }
 
-  // replace x with its value
+  // replaces all x with its value in an expression
+  // @param: String exp - expression to be substituted
+  // @param: double x - value to be substituted
+  // @return: String - expression with x substituted
   private static String substitute(String exp, double x) {
     int i = 0;
     while (i < exp.length()) {
@@ -137,6 +143,7 @@ public class Equation implements KeyListener {
     return exp;
   }
 
+  // evaluates the equation at a given x value
   private static double evaluate(String exp) {
     if (exp.length() == 0) {
       return 0;
@@ -252,6 +259,9 @@ public class Equation implements KeyListener {
     return evalSimple(exp);
   }
 
+  // checks if char is an operator
+  // @param: the char to check
+  // @return: true if char is an operator, false otherwise
   private static boolean isOp(char c) {
     return "+-*/^".indexOf(c) != -1;
   }
@@ -307,6 +317,9 @@ public class Equation implements KeyListener {
     return result;
   }
 
+  // evaluate an expression with only */
+  // @param: exp - the expression to evaluate
+  // @return: the result of the expression
   private static double product(String exp) {
     StringTokenizer st = new StringTokenizer(exp, "*/", true);
     double result = 1;
@@ -323,7 +336,11 @@ public class Equation implements KeyListener {
     return result;
   }
 
-  private static Vector transform(double x) {
+  // transforms the value of the function to display correctly (0,0)->(500,450)
+  // if the value is undefined, it tries to evaluate it at a nearby point
+  // @param: x - the x value to transform
+  // @return: a vector containing the transformed x and y values
+  private Vector transform(double x) {
     double y = tryEvaluate(x / 5.0);
     if (isUndefined(y)) {
       y = tryEvaluate(x / 5.0 + 0.000001);
@@ -343,9 +360,12 @@ public class Equation implements KeyListener {
     }
   }
 
-  private static double tryEvaluate(double x) {
+  // attempts to evaluate the equation at a given x value
+  // @param: x - the x value to evaluate at
+  // @return: the y value of the equation at x
+  private double tryEvaluate(double x) {
     try {
-      double y = -50 * evaluate(substitute(equation, x)) + 450;
+      double y = -50 * evaluate(substitute(this.equation, x)) + 450;
       error = false;
       return y;
     } catch (Exception e) {
@@ -353,17 +373,36 @@ public class Equation implements KeyListener {
     }
   }
 
+  // checks if a number is undefined
+  // @param: x - the double to check
+  // @return: true if x is undefined, false otherwise
   public static boolean isUndefined(double x) {
     return Double.isNaN(x) || Double.isInfinite(x);
   }
 
-  public static void draw(Graphics2D g2) {
+  // draws the graph
+  public void draw(Graphics2D g2) {
     g2.setStroke(new BasicStroke(2));
-    if (equation.length() > 0) {
+    if (this.equation.length() > 0) {
       for (int i = 0; i < 100; i++) {
         if (!error)
           segments[i].draw(g2);
       }
+    }
+  }
+
+  // keylistener
+  public void keyPressed(KeyEvent e) {
+  }
+
+  public void keyReleased(KeyEvent e) {
+  }
+
+  public void keyTyped(KeyEvent e) {
+    if (e.getKeyChar() == '\b' && tempEquation.length() > 0) { // backspace
+      tempEquation = tempEquation.substring(0, tempEquation.length() - 1);
+    } else {
+      add(e.getKeyChar());
     }
   }
 }

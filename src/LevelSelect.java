@@ -1,7 +1,11 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: The screen for selecting which level to play
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-//import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,9 +15,6 @@ public class LevelSelect implements MouseListener {
     public static BufferedImage challengeBg;
     public static int currentScreen = 1, mouseX, mouseY;
     public static boolean isDrawn = false;
-
-    // when displaying levels, sort by completion status (put completed at the end,
-    // sort by difficulty)
 
     public LevelSelect() {
         try {

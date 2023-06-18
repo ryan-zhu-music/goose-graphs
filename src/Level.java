@@ -1,3 +1,8 @@
+// Name: Delin Gu and Ryan Zhu
+// Date: June 17th, 2021
+// Assignment: FINAL ISU!!!
+// Description: This class is used to create instances of each of the 15 levels. It stores unique states for each game.
+
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +19,6 @@ public class Level {
   private int difficulty;
   private Vector gooseStart;
   private Vector[] bowtiePos;
-  private JPanel panel;
   private static long bestTime = Long.MAX_VALUE;
   private static long time;
   private static long startTime;
@@ -27,12 +31,6 @@ public class Level {
     this.difficulty = difficulty;
     this.gooseStart = gooseStart;
     this.bowtiePos = bowtiePos;
-    this.panel = panel;
-  }
-
-  // called when a new level is initiated, resets all game states except for
-  // completed
-  public void init() {
     e = new Equation();
     panel.addKeyListener(e);
     for (int i = 0; i < 6; i++) {
@@ -46,6 +44,11 @@ public class Level {
     panel.addMouseListener(buttons[6]);
     panel.addMouseListener(buttons[7]);
     panel.setFocusable(true);
+  }
+
+  // called when a new level is initiated; resets relevant properties
+  public void init() {
+    e.clear();
     for (int i = 0; i < GEESE_COUNT; i++) {
       new Goose(gooseStart.getX(), gooseStart.getY(), 0, 1);
     }
@@ -59,16 +62,21 @@ public class Level {
     running = true;
   }
 
+  // called when the game is exited (not the program)
   public static void halt() {
     running = false;
     currentLevel = -1;
     Goose.geese.clear();
   }
 
+  // called when the geese are fired to begin timing the level
   public static void startTimer() {
     startTime = System.currentTimeMillis();
   }
 
+  // returns the time in seconds
+  // @param: best - whether to return the best time or the current time
+  // @return: the time in seconds
   public static String getTime(boolean best) {
     if (bestTime == Long.MAX_VALUE) {
       return "N/A";
@@ -76,6 +84,7 @@ public class Level {
     return String.format("%d.%03ds", best ? bestTime / 1000 : time / 1000, best ? bestTime % 1000 : time % 1000);
   }
 
+  // getters
   public int getDifficulty() {
     return this.difficulty;
   }
@@ -100,6 +109,7 @@ public class Level {
     return running;
   }
 
+  // updates the level each frame
   public void update() {
     if (running) {
       Goose.update();
@@ -115,6 +125,7 @@ public class Level {
     }
   }
 
+  // draws the level each frame
   public void draw(Graphics2D g2) {
     if (running) {
       // bg
@@ -145,7 +156,7 @@ public class Level {
       g2.drawLine(0, 450, 1000, 450);
       g2.setColor(Color.RED);
       // equation
-      Equation.draw(g2);
+      e.draw(g2);
       // menu
       g2.setColor(Constants.COLORS.get("beige"));
       g2.fillRect(0, 0, 1000, 200);

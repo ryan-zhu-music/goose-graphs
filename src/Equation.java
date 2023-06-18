@@ -40,6 +40,7 @@ public class Equation implements KeyListener {
   // evaluates the equation at 101 x value, creating an array of points and lines
   // for displaying
   public boolean setEquation() {
+    Goose.stop();
     if (!equation.equals(tempEquation)) {
       equation = tempEquation;
       isDrawn = false;
@@ -75,6 +76,8 @@ public class Equation implements KeyListener {
       this.tempEquation += 'x';
     } else if (c == 'e' || c == 'E') {
       this.tempEquation += 'e';
+    } else if (c == 'p' || c == 'P') {
+      this.tempEquation += 'p';
     } else if (c == '/') {
       this.tempEquation += "/";
     } else if (c == '^') {

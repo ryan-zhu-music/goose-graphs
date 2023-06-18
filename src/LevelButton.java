@@ -11,19 +11,19 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public class LevelButton implements MouseListener, MouseMotionListener, Comparable<LevelButton> {
-    public BufferedImage img, img1, img2;
-    public int mouseX, mouseY, width, height, levelID;
-    public Vector pos = new Vector(0, 0);
-    public boolean hovered = false;
+    private BufferedImage img, img1, img2;
+    private int mouseX, mouseY, width, height, levelID;
+    private Vector pos = new Vector(0, 0);
+    private boolean hovered = false;
     private boolean challenge;
     public boolean isDrawn = false;
-    public static ArrayList<LevelButton> buttons = new ArrayList<>();
+    private static ArrayList<LevelButton> buttons = new ArrayList<>();
 
     public LevelButton(int levelID, Vector pos, boolean challenge) {
         try {
-            this.img = ImageIO.read(new File(levelID + 1 + "level.png"));
-            this.img1 = ImageIO.read(new File(levelID + 1 + "level1.png")); // hovered
-            this.img2 = ImageIO.read(new File(levelID + 1 + "win.png"));
+            this.img = ImageIO.read(new File("assets/" + (levelID + 1) + "level.png"));
+            this.img1 = ImageIO.read(new File("assets/" + (levelID + 1) + "level1.png")); // hovered
+            this.img2 = ImageIO.read(new File("assets/" + (levelID + 1) + "win.png"));
             this.levelID = levelID;
             this.pos.set(pos);
             this.width = img.getWidth();
@@ -67,7 +67,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
                 } else if (Menu.levels[b.levelID].isCompleted()) {
-                    g2.drawImage(b.img2, x - 5, y - 5, null);
+                    g2.drawImage(b.img2, x, y, null);
                 } else {
                     g2.drawImage(b.img, x, y, null);
                 }
@@ -82,7 +82,7 @@ public class LevelButton implements MouseListener, MouseMotionListener, Comparab
                 if (b.hovered) {
                     g2.drawImage(b.img1, x - 5, y - 5, null);
                 } else if (Menu.levels[b.levelID].isCompleted()) {
-                    g2.drawImage(b.img2, x - 5, y - 5, null);
+                    g2.drawImage(b.img2, x, y, null);
                 } else {
                     g2.drawImage(b.img, x, y, null);
                 }

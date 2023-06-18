@@ -9,11 +9,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 public class Win {
-  public static BufferedImage winScreen;
+  private static BufferedImage winScreen;
 
   public Win() {
     try {
-      winScreen = ImageIO.read(new File("winScreen.png"));
+      winScreen = ImageIO.read(new File("assets/winScreen.png"));
     } catch (FileNotFoundException e) {
       System.out.println("File not found!");
     } catch (IOException e) {

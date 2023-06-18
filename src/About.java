@@ -18,11 +18,11 @@ public class About {
 
     public About() {
         try {
-            aboutMenu = ImageIO.read(new File("aboutMenu.png"));
-            pinkGoose1 = ImageIO.read(new File("pinkGoose1.png"));
-            pinkGoose2 = ImageIO.read(new File("pinkGoose2.png"));
-            purpleGoose1 = ImageIO.read(new File("purpleGoose1.png"));
-            purpleGoose2 = ImageIO.read(new File("purpleGoose2.png"));
+            aboutMenu = ImageIO.read(new File("assets/aboutMenu.png"));
+            pinkGoose1 = ImageIO.read(new File("assets/pinkGoose1.png"));
+            pinkGoose2 = ImageIO.read(new File("assets/pinkGoose2.png"));
+            purpleGoose1 = ImageIO.read(new File("assets/purpleGoose1.png"));
+            purpleGoose2 = ImageIO.read(new File("assets/purpleGoose2.png"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {

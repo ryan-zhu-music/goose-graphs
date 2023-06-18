@@ -17,7 +17,7 @@ public class Bowtie {
     private boolean obtained;
     private static int count = 0;
     private static ArrayList<Bowtie> bowties = new ArrayList<>();
-    public static BufferedImage bowtie;
+    private static BufferedImage bowtie;
 
     public Bowtie(int x, int y) {
         this.pos = new Vector(x, y);
@@ -25,7 +25,7 @@ public class Bowtie {
         bowties.add(this);
 
         try {
-            bowtie = ImageIO.read(new File("bowtie.png"));
+            bowtie = ImageIO.read(new File("assets/bowtie.png"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {

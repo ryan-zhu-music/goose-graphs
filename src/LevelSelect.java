@@ -11,15 +11,16 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 public class LevelSelect implements MouseListener {
-    public static BufferedImage normalBg;
-    public static BufferedImage challengeBg;
-    public static int currentScreen = 1, mouseX, mouseY;
+    private static BufferedImage normalBg;
+    private static BufferedImage challengeBg;
+    public static int currentScreen = 1;
+    private static int mouseX, mouseY;
     public static boolean isDrawn = false;
 
     public LevelSelect() {
         try {
-            normalBg = ImageIO.read(new File("levelMenuNormal.png"));
-            challengeBg = ImageIO.read(new File("levelMenuChallenge.png"));
+            normalBg = ImageIO.read(new File("assets/levelMenuNormal.png"));
+            challengeBg = ImageIO.read(new File("assets/levelMenuChallenge.png"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {

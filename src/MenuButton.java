@@ -19,8 +19,8 @@ public class MenuButton implements MouseListener, MouseMotionListener {
 
     public MenuButton(String fileName, String fileName1, int imgX, int imgY, int screenID, int parentScreen) {
         try {
-            this.img = ImageIO.read(new File(fileName));
-            this.img1 = ImageIO.read(new File(fileName1));
+            this.img = ImageIO.read(new File("assets/" + fileName));
+            this.img1 = ImageIO.read(new File("assets/" + fileName1));
             this.imgX = imgX;
             this.imgY = imgY;
             this.screenID = screenID;

@@ -19,8 +19,7 @@ public class Goose {
   private Vector initialPos;
   private boolean fired = false;
   private Queue<Vector> vels = new LinkedList<>();
-  public static BufferedImage goose;
-
+  private static BufferedImage goose;
   public static LinkedList<Goose> geese = new LinkedList<>();
 
   public Goose(double x, double y, double vx, double vy) {
@@ -30,7 +29,7 @@ public class Goose {
     geese.add(this);
 
     try {
-      goose = ImageIO.read(new File("goose.png"));
+      goose = ImageIO.read(new File("assets/goose.png"));
     } catch (FileNotFoundException e) {
       System.out.println("File not found!");
     } catch (IOException e) {
@@ -60,7 +59,7 @@ public class Goose {
     }
   }
 
-  // resets all geese back to their starting position
+  // resets goose back to their starting position
   public void reset() {
     this.fired = false;
     this.pos.set(initialPos);

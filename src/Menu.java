@@ -75,31 +75,31 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
         }
 
         try {
-            icon = new ImageIcon("goose.png");
-            logo = ImageIO.read(new File("logo.png"));
-            logo1 = ImageIO.read(new File("logo1.png"));
-            mainMenu = ImageIO.read(new File("mainMenu.png"));
-            goose1 = ImageIO.read(new File("goose1.png"));
-            goose2 = ImageIO.read(new File("goose2.png"));
-            sprayGoose1 = ImageIO.read(new File("sprayGoose.png"));
-            sprayGoose2 = ImageIO.read(new File("sprayGoose1.png"));
+            icon = new ImageIcon("assets/goose.png");
+            logo = ImageIO.read(new File("assets/logo.png"));
+            logo1 = ImageIO.read(new File("assets/logo1.png"));
+            mainMenu = ImageIO.read(new File("assets/mainMenu.png"));
+            goose1 = ImageIO.read(new File("assets/goose1.png"));
+            goose2 = ImageIO.read(new File("assets/goose2.png"));
+            sprayGoose1 = ImageIO.read(new File("assets/sprayGoose.png"));
+            sprayGoose2 = ImageIO.read(new File("assets/sprayGoose1.png"));
 
-            sound = AudioSystem.getAudioInputStream(new File("menuMusic.wav"));
+            sound = AudioSystem.getAudioInputStream(new File("assets/menuMusic.wav"));
             menuMusic = AudioSystem.getClip();
             menuMusic.open(sound);
-            sound = AudioSystem.getAudioInputStream(new File("gameMusic.wav"));
+            sound = AudioSystem.getAudioInputStream(new File("assets/gameMusic.wav"));
             gameMusic = AudioSystem.getClip();
             gameMusic.open(sound);
-            sound = AudioSystem.getAudioInputStream(new File("honk.wav"));
+            sound = AudioSystem.getAudioInputStream(new File("assets/honk.wav"));
             honk = AudioSystem.getClip();
             honk.open(sound);
-            sound = AudioSystem.getAudioInputStream(new File("win.wav"));
+            sound = AudioSystem.getAudioInputStream(new File("assets/win.wav"));
             win = AudioSystem.getClip();
             win.open(sound);
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
-            System.out.println("Reading Error!");
+            System.out.println("Reading Error1!");
         } catch (UnsupportedAudioFileException e) {
             System.out.println("The specified audio file is not supported!");
         } catch (LineUnavailableException e) {

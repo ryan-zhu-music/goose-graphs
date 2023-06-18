@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-public class Constants {
+final class Constants {
   static final Vector GRAVITY = new Vector(0, 0.15);
   static final double FRICTION = 0.999;
   static final int MAX_VELOCITY = 10;

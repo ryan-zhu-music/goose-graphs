@@ -15,9 +15,9 @@ public class Help {
 
     public Help() {
         try {
-            helpMenu = ImageIO.read(new File("helpMenu.png"));
-            goose3 = ImageIO.read(new File("goose3.png"));
-            goose4 = ImageIO.read(new File("goose4.png"));
+            helpMenu = ImageIO.read(new File("assets/helpMenu.png"));
+            goose3 = ImageIO.read(new File("assets/goose3.png"));
+            goose4 = ImageIO.read(new File("assets/goose4.png"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } catch (IOException e) {
